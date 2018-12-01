@@ -33,8 +33,6 @@
 (setq package-enable-at-startup nil) (package-initialize)
 
 
-
-
 ;;;; SMEX and IDO
 
 (global-set-key (kbd "M-x") 'smex)
@@ -69,7 +67,12 @@
 ;; Activate python highlighting for PYX and PPL files
 (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
 (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
+
 (elpy-enable)
+
+(define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+(define-key global-map (kbd "C-c o") 'iedit-mode)
+
 
 (add-hook 'python-mode-hook 'elpy-mode)
 (with-eval-after-load 'elpy
@@ -78,19 +81,19 @@
 
 ;;;;;;;; AC
 
-(require 'auto-complete)
-(setq ac-auto-start nil)
-(ac-set-trigger-key "TAB")
+;; (require 'auto-complete)
+;; (setq ac-auto-start nil)
+;; (ac-set-trigger-key "TAB")
 
 
-;; (require 'ssh)
+(require 'ssh)
 ;; (add-hook 'ssh-mode-hook
 ;; 	  (lambda ()
 ;; 	    (setq ssh-directory-tracking-mode t)
 ;;                 (shell-dirtrack-mode t)
 ;;                 (setq dirtrackp nil)))
 
-;;( setq tramp-default-method "ssh")
+( setq tramp-default-method "ssh")
 
 
  (mapc
@@ -118,13 +121,6 @@
 ;; (setq powerline-arrow-shape 'curve)
 ;; (setq powerline-default-separator-dir '(right . left))
 ;; (setq sml/theme 'powerline)
-(set-face-attribute 'mode-line nil
-                    :foreground "Black"
-                    :background "Black"
-                    :box nil)
-
-(sml/setup)
-
 
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
@@ -145,7 +141,7 @@
  '(highlight-indent-guides-responsive (quote stack))
  '(package-selected-packages
    (quote
-    (projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -153,3 +149,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(set-face-attribute 'mode-line nil
+                    :foreground "Black"
+                    :background "Black"
+                    :box nil)
+
+(sml/setup)
+
