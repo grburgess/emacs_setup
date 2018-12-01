@@ -7,25 +7,6 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-;(add-to-list 'package-archives
-;             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
-
-(setq package-enable-at-startup nil) (package-initialize)
-
-;; (require 'smex) ; Not needed if you use package.el
-;;   (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
-;;                     ; when Smex is auto-initialized on its first run.
-
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-(require 'ido)
-(ido-mode t)
-
 ; Temporary files cluttering up the space are annoying.  Here's how we
 ; can deal with them -- create a directory in your home directory, and
 ; save to there instead!  No more random ~ files.
@@ -45,33 +26,49 @@
 
 
 
-					; LATEX
+;;;;;  PACKAGES
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(setq package-enable-at-startup nil) (package-initialize)
+
+
+
+
+;;;; SMEX and IDO
+
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+(require 'ido)
+(ido-mode t)
+
+;;;;;;;;;;;;;; LATEX
 (load "auctex.el" nil t t)
 
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
-
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 
 
 
 
+;;;;;;;;;;;; PYTHON
+
 (add-hook 'python-mode-hook (lambda ()
 			      (require 'sphinx-doc)
 			      (sphinx-doc-mode t)))
 
-
 ;; Activate python highlighting for PYX and PPL files
 (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
 (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
-
-
 (elpy-enable)
 
 (add-hook 'python-mode-hook 'elpy-mode)
@@ -79,6 +76,7 @@
 (remove-hook 'elpy-modules 'elpy-module-flymake)
 (add-hook 'elpy-mode-hook 'flycheck-mode))
 
+;;;;;;;; AC
 
 (require 'auto-complete)
 (setq ac-auto-start nil)
@@ -94,27 +92,12 @@
 
 ;;( setq tramp-default-method "ssh")
 
-;; (require 'origami)
-
-;; (define-key origami-mode-map (kbd "C-c f a") 'origami-toggle-all-nodes)
-;; (define-key origami-mode-map (kbd "C-c f o") 'origami-open-node)
-;; (define-key origami-mode-map (kbd "C-c f c") 'origami-close-node)
-;; (define-key origami-mode-map (kbd "C-c f r") 'origami-recursively-toggle-node)
-
-
-;(global-origami-mode 1)
-
-
 
  (mapc
  (lambda (p)
    (unless (package-installed-p p)
      (package-install p)))
  '(stan-mode stan-snippets))
-
-
-
-
 
 
 (add-hook 'after-init-hook 'global-color-identifiers-mode)
@@ -128,16 +111,6 @@
 
 
 (setq custom-safe-themes t)
-
-(add-to-list 'load-path              "~/.emacs_themes/alect-themes")
-(add-to-list 'custom-theme-load-path "~/.emacs_themes/alect-themes")
-
-
-
-
-
-
-
 
 (require 'smart-mode-line)
 ;; These two lines you really need.
