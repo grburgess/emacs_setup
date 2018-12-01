@@ -96,12 +96,16 @@
 ( setq tramp-default-method "ssh")
 
 
- (mapc
- (lambda (p)
-   (unless (package-installed-p p)
-     (package-install p)))
- '(stan-mode stan-snippets))
-
+ ;; (mapc
+ ;; (lambda (p)
+ ;;   (unless (package-installed-p p)
+ ;;     (package-install p)))
+;; '(stan-mode stan-snippets))
+(require 'yasnippet)
+(require 'stan-mode)
+(require 'stan-snippets)
+(yas-global-mode 1)
+(add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
 
 (add-hook 'after-init-hook 'global-color-identifiers-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -141,7 +145,7 @@
  '(highlight-indent-guides-responsive (quote stack))
  '(package-selected-packages
    (quote
-    (elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
