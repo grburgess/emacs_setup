@@ -171,8 +171,8 @@
        "* TODO %? |- (%:description) :BOOKMARK:\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
       ("s" "Selection from browser" entry (file "~/org/note.org")
        "* TODO %? :BOOKMARK:\n%(replace-regexp-in-string \"\n.*\" \"\" \"%i\")\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
-      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t:LOGBOOK:\n\t:END:\n\t:CREATED:%U\n\t:END:\n")
-      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n:LOGBOOK:\n\t:END:\n\t:CREATED:%U\n\t:END:") 
+      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n") 
 
       )
     )
