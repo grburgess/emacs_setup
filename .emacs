@@ -171,8 +171,8 @@
        "* TODO %? |- (%:description) :BOOKMARK:\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
       ("s" "Selection from browser" entry (file "~/org/note.org")
        "* TODO %? :BOOKMARK:\n%(replace-regexp-in-string \"\n.*\" \"\" \"%i\")\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
-      ("a" "Research Article" entry(file "~/org/publications.org") "* WRITING %^{Title}")
-      ("r" "Ref. Report" entry(file "~/org/publications.org") "* WRITING %^{Title}") 
+      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t:LOGBOOK:\n\t:END:\n\t:CREATED:%U\n\t:END:\n")
+      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n:LOGBOOK:\n\t:END:\n\t:CREATED:%U\n\t:END:") 
 
       )
     )
@@ -199,6 +199,7 @@
  '(org-agenda-files
    (quote
     ("~/org/projects.org" "~/org/notes.org" "~/org/publications.org")))
+ '(org-log-into-drawer t)
  '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
  '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
