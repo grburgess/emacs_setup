@@ -109,6 +109,7 @@
 
 (add-hook 'after-init-hook 'global-color-identifiers-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (setq highlight-indent-guides-method 'character)
 (setq highlight-indent-guides-responsive 'stack)
@@ -120,17 +121,68 @@
 (setq custom-safe-themes t)
 
 (require 'smart-mode-line)
-;; These two lines you really need.
-;; (setq sml/applytheme 'atom-one-dark)
-;; (setq powerline-arrow-shape 'curve)
-;; (setq powerline-default-separator-dir '(right . left))
-;; (setq sml/theme 'powerline)
+
 
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
+;; ORG
+
+
+
+;; (setq org-agenda-files
+;;       (mapcar 'abbreviate-file-name
+;; 	      (split-string
+;; 	                      (shell-command-to-string "find ~/org -name \"*.org\"") "\n")))
+
+(setq org-directory "~/org")
+(setq org-mobile-inbox-for-pull "~/org/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(setq org-todo-keywords
+      '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
+        ("CANCELED" . (:foreground "pink" :weight bold))
+	("WRITING" . (:foreground "red" :weight bold))
+	("RECIEVED" . (:foreground "red" :background "green" :weight bold))
+	("SUBMITTED" . (:foreground "blue"))
+	("ACCEPTED" . (:foreground "green"))
+	
+
+	))
+
+;;; ORG TEMPLATES
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map "\C-cc" 'org-capture)
+(setq org-capture-templates
+    '(("t" "Todo" entry (file "~/org/notes.org")
+       "* TODO %?\n%U" :empty-lines 1)
+      ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
+
+      ("P" "Research project" entry (file "~/org/projects.org")
+       "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
+      ("b" "Link from browser" entry (file "~/org/notes.org")
+       "* TODO %? |- (%:description) :BOOKMARK:\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
+      ("s" "Selection from browser" entry (file "~/org/note.org")
+       "* TODO %? :BOOKMARK:\n%(replace-regexp-in-string \"\n.*\" \"\" \"%i\")\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
+      ("a" "Research Article" entry(file "~/org/publications.org") "* WRITING %^{Title}")
+      ("r" "Ref. Report" entry(file "~/org/publications.org") "* WRITING %^{Title}") 
+
+      )
+    )
+
+
+
+
+
+
+(require 'org-trello)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -141,11 +193,19 @@
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
  '(highlight-indent-guides-auto-enabled nil)
+ '(highlight-indent-guides-auto-stack-even-face-perc 20)
  '(highlight-indent-guides-method (quote character))
  '(highlight-indent-guides-responsive (quote stack))
+ '(org-agenda-files
+   (quote
+    ("~/org/projects.org" "~/org/notes.org" "~/org/publications.org")))
+ '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
+ '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
