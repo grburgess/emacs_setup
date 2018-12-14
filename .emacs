@@ -43,6 +43,7 @@
 (require 'ido)
 (ido-mode t)
 
+(add-hook 'after-init-hook 'global-company-mode)
 ;;;;;;;;;;;;;; LATEX
 (load "auctex.el" nil t t)
 
