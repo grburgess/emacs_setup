@@ -1,4 +1,4 @@
-;; Added by Package.el.  This must come before configurations of
+1;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -32,6 +32,25 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (setq package-enable-at-startup nil) (package-initialize)
 
+(require 'sublimity)
+(require 'sublimity-scroll)
+;;(require 'sublimity-map) ;; experimental
+;; (require 'sublimity-attractive)
+(sublimity-mode 1)
+(setq sublimity-scroll-weight 10
+      sublimity-scroll-drift-length 5)
+
+;; (setq sublimity-map-size 20)
+;; (setq sublimity-map-fraction 0.3)
+;; (setq sublimity-map-text-scale -7)
+
+
+;; (add-hook 'sublimity-map-setup-hook
+;;           (lambda ()
+;;             (setq buffer-face-mode-face '(:family "Monospace"))
+;;             (buffer-face-mode)))
+
+;; (sublimity-map-set-delay 5)
 
 ;;;; SMEX and IDO
 
@@ -197,6 +216,7 @@
  '(highlight-indent-guides-auto-stack-even-face-perc 20)
  '(highlight-indent-guides-method (quote character))
  '(highlight-indent-guides-responsive (quote stack))
+ '(inhibit-startup-buffer-menu t)
  '(org-agenda-files
    (quote
     ("~/org/projects.org" "~/org/notes.org" "~/org/publications.org")))
@@ -205,7 +225,7 @@
  '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
 
 
 
