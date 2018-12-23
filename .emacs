@@ -1,4 +1,4 @@
-1;; Added by Package.el.  This must come before configurations of
+;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
@@ -34,11 +34,12 @@
 
 (require 'sublimity)
 (require 'sublimity-scroll)
-;;(require 'sublimity-map) ;; experimental
+(when (display-graphic-p) (require 'sublimity-map))
+
 (require 'sublimity-attractive)
 (sublimity-mode 1)
-(setq sublimity-scroll-weight 10
-      sublimity-scroll-drift-length 5)
+(setq sublimity-scroll-weight 5
+      sublimity-scroll-drift-length 10)
 
 ;; (setq sublimity-map-size 20)
 ;; (setq sublimity-map-fraction 0.3)
@@ -101,10 +102,23 @@
 
 ;;;;;;;; AC
 
-;; (require 'auto-complete)
-;; (setq ac-auto-start nil)
-;; (ac-set-trigger-key "TAB")
+(require 'auto-complete)
+(setq ac-auto-start nil)
+(ac-set-trigger-key "TAB")
 
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
+;; you can select the key you prefer to
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "C-c C-c SPC") 'ace-jump-line-mode)
+
+
+;; (global-set-key (kbd "C-:") 'avy-goto-char)
+;; (avy-setup-default)
+;; (global-set-key (kbd "C-c C-j") 'avy-resume)
 
 (require 'ssh)
 ;; (add-hook 'ssh-mode-hook
@@ -225,7 +239,7 @@
  '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
 
 
 
@@ -243,3 +257,4 @@
 
 (sml/setup)
 
+;(global-linum-mode 1)
