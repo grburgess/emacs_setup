@@ -40,7 +40,7 @@
 (sublimity-mode 1)
 (setq sublimity-scroll-weight 5
       sublimity-scroll-drift-length 10)
-
+(setq sublimity-attractive-centering-width 200)
 ;; (setq sublimity-map-size 20)
 ;; (setq sublimity-map-fraction 0.3)
 ;; (setq sublimity-map-text-scale -7)
@@ -64,8 +64,13 @@
 (ido-mode t)
 
 (add-hook 'after-init-hook 'global-company-mode)
+(add-to-list 'load-path "path/to/company-auctex.el")
+(require 'company-auctex)
+(company-auctex-init)
+
 ;;;;;;;;;;;;;; LATEX
 (load "auctex.el" nil t t)
+(require 'reftex)
 
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
@@ -102,9 +107,9 @@
 
 ;;;;;;;; AC
 
-(require 'auto-complete)
-(setq ac-auto-start nil)
-(ac-set-trigger-key "TAB")
+;(require 'auto-complete)
+;(setq ac-auto-start nil)
+;(ac-set-trigger-key "TAB")
 
 (autoload
   'ace-jump-mode
@@ -239,7 +244,7 @@
  '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
 
 
 
