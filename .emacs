@@ -40,7 +40,7 @@
 (sublimity-mode 1)
 (setq sublimity-scroll-weight 5
       sublimity-scroll-drift-length 10)
-(setq sublimity-attractive-centering-width 200)
+(setq sublimity-attractive-centering-width 170)
 ;; (setq sublimity-map-size 20)
 ;; (setq sublimity-map-fraction 0.3)
 ;; (setq sublimity-map-text-scale -7)
@@ -75,12 +75,15 @@
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
+
+(add-hook 'LaTeX-mode-hook 'reftex-mode)
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
-
+(setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
 
 
 
