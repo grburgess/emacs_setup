@@ -78,6 +78,8 @@
 
 (add-hook 'LaTeX-mode-hook 'reftex-mode)
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'TeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
+(add-hook 'find-file-hook 'TeX-fold-buffer t)
 
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
@@ -230,6 +232,32 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-fold-macro-spec-list
+   (quote
+    (("[c]"
+      ("citep" "citet"))
+     ("[f]"
+      ("footnote" "marginpar"))
+     ("[c]"
+      ("cite"))
+     ("[l]"
+      ("label"))
+     ("[r]"
+      ("ref" "pageref" "eqref"))
+     ("[i]"
+      ("index" "glossary"))
+     ("[1]:||*"
+      ("item"))
+     ("..."
+      ("dots"))
+     ("(C)"
+      ("copyright"))
+     ("(R)"
+      ("textregistered"))
+     ("TM"
+      ("texttrademark"))
+     (1
+      ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup")))))
  '(custom-enabled-themes (quote (kaolin-fusion)))
  '(elpy-modules
    (quote
