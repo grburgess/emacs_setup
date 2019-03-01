@@ -7,6 +7,8 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
+(set-frame-font "Hack-14" nil t)
+
 ; Temporary files cluttering up the space are annoying.  Here's how we
 ; can deal with them -- create a directory in your home directory, and
 ; save to there instead!  No more random ~ files.
@@ -33,13 +35,13 @@
 (setq package-enable-at-startup nil) (package-initialize)
 
 (require 'sublimity)
-(require 'sublimity-scroll)
-(when (display-graphic-p) (require 'sublimity-map))
+;; (require 'sublimity-scroll)
+;; (when (display-graphic-p) (require 'sublimity-map))
 
 (require 'sublimity-attractive)
 (sublimity-mode 1)
-(setq sublimity-scroll-weight 5
-      sublimity-scroll-drift-length 10)
+;; (setq sublimity-scroll-weight 5
+;;       sublimity-scroll-drift-length 10)
 (setq sublimity-attractive-centering-width 170)
 ;; (setq sublimity-map-size 20)
 ;; (setq sublimity-map-fraction 0.3)
@@ -275,7 +277,7 @@
  '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
 
 
 
