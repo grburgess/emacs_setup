@@ -2,12 +2,22 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-
+(setq debug-on-error t)
 
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
 (set-frame-font "Hack-14" nil t)
+
+
+(defun xah-get-fullpath (@file-relative-path)
+  
+  (concat (file-name-directory (or load-file-name buffer-file-name)) @file-relative-path)
+
+  )
+
+
+
 
 ; Temporary files cluttering up the space are annoying.  Here's how we
 ; can deal with them -- create a directory in your home directory, and
@@ -34,103 +44,50 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (setq package-enable-at-startup nil) (package-initialize)
 
-(require 'sublimity)
-;; (require 'sublimity-scroll)
-;; (when (display-graphic-p) (require 'sublimity-map))
-
-(require 'sublimity-attractive)
-(sublimity-mode 1)
-;; (setq sublimity-scroll-weight 5
-;;       sublimity-scroll-drift-length 10)
-(setq sublimity-attractive-centering-width 170)
-;; (setq sublimity-map-size 20)
-;; (setq sublimity-map-fraction 0.3)
-;; (setq sublimity-map-text-scale -7)
 
 
-;; (add-hook 'sublimity-map-setup-hook
-;;           (lambda ()
-;;             (setq buffer-face-mode-face '(:family "Monospace"))
-;;             (buffer-face-mode)))
+;;;; email!
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
 
-;; (sublimity-map-set-delay 5)
+(require 'mu4e)
+
+(load (xah-get-fullpath "~/coding/emacs_setup/mail.el"))
+
 
 ;;;; SMEX and IDO
 
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(load (xah-get-fullpath "~/coding/emacs_setup/complete.el"))
 
-(require 'ido)
-(ido-mode t)
-
-(add-hook 'after-init-hook 'global-company-mode)
-(add-to-list 'load-path "path/to/company-auctex.el")
-(require 'company-auctex)
-(company-auctex-init)
 
 ;;;;;;;;;;;;;; LATEX
-(load "auctex.el" nil t t)
-(require 'reftex)
 
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
-
-(add-hook 'LaTeX-mode-hook 'reftex-mode)
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
-(add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
-
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(setq reftex-plug-into-AUCTeX t)
-(setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
-
-
+(load (xah-get-fullpath "~/coding/emacs_setup/latex.el"))
 
 ;;;;;;;;;;;; PYTHON
 
-(add-hook 'python-mode-hook (lambda ()
-			      (require 'sphinx-doc)
-			      (sphinx-doc-mode t)))
-
-;; Activate python highlighting for PYX and PPL files
-(add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
-(add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
-
-(elpy-enable)
-
-(define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
-(define-key global-map (kbd "C-c o") 'iedit-mode)
+(load (xah-get-fullpath "~/coding/emacs_setup/python_setup.el"))
 
 
-(add-hook 'python-mode-hook 'elpy-mode)
-(with-eval-after-load 'elpy
-(remove-hook 'elpy-modules 'elpy-module-flymake)
-(add-hook 'elpy-mode-hook 'flycheck-mode))
 
-;;;;;;;; AC
+;; ORG
 
-;(require 'auto-complete)
-;(setq ac-auto-start nil)
-;(ac-set-trigger-key "TAB")
-
-(autoload
-  'ace-jump-mode
-  "ace-jump-mode"
-  "Emacs quick move minor mode"
-  t)
-;; you can select the key you prefer to
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-(define-key global-map (kbd "C-c C-c SPC") 'ace-jump-line-mode)
+(load (xah-get-fullpath "~/coding/emacs_setup/org_setup.el"))
 
 
-;; (global-set-key (kbd "C-:") 'avy-goto-char)
-;; (avy-setup-default)
-;; (global-set-key (kbd "C-c C-j") 'avy-resume)
+
+
+;;;;;;;;;;; DISPLAY
+
+
+(load (xah-get-fullpath "~/coding/emacs_setup/view.el"))
+
+
+
+;; (set-face-background 'highlight-indentation-face "#000000")
+;; (set-face-background 'highlight-indentation-current-column-face "#000000")
+
+
+(setq custom-safe-themes t)
 
 (require 'ssh)
 ;; (add-hook 'ssh-mode-hook
@@ -142,93 +99,6 @@
 ( setq tramp-default-method "ssh")
 
 
- ;; (mapc
- ;; (lambda (p)
- ;;   (unless (package-installed-p p)
- ;;     (package-install p)))
-;; '(stan-mode stan-snippets))
-(require 'yasnippet)
-(require 'stan-mode)
-(require 'stan-snippets)
-(yas-global-mode 1)
-(add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
-
-(add-hook 'after-init-hook 'global-color-identifiers-mode)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(setq highlight-indent-guides-method 'character)
-(setq highlight-indent-guides-responsive 'stack)
-
-;; (set-face-background 'highlight-indentation-face "#000000")
-;; (set-face-background 'highlight-indentation-current-column-face "#000000")
-
-
-(setq custom-safe-themes t)
-
-(require 'smart-mode-line)
-
-
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
-
-;; ORG
-
-
-
-;; (setq org-agenda-files
-;;       (mapcar 'abbreviate-file-name
-;; 	      (split-string
-;; 	                      (shell-command-to-string "find ~/org -name \"*.org\"") "\n")))
-
-(setq org-directory "~/org")
-(setq org-mobile-inbox-for-pull "~/org/flagged.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(setq org-todo-keywords
-      '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
-
-(setq org-todo-keyword-faces
-      '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
-        ("CANCELED" . (:foreground "pink" :weight bold))
-	("WRITING" . (:foreground "red" :weight bold))
-	("RECIEVED" . (:foreground "red" :background "green" :weight bold))
-	("SUBMITTED" . (:foreground "blue"))
-	("ACCEPTED" . (:foreground "green"))
-	
-
-	))
-
-;;; ORG TEMPLATES
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(define-key global-map "\C-cc" 'org-capture)
-(setq org-capture-templates
-    '(("t" "Todo" entry (file "~/org/notes.org")
-       "* TODO %?\n%U" :empty-lines 1)
-      ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
-
-      ("P" "Research project" entry (file "~/org/projects.org")
-       "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
-      ("b" "Link from browser" entry (file "~/org/notes.org")
-       "* TODO %? |- (%:description) :BOOKMARK:\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
-      ("s" "Selection from browser" entry (file "~/org/note.org")
-       "* TODO %? :BOOKMARK:\n%(replace-regexp-in-string \"\n.*\" \"\" \"%i\")\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
-      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
-      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n") 
-
-      )
-    )
-
-
-
-
-
-
-(require 'org-trello)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -277,7 +147,7 @@
  '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
 
 
 
@@ -286,13 +156,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:background nil)))))
+ )
 
-(set-face-attribute 'mode-line nil
-                    :foreground "Black"
-                    :background "Black"
-                    :box nil)
-
-(sml/setup)
 
 ;(global-linum-mode 1)
