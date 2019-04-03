@@ -16,6 +16,11 @@
 
   )
 
+;; Disable the splash screen (to enable it agin, replace the t with 0)
+(setq inhibit-splash-screen t)
+
+
+
 
 
 
@@ -43,6 +48,18 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (setq package-enable-at-startup nil) (package-initialize)
+
+
+;;;;; editing tools 
+
+(load (xah-get-fullpath "~/coding/emacs_setup/editing.el"))
+
+
+
+;;;;; custom keybinds
+
+(load (xah-get-fullpath "~/coding/emacs_setup/custom_keys.el"))
+
 
 
 
@@ -76,27 +93,35 @@
 
 
 
-;;;;;;;;;;; DISPLAY
 
 
-(load (xah-get-fullpath "~/coding/emacs_setup/view.el"))
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
 
-;; (set-face-background 'highlight-indentation-face "#000000")
-;; (set-face-background 'highlight-indentation-current-column-face "#000000")
+(add-hook 'after-init-hook 'global-color-identifiers-mode)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
+(require 'highlight-indent-guides)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(setq highlight-indent-guides-auto-enabled nil)
+(setq highlight-indent-guides-method 'character)
+(setq highlight-indent-guides-responsive 'stack)
 
 (setq custom-safe-themes t)
 
-(require 'ssh)
-;; (add-hook 'ssh-mode-hook
-;; 	  (lambda ()
-;; 	    (setq ssh-directory-tracking-mode t)
-;;                 (shell-dirtrack-mode t)
-;;                 (setq dirtrackp nil)))
+;; (require 'ssh)
+;; ;; (add-hook 'ssh-mode-hook
+;; ;; 	  (lambda ()
+;; ;; 	    (setq ssh-directory-tracking-mode t)
+;; ;;                 (shell-dirtrack-mode t)
+;; ;;                 (setq dirtrackp nil)))
 
-( setq tramp-default-method "ssh")
+;; ( setq tramp-default-method "ssh")
+
+(load (xah-get-fullpath "~/coding/emacs_setup/view.el"))
 
 
 (custom-set-variables
@@ -130,33 +155,65 @@
       ("texttrademark"))
      (1
       ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup")))))
- '(custom-enabled-themes (quote (kaolin-fusion)))
+ '(custom-enabled-themes (quote (wilson)))
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
- '(highlight-indent-guides-auto-enabled nil)
- '(highlight-indent-guides-auto-stack-even-face-perc 20)
- '(highlight-indent-guides-method (quote character))
- '(highlight-indent-guides-responsive (quote stack))
  '(inhibit-startup-buffer-menu t)
+ '(linum-format " %7i ")
  '(org-agenda-files
    (quote
     ("~/org/projects.org" "~/org/notes.org" "~/org/publications.org")))
  '(org-log-into-drawer t)
- '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
- '(org-trello-files (quote ("~/org/stew.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex))))
+    (smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
+ '(pos-tip-background-color "#3D4E54")
+ '(pos-tip-foreground-color "#C1CADE")
+ '(send-mail-function (quote smtpmail-send-it))
+ '(xterm-color-names
+   ["#404B5C" "#B26BB8" "#76A8A0" "#C79474" "#6886A6" "#515275" "#7D8AA8" "#8C92A1"])
+ '(xterm-color-names-bright
+   ["#666B88" "#C27CBE" "#7FBAB0" "#9FC7AD" "#76A0C4" "#898EC4" "#A4A4BD" "#858B99"]))
+ 
+
+
+;;;;;;;;;;; DISPLAY
+;; (add-to-list 'load-path "~/.emacs.d/vendor/emacs-powerline")
+;; (require 'powerline)
 
 
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; (setq powerline-arrow-shape 'arrow14)   ;; give your mode-line curves
+
+
+;; (setq powerline-color1 "grey10")
+;; (setq powerline-color2 "forestgreen")
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(mode-line ((t (:foreground "#030303" :background "#bdbdbd" :box nil))))
+;;  '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
+
+
+(setq powerline-arrow-shape 'curve)
+(setq powerline-default-separator-dir '(right . left))
+(setq sml/theme 'powerline)
+
+
+;; (set-face-attribute 'mode-line nil
+;;                     :foreground "Black"
+;;                     :background "OliveDrab3"
+;;                     :box nil)
+
+
+(sml/setup)
+
+
+
 
 
 ;(global-linum-mode 1)
+

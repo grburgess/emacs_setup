@@ -1,5 +1,5 @@
 (load "auctex.el" nil t t)
-(with-eval-after-load 'auxtex
+(with-eval-after-load 'latex
 
   
   (require 'reftex)
