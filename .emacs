@@ -7,8 +7,12 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
-(set-frame-font "Hack-14" nil t)
 
+
+;; This is only needed once, near the top of the file
+;; (eval-when-compile
+
+;;   (require 'use-package))
 
 (defun xah-get-fullpath (@file-relative-path)
   
@@ -53,6 +57,8 @@
 ;;;;; editing tools 
 
 (load (xah-get-fullpath "~/coding/emacs_setup/editing.el"))
+
+(load (xah-get-fullpath "~/coding/emacs_setup/git_setup.el"))
 
 
 
@@ -155,7 +161,11 @@
       ("texttrademark"))
      (1
       ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup")))))
- '(custom-enabled-themes (quote (wilson)))
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#303030" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
+ '(custom-enabled-themes (quote (kaolin-galaxy)))
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
@@ -167,10 +177,78 @@
  '(org-log-into-drawer t)
  '(package-selected-packages
    (quote
-    (smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
+    (shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
  '(pos-tip-background-color "#3D4E54")
  '(pos-tip-foreground-color "#C1CADE")
  '(send-mail-function (quote smtpmail-send-it))
+ '(shell-pop-shell-type
+   (quote
+    ("terminal" "*terminal*"
+     (lambda nil
+       (term shell-pop-term-shell)))))
+ '(shell-pop-universal-key "C-t")
+ '(sml/mode-width (quote full))
+ '(sml/pos-id-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active1)
+     (:eval
+      (propertize " "
+		  (quote display)
+		  (funcall
+		   (intern
+		    (format "powerline-%s-%s"
+			    (powerline-current-separator)
+			    (car powerline-default-separator-dir)))
+		   (quote powerline-active1)
+		   (quote powerline-active2))))
+     (:propertize " " face powerline-active2))))
+ '(sml/pos-minor-modes-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active1)
+     (:eval
+      (propertize " "
+		  (quote display)
+		  (funcall
+		   (intern
+		    (format "powerline-%s-%s"
+			    (powerline-current-separator)
+			    (cdr powerline-default-separator-dir)))
+		   (quote powerline-active1)
+		   (quote sml/global))))
+     (:propertize " " face sml/global))))
+ '(sml/pre-id-separator
+   (quote
+    (""
+     (:propertize " " face sml/global)
+     (:eval
+      (propertize " "
+		  (quote display)
+		  (funcall
+		   (intern
+		    (format "powerline-%s-%s"
+			    (powerline-current-separator)
+			    (car powerline-default-separator-dir)))
+		   (quote sml/global)
+		   (quote powerline-active1))))
+     (:propertize " " face powerline-active1))))
+ '(sml/pre-minor-modes-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active2)
+     (:eval
+      (propertize " "
+		  (quote display)
+		  (funcall
+		   (intern
+		    (format "powerline-%s-%s"
+			    (powerline-current-separator)
+			    (cdr powerline-default-separator-dir)))
+		   (quote powerline-active2)
+		   (quote powerline-active1))))
+     (:propertize " " face powerline-active1))))
+ '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
  '(xterm-color-names
    ["#404B5C" "#B26BB8" "#76A8A0" "#C79474" "#6886A6" "#515275" "#7D8AA8" "#8C92A1"])
  '(xterm-color-names-bright
@@ -179,35 +257,13 @@
 
 
 ;;;;;;;;;;; DISPLAY
-;; (add-to-list 'load-path "~/.emacs.d/vendor/emacs-powerline")
-;; (require 'powerline)
-
-
-
-;; (setq powerline-arrow-shape 'arrow14)   ;; give your mode-line curves
-
-
-;; (setq powerline-color1 "grey10")
-;; (setq powerline-color2 "forestgreen")
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(mode-line ((t (:foreground "#030303" :background "#bdbdbd" :box nil))))
-;;  '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
 
 
 (setq powerline-arrow-shape 'curve)
 (setq powerline-default-separator-dir '(right . left))
 (setq sml/theme 'powerline)
-
-
-;; (set-face-attribute 'mode-line nil
-;;                     :foreground "Black"
-;;                     :background "OliveDrab3"
-;;                     :box nil)
-
+(setq sml/shorten-directory t)
+(setq sml/shorten-modes t)
 
 (sml/setup)
 
@@ -217,3 +273,17 @@
 
 ;(global-linum-mode 1)
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil))))
+ '(highlight-indent-guides-character-face ((t (:foreground "color-52"))))
+ '(highlight-indent-guides-even-face ((t (:background "#303035"))))
+ '(highlight-indent-guides-odd-face ((t (:background "color-19"))))
+ '(sml/folder ((t (:inherit sml/global :background "gray25" :foreground "color-105" :weight normal))))
+ '(sml/modes ((t (:inherit sml/global :background "gray12" :foreground "color-33"))))
+ '(sml/position-percentage ((t (:inherit sml/prefix :background "gray12" :foreground "color-48" :weight normal))))
+ '(sml/vc ((t (:inherit sml/git :background "#222225" :foreground "brightred"))))
+ '(sml/vc-edited ((t (:inherit sml/prefix :background "gray12" :foreground "color-46")))))
