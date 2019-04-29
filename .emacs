@@ -2,10 +2,10 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(setq debug-on-error t)
+;;(setq debug-on-error t)
 
 (menu-bar-mode 0)
-(scroll-bar-mode 0)
+;;(scroll-bar-mode 0)
 
 
 
@@ -72,9 +72,9 @@
 ;;;; email!
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
 
-(require 'mu4e)
+;; (require 'mu4e)
 
-(load (xah-get-fullpath "~/coding/emacs_setup/mail.el"))
+;; (load (xah-get-fullpath "~/coding/emacs_setup/mail.el"))
 
 
 ;;;; SMEX and IDO
@@ -92,6 +92,11 @@
 
 
 
+
+;; SPOTIFY
+
+;; (load (xah-get-fullpath "~/coding/emacs_setup/spotify_setup.el"))
+
 ;; ORG
 
 (load (xah-get-fullpath "~/coding/emacs_setup/org_setup.el"))
@@ -101,9 +106,9 @@
 
 
 
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; (projectile-mode +1)
+;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
 
@@ -114,7 +119,7 @@
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (setq highlight-indent-guides-auto-enabled nil)
 (setq highlight-indent-guides-method 'character)
-(setq highlight-indent-guides-responsive 'stack)
+;(setq highlight-indent-guides-responsive 'stack)
 
 (setq custom-safe-themes t)
 
@@ -177,16 +182,17 @@
  '(org-log-into-drawer t)
  '(package-selected-packages
    (quote
-    (shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
+    (spotify shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
  '(pos-tip-background-color "#3D4E54")
  '(pos-tip-foreground-color "#C1CADE")
+ '(pyvenv-mode t)
  '(send-mail-function (quote smtpmail-send-it))
  '(shell-pop-shell-type
    (quote
     ("terminal" "*terminal*"
      (lambda nil
        (term shell-pop-term-shell)))))
- '(shell-pop-universal-key "C-t")
+ ;'(shell-pop-universal-key "C-t")
  '(sml/mode-width (quote full))
  '(sml/pos-id-separator
    (quote
@@ -279,9 +285,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
- '(highlight-indent-guides-character-face ((t (:foreground "color-52"))))
+ '(highlight-indent-guides-character-face ((t (:foreground "color-99"))))
  '(highlight-indent-guides-even-face ((t (:background "#303035"))))
- '(highlight-indent-guides-odd-face ((t (:background "color-19"))))
+ '(highlight-indent-guides-odd-face ((t (:background "color-16"))))
  '(sml/folder ((t (:inherit sml/global :background "gray25" :foreground "color-105" :weight normal))))
  '(sml/modes ((t (:inherit sml/global :background "gray12" :foreground "color-33"))))
  '(sml/position-percentage ((t (:inherit sml/prefix :background "gray12" :foreground "color-48" :weight normal))))
