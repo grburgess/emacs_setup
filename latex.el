@@ -16,6 +16,7 @@
   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
   (setq reftex-plug-into-AUCTeX t)
   (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
 

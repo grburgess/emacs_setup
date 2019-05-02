@@ -26,9 +26,14 @@
 ;; you can select the key you prefer to
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 (define-key global-map (kbd "C-c C-c SPC") 'ace-jump-line-mode)
+;;(define-key global-map (kbd "C-o") 'ace-jump-mode)
+;; (define-key global-map (kbd "C-o SPC") 'ace-jump-line-mode)
+
+
+
 
 
 (require 'yasnippet)
-;; (global-set-key (kbd "C-:") 'avy-goto-char)
+;; ;; (global-set-key (kbd "C-:") 'avy-goto-char)
 ;; (avy-setup-default)
 ;; (global-set-key (kbd "C-c C-j") 'avy-resume)

@@ -8,7 +8,6 @@
 ;;(scroll-bar-mode 0)
 
 
-
 ;; This is only needed once, near the top of the file
 ;; (eval-when-compile
 
@@ -52,6 +51,12 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (setq package-enable-at-startup nil) (package-initialize)
+
+
+
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
 
 
 ;;;;; editing tools 
@@ -182,7 +187,7 @@
  '(org-log-into-drawer t)
  '(package-selected-packages
    (quote
-    (spotify shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
+    (magit-popup neotree browse-kill-ring spotify shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
  '(pos-tip-background-color "#3D4E54")
  '(pos-tip-foreground-color "#C1CADE")
  '(pyvenv-mode t)
@@ -192,7 +197,6 @@
     ("terminal" "*terminal*"
      (lambda nil
        (term shell-pop-term-shell)))))
- ;'(shell-pop-universal-key "C-t")
  '(sml/mode-width (quote full))
  '(sml/pos-id-separator
    (quote
