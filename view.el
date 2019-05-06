@@ -4,8 +4,8 @@
 
 (setq sublimity-attractive-centering-width 110)
 
-(require 'sublimity-scroll)
+;; (require 'sublimity-scroll)
 
-(setq sublimity-scroll-weight 10
-      sublimity-scroll-drift-length 5)
+;; (setq sublimity-scroll-weight 10
+;;       sublimity-scroll-drift-length 5)
 
