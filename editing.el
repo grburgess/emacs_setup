@@ -1,7 +1,7 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 
-
+;; define pasting to osx 
 (defun copy-from-osx ()
 (shell-command-to-string "pbpaste"))
 
