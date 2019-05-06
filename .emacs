@@ -104,6 +104,9 @@
 (load (xah-get-fullpath "~/coding/emacs_setup/org_setup.el"))
 
 
+(load (xah-get-fullpath "~/coding/emacs_setup/tablist_setup.el"))
+
+
 
 
 
@@ -172,57 +175,13 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#303030" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
- '(custom-enabled-themes (quote (kaolin-aurora)))
- '(diary-entry-marker (quote font-lock-variable-name-face))
+ '(cursor-type (quote bar))
+ '(custom-enabled-themes (quote (smart-mode-line-dark)))
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
- '(emms-mode-line-icon-image-cache
-   (quote
-    (image :type xpm :ascent center :data "/* XPM */
-static char *note[] = {
-/* width height num_colors chars_per_pixel */
-\"    10   11        2            1\",
-/* colors */
-\". c #1fb3b3\",
-\"# c None s None\",
-/* pixels */
-\"###...####\",
-\"###.#...##\",
-\"###.###...\",
-\"###.#####.\",
-\"###.#####.\",
-\"#...#####.\",
-\"....#####.\",
-\"#..######.\",
-\"#######...\",
-\"######....\",
-\"#######..#\" };")))
- '(fci-rule-color "#383838")
- '(gnus-logo-colors (quote ("#2fdbde" "#c0c0c0")) t)
- '(gnus-mode-line-image-cache
-   (quote
-    (image :type xpm :ascent center :data "/* XPM */
-static char *gnus-pointer[] = {
-/* width height num_colors chars_per_pixel */
-\"    18    13        2            1\",
-/* colors */
-\". c #1fb3b3\",
-\"# c None s None\",
-/* pixels */
-\"##################\",
-\"######..##..######\",
-\"#####........#####\",
-\"#.##.##..##...####\",
-\"#...####.###...##.\",
-\"#..###.######.....\",
-\"#####.########...#\",
-\"###########.######\",
-\"####.###.#..######\",
-\"######..###.######\",
-\"###....####.######\",
-\"###..######.######\",
-\"###########.######\" };")) t)
+ '(fci-rule-color "#eeeeee")
+ '(frame-background-mode (quote dark))
  '(inhibit-startup-buffer-menu t)
  '(linum-format " %7i ")
  '(org-agenda-files
@@ -231,7 +190,8 @@ static char *gnus-pointer[] = {
  '(org-log-into-drawer t)
  '(package-selected-packages
    (quote
-    (alect-themes cyberpunk-theme magit-popup neotree browse-kill-ring spotify shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
+    (alect-themes apropospriate-theme arc-dark-theme atom-one-dark-theme darktooth-theme eziam-theme foggy-night-theme minimal-theme mood-one-theme nimbus-theme nova-theme overcast-theme seti-theme srcery-theme tablist magit-popup neotree browse-kill-ring spotify shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
+ '(pdf-view-midnight-colors (quote ("#eeeeee" . "#000000")))
  '(pos-tip-background-color "#3D4E54")
  '(pos-tip-foreground-color "#C1CADE")
  '(pyvenv-mode t)
@@ -303,6 +263,7 @@ static char *gnus-pointer[] = {
 		   (quote powerline-active1))))
      (:propertize " " face powerline-active1))))
  '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
+<<<<<<< HEAD
  '(vc-annotate-background "#222222")
  '(vc-annotate-color-map
    (quote
@@ -325,6 +286,46 @@ static char *gnus-pointer[] = {
      (340 . "#94bff3")
      (360 . "#e353b9"))))
  '(vc-annotate-very-old-color "#e353b9")
+=======
+ '(tetris-x-colors
+   [[229 192 123]
+    [97 175 239]
+    [209 154 102]
+    [224 108 117]
+    [152 195 121]
+    [198 120 221]
+    [86 182 194]])
+ '(vc-annotate-background "#eeeeee")
+ '(vc-annotate-color-map
+   (\`
+    ((20 \, "#DF8C8C")
+     (40 \, "#dfdf8f8f8787")
+     (60 \, "#e7e797978787")
+     (80 \, "#efef9f9f8787")
+     (100 \, "#f7f7a7a78787")
+     (120 \, "#F2C38F")
+     (140 \, "#f7f7b7b78787")
+     (160 \, "#efefbfbf8787")
+     (180 \, "#e7e7c7c78787")
+     (200 \, "#dfdfcfcf8787")
+     (220 \, "#DADA93")
+     (240 \, "#cfcfd7d78787")
+     (260 \, "#c7c7d7d78787")
+     (280 \, "#bfbfd7d78787")
+     (300 \, "#b7b7d7d78787")
+     (320 \, "#A8CE93")
+     (340 \, "#a7a7cfcf9797")
+     (360 \, "#9f9fc7c7a7a7")
+     (380 \, "#9797bfbfb7b7")
+     (400 \, "#8f8fb7b7c7c7")
+     (420 \, "#83AFE5")
+     (440 \, "#8787a7a7d7d7")
+     (460 \, "#87879f9fd7d7")
+     (480 \, "#87879797d7d7")
+     (500 \, "#87878f8fd7d7")
+     (520 \, "#9A93E1"))))
+ '(vc-annotate-very-old-color "#6c6c6c6cacac")
+>>>>>>> 40feb7481d069f29274691e6c2517786d4d640b2
  '(xterm-color-names
    ["#404B5C" "#B26BB8" "#76A8A0" "#C79474" "#6886A6" "#515275" "#7D8AA8" "#8C92A1"])
  '(xterm-color-names-bright

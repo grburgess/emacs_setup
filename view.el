@@ -6,6 +6,6 @@
 
 (require 'sublimity-scroll)
 
-(setq sublimity-scroll-weight 5
-      sublimity-scroll-drift-length 10)
+(setq sublimity-scroll-weight 10
+      sublimity-scroll-drift-length 5)
 
