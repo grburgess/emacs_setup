@@ -257,9 +257,6 @@ static char *gnus-pointer[] = {
  '(inhibit-startup-buffer-menu t)
  '(linum-format " %7i ")
  '(magit-diff-use-overlays nil)
- '(org-agenda-files
-   (quote
-    ("~/org/projects.org" "~/org/notes.org" "~/org/publications.org")))
  '(org-log-into-drawer t)
  '(package-selected-packages
    (quote

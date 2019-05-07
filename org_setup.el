@@ -7,6 +7,8 @@
  (add-hook 'org-mode-hook 'turn-on-auto-fill)
 
 (setq org-directory "~/org")
+(setq org-agenda-files (list "~/org/"))
+(setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
 (setq org-mobile-inbox-for-pull "~/org/flagged.org")
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
