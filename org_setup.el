@@ -1,9 +1,10 @@
-
-
 ;; (setq org-agenda-files
 ;;       (mapcar 'abbreviate-file-name
 ;; 	      (split-string
 ;; 	                      (shell-command-to-string "find ~/org -name \"*.org\"") "\n")))
+
+
+ (add-hook 'org-mode-hook 'turn-on-auto-fill)
 
 (setq org-directory "~/org")
 (setq org-mobile-inbox-for-pull "~/org/flagged.org")
@@ -13,6 +14,17 @@
 (global-set-key "\C-ca" 'org-agenda)
 (setq org-todo-keywords
       '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
+
+
+
+;(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
+;(sequence "⚑ WAITING(w)" "|")
+;(sequence "|" "✘ CANCELED(c)")))
+
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
 
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
@@ -28,20 +40,34 @@
 ;;; ORG TEMPLATES
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (define-key global-map "\C-cc" 'org-capture)
+
+
 (setq org-capture-templates
     '(("t" "Todo" entry (file "~/org/notes.org")
        "* TODO %?\n%U" :empty-lines 1)
       ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
 
+
       ("P" "Research project" entry (file "~/org/projects.org")
        "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
+
+
       ("b" "Link from browser" entry (file "~/org/notes.org")
        "* TODO %? |- (%:description) :BOOKMARK:\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
+
       ("s" "Selection from browser" entry (file "~/org/note.org")
        "* TODO %? :BOOKMARK:\n%(replace-regexp-in-string \"\n.*\" \"\" \"%i\")\n:PROPERTIES:\n:CREATED: %U\n:Source: %:link\n:END:\n%i\n" :clock-in t :clock-resume t)
-      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
-      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n") 
 
+      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+      ("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+      
+      ("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description} %^g \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n") 
+
+
+      
       )
     )
 

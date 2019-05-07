@@ -58,7 +58,7 @@
 
 ;;;;; editing tools 
 
-;(load (xah-get-fullpath "~/coding/emacs_setup/editing.el"))
+(load (xah-get-fullpath "~/coding/emacs_setup/editing.el"))
 
 (load (xah-get-fullpath "~/coding/emacs_setup/git_setup.el"))
 
@@ -173,24 +173,97 @@
       ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup")))))
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
+ '(ansi-color-map (ansi-color-make-color-map) t)
  '(ansi-color-names-vector
    ["#303030" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
+ '(ansi-term-color-vector
+   [unspecified "#14191f" "#d15120" "#81af34" "#deae3e" "#7e9fc9" "#a878b5" "#7e9fc9" "#dcdddd"])
+ '(background-color "#202020")
+ '(background-mode dark)
+ '(beacon-color "#ffff2faf97d7")
+ '(compilation-message-face (quote default))
+ '(cursor-color "#cccccc")
  '(cursor-type (quote bar))
- '(custom-enabled-themes (quote (smart-mode-line-dark)))
+ '(custom-enabled-themes (quote (calmer-forest)))
+ '(diary-entry-marker (quote font-lock-variable-name-face))
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
+ '(emms-mode-line-icon-image-cache
+   (quote
+    (image :type xpm :ascent center :data "/* XPM */
+static char *note[] = {
+/* width height num_colors chars_per_pixel */
+\"    10   11        2            1\",
+/* colors */
+\". c #1ba1a1\",
+\"# c None s None\",
+/* pixels */
+\"###...####\",
+\"###.#...##\",
+\"###.###...\",
+\"###.#####.\",
+\"###.#####.\",
+\"#...#####.\",
+\"....#####.\",
+\"#..######.\",
+\"#######...\",
+\"######....\",
+\"#######..#\" };")))
+ '(evil-emacs-state-cursor (quote ("#E57373" hbar)))
+ '(evil-insert-state-cursor (quote ("#E57373" bar)))
+ '(evil-normal-state-cursor (quote ("#FFEE58" box)))
+ '(evil-visual-state-cursor (quote ("#C5E1A5" box)))
+ '(fci-rule-character-color "#192028")
  '(fci-rule-color "#eeeeee")
+ '(foreground-color "#cccccc")
  '(frame-background-mode (quote dark))
+ '(gnus-logo-colors (quote ("#4c8383" "#bababa")) t)
+ '(gnus-mode-line-image-cache
+   (quote
+    (image :type xpm :ascent center :data "/* XPM */
+static char *gnus-pointer[] = {
+/* width height num_colors chars_per_pixel */
+\"    18    13        2            1\",
+/* colors */
+\". c #1ba1a1\",
+\"# c None s None\",
+/* pixels */
+\"##################\",
+\"######..##..######\",
+\"#####........#####\",
+\"#.##.##..##...####\",
+\"#...####.###...##.\",
+\"#..###.######.....\",
+\"#####.########...#\",
+\"###########.######\",
+\"####.###.#..######\",
+\"######..###.######\",
+\"###....####.######\",
+\"###..######.######\",
+\"###########.######\" };")) t)
+ '(highlight-changes-colors (quote ("#ff8eff" "#ab7eff")))
+ '(highlight-indent-guides-auto-enabled nil)
+ '(highlight-symbol-colors
+   (quote
+    ("#FFEE58" "#C5E1A5" "#80DEEA" "#64B5F6" "#E1BEE7" "#FFCC80")))
+ '(highlight-symbol-foreground-color "#E0E0E0")
+ '(highlight-tail-colors (quote (("#ffff2faf97d7" . 0) ("#424242" . 100))))
+ '(hl-paren-colors
+   (quote
+    ("#B9F" "#B8D" "#B7B" "#B69" "#B57" "#B45" "#B33" "#B11")))
+ '(ibuffer-deletion-face (quote diredp-deletion-file-name))
+ '(ibuffer-marked-face (quote diredp-flag-mark))
  '(inhibit-startup-buffer-menu t)
  '(linum-format " %7i ")
+ '(magit-diff-use-overlays nil)
  '(org-agenda-files
    (quote
     ("~/org/projects.org" "~/org/notes.org" "~/org/publications.org")))
  '(org-log-into-drawer t)
  '(package-selected-packages
    (quote
-    (alect-themes apropospriate-theme arc-dark-theme atom-one-dark-theme darktooth-theme eziam-theme foggy-night-theme minimal-theme mood-one-theme nimbus-theme nova-theme overcast-theme seti-theme srcery-theme tablist magit-popup neotree browse-kill-ring spotify shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
+    (org-bullets abyss-theme afternoon-theme ample-theme arjen-grey-theme atom-dark-theme badger-theme birds-of-paradise-plus-theme calmer-forest-theme constant-theme dakrone-theme dark-krystal-theme dark-mint-theme darkmine-theme darkokai-theme distinguished-theme exotica-theme flatui-dark-theme forest-blue-theme gotham-theme grandshell-theme gruber-darker-theme hamburg-theme idea-darkula-theme klere-theme kooten-theme liso-theme lush-theme madhat2r-theme majapahit-theme metalheart-theme monochrome-theme monokai-alt-theme noctilux-theme northcode-theme nyx-theme paganini-theme planet-theme reykjavik-theme rimero-theme sexy-monochrome-theme smart-mode-line-atom-one-dark-theme soft-charcoal-theme soothe-theme toxi-theme twilight-anti-bright-theme warm-night-theme zeno-theme zerodark-theme zweilight-theme alect-themes apropospriate-theme arc-dark-theme atom-one-dark-theme darktooth-theme eziam-theme foggy-night-theme minimal-theme mood-one-theme nimbus-theme nova-theme overcast-theme seti-theme srcery-theme tablist magit-popup neotree browse-kill-ring spotify shell-pop use-package magithub smart-mode-line-powerline-theme moe-theme undo-tree mu4e-maildirs-extension mu4e-conversation mutt-mode blacken company-reftex company-auctex ace-jump-mode avy sublime-themes auto-complete-auctex sublimity org-trello yasnippet-classic-snippets standoff-mode elpygen projectile auto-complete smex yasnippet-snippets yaml-mode stan-snippets ssh sphinx-doc spacemacs-theme rope-read-mode rainbow-identifiers rainbow-delimiters python-docstring origami omtose-phellack-theme markdown-mode magit kaolin-themes js2-mode highlight-numbers highlight-indent-guides gist flymake-python-pyflakes flycheck ess elpy dockerfile-mode cython-mode context-coloring company-irony-c-headers color-identifiers-mode colonoscopy-theme auctex)))
  '(pdf-view-midnight-colors (quote ("#eeeeee" . "#000000")))
  '(pos-tip-background-color "#3D4E54")
  '(pos-tip-foreground-color "#C1CADE")
@@ -263,30 +336,7 @@
 		   (quote powerline-active1))))
      (:propertize " " face powerline-active1))))
  '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
-<<<<<<< HEAD
- '(vc-annotate-background "#222222")
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#db4334")
-     (40 . "#ea3838")
-     (60 . "#abab3a")
-     (80 . "#e5c900")
-     (100 . "#fe8b04")
-     (120 . "#e8e815")
-     (140 . "#3cb370")
-     (160 . "#099709")
-     (180 . "#7fb07f")
-     (200 . "#32cd32")
-     (220 . "#8ce096")
-     (240 . "#528d8d")
-     (260 . "#1fb3b3")
-     (280 . "#0c8782")
-     (300 . "#30a5f5")
-     (320 . "#62b6ea")
-     (340 . "#94bff3")
-     (360 . "#e353b9"))))
- '(vc-annotate-very-old-color "#e353b9")
-=======
+ '(tabbar-background-color "#377737773777")
  '(tetris-x-colors
    [[229 192 123]
     [97 175 239]
@@ -325,7 +375,8 @@
      (500 \, "#87878f8fd7d7")
      (520 \, "#9A93E1"))))
  '(vc-annotate-very-old-color "#6c6c6c6cacac")
->>>>>>> 40feb7481d069f29274691e6c2517786d4d640b2
+ '(weechat-color-list
+   (unspecified "#242728" "#424748" "#F70057" "#ff0066" "#86C30D" "#63de5d" "#BEB244" "#E6DB74" "#40CAE4" "#06d8ff" "#FF61FF" "#ff8eff" "#00b2ac" "#53f2dc" "#f8fbfc" "#ffffff"))
  '(xterm-color-names
    ["#404B5C" "#B26BB8" "#76A8A0" "#C79474" "#6886A6" "#515275" "#7D8AA8" "#8C92A1"])
  '(xterm-color-names-bright
@@ -338,7 +389,7 @@
 
 (setq powerline-arrow-shape 'curve)
 (setq powerline-default-separator-dir '(right . left))
-(setq sml/theme 'powerline)
+;(setq sml/theme 'powerline)
 (setq sml/shorten-directory t)
 (setq sml/shorten-modes t)
 
