@@ -11,7 +11,7 @@
   This is an Emacs configuration file written in [[http://orgmode.org][Org mode]]. It is an attempt
   to keep my =~/.emacs.d= tidy, but still be able to keep it all in one
   file. I aim to briefly explain all my configurations as I go along!
-
+  
 * Configurations
 ** Meta
 
@@ -404,19 +404,10 @@
    Change the color-theme to =forrest=.
 
    #+BEGIN_SRC emacs-lisp
-   (load-theme 'calmer-forest t)
+   (load-theme 'seti t)
    #+END_SRC
 
 
-   #+BEGIN_SRC emacs-lisp
-   (defun cycle-themes ()
-     "Returns a function that lets you cycle your themes."
-     (lexical-let ((themes '#1=(calmer-forest atom-one-dark nimbus seti . #1#)))
-       (lambda ()
-         (interactive)
-         ;; Rotates the theme cycle and changes the current theme.
-         (load-theme (car (setq themes (cdr themes))) t))))
-   #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
 
@@ -435,7 +426,7 @@
    #+END_SRC
 
 
-   #+BEGIN_SRC emacs-lispq
+   #+BEGIN_SRC emacs-lisp
    (setq ibuffer-saved-filter-groups
 	 '(("home"
 	    ("emacs-config" (or (filename . ".emacs.d")
@@ -459,14 +450,6 @@
    (add-hook 'ibuffer-mode-hook
 	     '(lambda ()
 		(ibuffer-switch-to-saved-filter-groups "home")))
-
-   (setq locale-coding-system 'utf-8)
-   (set-terminal-coding-system 'utf-8)
-   (set-keyboard-coding-system 'utf-8)
-   (set-selection-coding-system 'utf-8)
-   (prefer-coding-system 'utf-8)
-   (when (display-graphic-p)
-      (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
 
 
@@ -520,7 +503,7 @@
                                           ("psi" . ?ψ)))
    #+END_SRC
 
-
+   
 ** Completion
 
    [[https://github.com/auto-complete/auto-complete][Auto-Complete]] has been a part of my config for years, but I want to try
@@ -1505,8 +1488,6 @@
 
   #+END_SRC
 
-
-
 * Key bindings
   
   Inspired by [[http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs][this StackOverflow post]] I keep a =custom-bindings-map= that
@@ -1515,6 +1496,16 @@
   inhibits other =major-modes= to override these bindings. I keep this at
   the end of the init-file to make sure that all functions are actually
   defined.
+
+  #+BEGIN_SRC emacs-lisp
+    ;; join the line below with the current line
+  (global-set-key (kbd "M-j") (lambda () (interactive)
+		    (join-line -1)))
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (autoload 'ibuffer "ibuffer" "List buffers." t)
+
+  #+END_SRC
+  
 
   #+BEGIN_SRC emacs-lisp
   (defvar custom-bindings-map (make-keymap)
