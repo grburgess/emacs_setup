@@ -375,11 +375,19 @@
    (setq highlight-indent-guides-auto-enabled nil)
    (setq highlight-indent-guides-method 'character)
 
-   (dolist (mode
-            '(tool-bar-mode                ; No toolbars, more room for text
-              scroll-bar-mode              ; No scroll bars either
-              ))
-     (funcall mode 0))
+   (setq highlight-indent-guides-auto-enabled nil)
+
+   (set-face-background 'highlight-indent-guides-odd-face "seagreen")
+   (set-face-background 'highlight-indent-guides-even-face "seagreen")
+   (set-face-foreground 'highlight-indent-guides-character-face "seagreen")
+
+
+
+      (dolist (mode
+	       '(tool-bar-mode                ; No toolbars, more room for text
+		 scroll-bar-mode              ; No scroll bars either
+		 ))
+	(funcall mode 0))
    #+END_SRC
 
    Let's apply the same technique for enabling modes that are disabled by
@@ -1257,6 +1265,77 @@
    #+END_SRC
 
 * Mode specific
+
+** Python  
+   
+
+   I use elpy for python. 
+
+   #+BEGIN_SRC emacs-lisp
+   (elpy-enable)
+
+   (with-eval-after-load 'elpy
+
+     (add-hook 'python-mode-hook (lambda ()
+				   (require 'sphinx-doc)
+				   (sphinx-doc-mode t)))
+
+     ;; Activate python highlighting for PYX and PPL files
+     (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
+     (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
+
+
+
+     (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+     (define-key global-map (kbd "C-c o") 'iedit-mode)
+
+
+     (add-hook 'python-mode-hook 'elpy-mode)
+
+     (remove-hook 'elpy-modules 'elpy-module-flymake)
+     (add-hook 'elpy-mode-hook 'flycheck-mode)
+     (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+   
+
+
+  )
+
+   
+
+
+
+  #+END_SRC
+
+** LaTeX and org-mode LaTeX export
+
+   LaTeX Setup
+   #+BEGIN_SRC emacs-lisp
+   (load "auctex.el" nil t t)
+   (with-eval-after-load 'latex
+   
+   
+   (require 'reftex)
+   
+   (setq TeX-auto-save t)
+   (setq TeX-parse-self t)
+   (setq-default TeX-master nil)
+   
+   (add-hook 'LaTeX-mode-hook 'reftex-mode)
+   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+   (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
+   (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
+   
+   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+   ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
+   (setq reftex-plug-into-AUCTeX t)
+   (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
+   
+   
+   )
+   
+   #+END_SRC
 ** Compilation
 
    I often run ~latexmk -pdf -pvc~ in a compilation buffer, which recompiles
@@ -1455,38 +1534,6 @@
    (add-hook 'java-mode-hook 'java-setup)
    #+END_SRC
 
-** LaTeX and org-mode LaTeX export
-
-   LaTeX Setup
-   #+BEGIN_SRC emacs-lisp
-   (load "auctex.el" nil t t)
-   (with-eval-after-load 'latex
-   
-   
-   (require 'reftex)
-   
-   (setq TeX-auto-save t)
-   (setq TeX-parse-self t)
-   (setq-default TeX-master nil)
-   
-   (add-hook 'LaTeX-mode-hook 'reftex-mode)
-   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-   (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
-   (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
-   
-   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-   ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
-   (setq reftex-plug-into-AUCTeX t)
-   (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
-   
-   
-   )
-   
-   #+END_SRC
-
-
 
 ** Markdown
 
@@ -1527,39 +1574,6 @@
                (ispell-change-dictionary "norsk")
                (local-set-key (kbd "C-c b") 'insert-markdown-inline-math-block)) t)
    #+END_SRC
-
-** Python  
-   
-
-   I use elpy for python. 
-
-   #+BEGIN_SRC emacs-lisp
-   (elpy-enable)
-   
-   (with-eval-after-load 'elpy
-   
-   (add-hook 'python-mode-hook (lambda ()
-   (require 'sphinx-doc)
-   (sphinx-doc-mode t)))
-   
-   ;; Activate python highlighting for PYX and PPL files
-   (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
-   (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
-   
-   
-   
-   (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
-   (define-key global-map (kbd "C-c o") 'iedit-mode)
-   
-   
-   (add-hook 'python-mode-hook 'elpy-mode)
-   
-   (remove-hook 'elpy-modules 'elpy-module-flymake)
-   (add-hook 'elpy-mode-hook 'flycheck-mode)
-   
-   )
-
-  #+END_SRC
 
 * Key bindings
   
