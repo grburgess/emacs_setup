@@ -36,6 +36,8 @@
 
    ;; We can't tangle without org!
    (require 'org)
+   ;;(setq my_dir "/Users/jburgess/.emacs.d")
+
    ;; Open the configuration
    (find-file (concat user-emacs-directory "init.org"))
    ;; tangle it
@@ -89,7 +91,7 @@
 
    I'd like to keep a few settings private, so we load a =private.el= if it
    exists after the init-file has loaded.
-
+   
 ** Packages
 
    Managing extensions for Emacs is simplified using =package= which is
@@ -407,6 +409,15 @@
    (load-theme 'seti t)
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+   (defun cycle-themes ()
+     "Returns a function that lets you cycle your themes."
+     (lexical-let ((themes '#1=(seti nimbus atom-one-dark darktooth . #1#)))
+       (lambda ()
+         (interactive)
+         ;; Rotates the thme cycle and changes the current theme.
+         (load-theme (car (setq themes (cdr themes))) t))))
+   #+END_SRC
 
 
    #+BEGIN_SRC emacs-lisp
@@ -415,7 +426,7 @@
    (require 'sublimity-attractive)
    (sublimity-mode 1)
 
-   (setq sublimity-attractive-centering-width 110)
+   (setq sublimity-attractive-centering-width 130)
 
    ;; (require 'sublimity-scroll)
 
@@ -425,6 +436,21 @@
 
    #+END_SRC
 
+
+
+   #+BEGIN_SRC emacs-lisp
+
+   ;; (setq powerline-arrow-shape 'curve)
+   ;; (setq powerline-default-separator-dir '(right . left))
+   ;;(setq sml/theme 'powerline)
+   (setq sml/shorten-directory t)
+   (setq sml/shorten-modes t)
+   (setq sml/no-confirm-load-theme t)
+   (sml/setup)
+
+
+
+   #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
    (setq ibuffer-saved-filter-groups
@@ -465,16 +491,6 @@
    ~with-eval-after-load~. To avoid typing this multiple times a small macro
    is provided.
 
-   #+BEGIN_SRC emacs-lisp
-   (defmacro safe-diminish (file mode &optional new-name)
-     `(with-eval-after-load ,file
-	(diminish ,mode ,new-name)))
-
-   (diminish 'auto-fill-function)
-   (safe-diminish "eldoc" 'eldoc-mode)
-   (safe-diminish "flyspell" 'flyspell-mode)
-   (safe-diminish "paredit" 'paredit-mode "()")
-   #+END_SRC
 
    [[https://github.com/syohex/emacs-git-gutter-fringe][git-gutter-fringe]] gives a great visual indication of where you've made
    changes since your last commit. There are several packages that performs
@@ -515,20 +531,32 @@
    #+BEGIN_SRC emacs-lisp
 
    (add-hook 'after-init-hook 'global-company-mode)
-;   (add-to-list 'load-path "path/to/company-auctex.el")
+					   ;   (add-to-list 'load-path "path/to/company-auctex.el")
    (require 'company-auctex)
    (company-auctex-init)
 
 
    (setq company-idle-delay 0
-   company-echo-delay 0
-   company-dabbrev-downcase nil
-   company-minimum-prefix-length 2
-   company-selection-wrap-around t
-   company-transformers '(company-sort-by-occurrence
-   company-sort-by-backend-importance))
-   
+	 company-echo-delay 0
+	 company-dabbrev-downcase nil
+	 company-minimum-prefix-length 2
+	 company-selection-wrap-around t
+	 company-transformers '(company-sort-by-occurrence
+				company-sort-by-backend-importance))
+
    (require 'yasnippet)	
+
+   (require 'stan-mode)
+
+   (with-eval-after-load 'stan
+
+   (require 'stan-snippets)
+   (yas-global-mode 1)
+   (add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
+
+   )
+
+
    #+END_SRC
 
 ** IDO/SMEX/ACE
@@ -569,272 +597,272 @@
    mail-folder exists, then it's probably safe to load.
 
    #+BEGIN_SRC emacs-lisp
-   (setq mu4e-mu-binary "/usr/local/bin/mu")
-(with-eval-after-load 'mu4e
-  (require 'smtpmail)
+   ;; (setq mu4e-mu-binary "/usr/local/bin/mu")
+   ;; (with-eval-after-load 'mu4e
+   ;;   (require 'smtpmail)
 
-  ;; (setq message-send-mail-function 'smtpmail-send-it
-  ;;     starttls-use-gnutls t
-  ;;     smtpmail-starttls-credentials
-  ;;     '(("smtp.gmail.com" 587 nil nil))
-  ;;     smtpmail-auth-credentials
-  ;;     (expand-file-name "~/.authinfo")
-  ;;     smtpmail-default-smtp-server "smtp.gmail.com"
-  ;;     smtpmail-smtp-server "smtp.gmail.com"
-  ;;     smtpmail-smtp-service 587
-  ;;     smtpmail-debug-info t)
-
-  
-  (setq mu4e-maildir "/Users/jburgess/mail"
-        mu4e-get-mail-command "mbsync -a --verbose"
-        mu4e-update-interval 600
-        mu4e-compose-signature-auto-include nil
-        mu4e-view-show-images t
-        mu4e-view-show-addresses t
-        mu4e-enable-notifications nil
-        mu4e-enable-mode-line t
-        mu4e-headers-skip-duplicates t
-        ;; rename files when moving, needed for mbsync
-        mu4e-change-filenames-when-moving t
-	
-        mu4e-compose-dont-reply-to-self t
-;        mu4e-compose-format-flowed nil
-        fill-flowed-encode-column 280
-        mu4e-user-mail-address-list '("jmichaelburgess@gmail.com" "jburgess@mpe.mpg.de, jmichael.gcn@gmail.com")
-        mu4e-compose-complete-only-personal t
-        mu4e-enable-async-operations t
-        org-mu4e-link-query-in-headers-mode nil
-        org-mu4e-convert-to-html t
-        ;; customize the reply-quote-string
-        message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
-        ;; choose to use the formatted string
-        message-citation-line-function 'message-insert-formatted-citation-line)
+   ;;   ;; (setq message-send-mail-function 'smtpmail-send-it
+   ;;   ;;     starttls-use-gnutls t
+   ;;   ;;     smtpmail-starttls-credentials
+   ;;   ;;     '(("smtp.gmail.com" 587 nil nil))
+   ;;   ;;     smtpmail-auth-credentials
+   ;;   ;;     (expand-file-name "~/.authinfo")
+   ;;   ;;     smtpmail-default-smtp-server "smtp.gmail.com"
+   ;;   ;;     smtpmail-smtp-server "smtp.gmail.com"
+   ;;   ;;     smtpmail-smtp-service 587
+   ;;   ;;     smtpmail-debug-info t)
 
 
-  ;; (setq smtpmail-smtp-server "smtp.gmail.com"
-  ;; 	smtpmail-smtp-service 587
-  ;; 	smtpmail-queue-mail nil
-  ;; 	smtpmail-queue-dir "~/mail/queue/cur"
-  ;; 	send-mail-function 'smtpmail-send-it
-  ;; 	message-send-mail-function 'smtpmail-send-it
-  ;; 	mu4e-sent-messages-behavior 'delete
-  ;; 	mail-envelope-from 'header
-  ;; 	mail-user-agent 'mu4e-user-agent
-  ;; 	smtpmail-debug-info t
-  ;; 	smtpmail-debug-verb t)
-  
-  ;; (defun mu4e-message-maildir-matches (msg rx)
-  ;;   (string-match rx (mu4e-message-field msg :maildir)))
-  
-  (setq
-   mu4e-compose-context-policy 'ask-if-none
+   ;;   (setq mu4e-maildir "/Users/jburgess/mail"
+   ;; 	mu4e-get-mail-command "mbsync -a --verbose"
+   ;; 	mu4e-update-interval 600
+   ;; 	mu4e-compose-signature-auto-include nil
+   ;; 	mu4e-view-show-images t
+   ;; 	mu4e-view-show-addresses t
+   ;; 	mu4e-enable-notifications nil
+   ;; 	mu4e-enable-mode-line t
+   ;; 	mu4e-headers-skip-duplicates t
+   ;; 	;; rename files when moving, needed for mbsync
+   ;; 	mu4e-change-filenames-when-moving t
 
-   mu4e-contexts
-   `(,(make-mu4e-context
-       :name "home"
-       :enter-func (lambda ()
-		     (mu4e-message "Switch to jmichaelburgess@gmail.com"))
-       ;; leave-func not defined
-       :match-func (lambda (msg)
-		     (when msg
-
-		       (mu4e-message-contact-field-matches msg :to "jmichaelburgess@gmail.com")
-		       ))
-       :vars '((mu4e-sent-folder . "/gmail-personal/sent")
-	       (mu4e-trash-folder . "/gmail-personal/trash")
-	       (mu4e-refile-folder . "/gmail-personal/INBOX")
-	       (mu4e-drafts-folder . "/gmail-personal/drafts")
-	       (user-mail-address . "jmichaelburgess@gmail.com")
-	       (user-full-name . "J. Michael Burgess")
-	       (smtpmail-smtp-user . "jmichaelburgess@gmail.com")
-	       ;(smtpmail-local-domain "gmail.com")
-	       (smtpmail-default-smtp-server . "smtp.gmail.com")
-	       (smtpmail-smtp-server . "smtp.gmail.com")
-	       (smtpmail-smtp-service . 587)
-					;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
-	       ))
-     ,(make-mu4e-context
-       :name "work"
-       :enter-func (lambda ()
-		     (mu4e-message "Switch to jburgess@mpe.mpg.de"))
-       ;; leave-func not defined
-       :match-func (lambda (msg)
-		     (when msg
-;		       (mu4e-message-maildir-matches msg "^/mpe/")
-		       (mu4e-message-contact-field-matches msg :to "jburgess@mpe.mpg.de")
-		       ))
-       :vars '((mu4e-sent-folder . "/mpe/sent")
-	       (mu4e-trash-folder . "/mpe/trash")
-	       (mu4e-refile-folder . "/mpe/INBOX")
-	       (mu4e-drafts-folder . "/mpe/drafts")
-	       (user-mail-address . "jburgess@mpe.mpg.de")
-	       (user-full-name . "J. Michael Burgess")
-	       (smtpmail-smtp-user . "jburgess@mpe.mpg.de")
-	       ;(smtpmail-local-domain "mpe.mpg.de")
-	       (smtpmail-default-smtp-server . "smtp.mpe.mpg.de")
-	       (smtpmail-smtp-server . "smtp.mpe.mpg.de")
-	       (smtpmail-smtp-service . 587)
-					;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
-	       
-	       ))))
-  
-;  (add-hook 'mu4e-compose-mode-hook #'turn-off-auto-fill)
-;  (add-hook 'mu4e-compose-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
-  
-  (setq mu4e-view-actions
-	'(("capture message" . mu4e-action-capture-message)
-	  ("view in browser" . mu4e-action-view-in-browser)
-	  ("show this thread" . mu4e-action-show-thread)
-	  ("View as pdf" . mu4e-action-view-as-pdf)))
+   ;; 	mu4e-compose-dont-reply-to-self t
+   ;; ;        mu4e-compose-format-flowed nil
+   ;; 	fill-flowed-encode-column 280
+   ;; 	mu4e-user-mail-address-list '("jmichaelburgess@gmail.com" "jburgess@mpe.mpg.de, jmichael.gcn@gmail.com")
+   ;; 	mu4e-compose-complete-only-personal t
+   ;; 	mu4e-enable-async-operations t
+   ;; 	org-mu4e-link-query-in-headers-mode nil
+   ;; 	org-mu4e-convert-to-html t
+   ;; 	;; customize the reply-quote-string
+   ;; 	message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
+   ;; 	;; choose to use the formatted string
+   ;; 	message-citation-line-function 'message-insert-formatted-citation-line)
 
 
-(setq mu4e-user-mail-address-list
-      (delq nil
-            (mapcar (lambda (context)
-                      (when (mu4e-context-vars context)
-                        (cdr (assq 'user-mail-address (mu4e-context-vars context)))))
-                    mu4e-contexts)))
+   ;;   ;; (setq smtpmail-smtp-server "smtp.gmail.com"
+   ;;   ;; 	smtpmail-smtp-service 587
+   ;;   ;; 	smtpmail-queue-mail nil
+   ;;   ;; 	smtpmail-queue-dir "~/mail/queue/cur"
+   ;;   ;; 	send-mail-function 'smtpmail-send-it
+   ;;   ;; 	message-send-mail-function 'smtpmail-send-it
+   ;;   ;; 	mu4e-sent-messages-behavior 'delete
+   ;;   ;; 	mail-envelope-from 'header
+   ;;   ;; 	mail-user-agent 'mu4e-user-agent
+   ;;   ;; 	smtpmail-debug-info t
+   ;;   ;; 	smtpmail-debug-verb t)
+
+   ;;   ;; (defun mu4e-message-maildir-matches (msg rx)
+   ;;   ;;   (string-match rx (mu4e-message-field msg :maildir)))
+
+   ;;   (setq
+   ;;    mu4e-compose-context-policy 'ask-if-none
+
+   ;;    mu4e-contexts
+   ;;    `(,(make-mu4e-context
+   ;;        :name "home"
+   ;;        :enter-func (lambda ()
+   ;; 		     (mu4e-message "Switch to jmichaelburgess@gmail.com"))
+   ;;        ;; leave-func not defined
+   ;;        :match-func (lambda (msg)
+   ;; 		     (when msg
+
+   ;; 		       (mu4e-message-contact-field-matches msg :to "jmichaelburgess@gmail.com")
+   ;; 		       ))
+   ;;        :vars '((mu4e-sent-folder . "/gmail-personal/sent")
+   ;; 	       (mu4e-trash-folder . "/gmail-personal/trash")
+   ;; 	       (mu4e-refile-folder . "/gmail-personal/INBOX")
+   ;; 	       (mu4e-drafts-folder . "/gmail-personal/drafts")
+   ;; 	       (user-mail-address . "jmichaelburgess@gmail.com")
+   ;; 	       (user-full-name . "J. Michael Burgess")
+   ;; 	       (smtpmail-smtp-user . "jmichaelburgess@gmail.com")
+   ;; 	       ;(smtpmail-local-domain "gmail.com")
+   ;; 	       (smtpmail-default-smtp-server . "smtp.gmail.com")
+   ;; 	       (smtpmail-smtp-server . "smtp.gmail.com")
+   ;; 	       (smtpmail-smtp-service . 587)
+   ;; 					;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
+   ;; 	       ))
+   ;;      ,(make-mu4e-context
+   ;;        :name "work"
+   ;;        :enter-func (lambda ()
+   ;; 		     (mu4e-message "Switch to jburgess@mpe.mpg.de"))
+   ;;        ;; leave-func not defined
+   ;;        :match-func (lambda (msg)
+   ;; 		     (when msg
+   ;; ;		       (mu4e-message-maildir-matches msg "^/mpe/")
+   ;; 		       (mu4e-message-contact-field-matches msg :to "jburgess@mpe.mpg.de")
+   ;; 		       ))
+   ;;        :vars '((mu4e-sent-folder . "/mpe/sent")
+   ;; 	       (mu4e-trash-folder . "/mpe/trash")
+   ;; 	       (mu4e-refile-folder . "/mpe/INBOX")
+   ;; 	       (mu4e-drafts-folder . "/mpe/drafts")
+   ;; 	       (user-mail-address . "jburgess@mpe.mpg.de")
+   ;; 	       (user-full-name . "J. Michael Burgess")
+   ;; 	       (smtpmail-smtp-user . "jburgess@mpe.mpg.de")
+   ;; 	       ;(smtpmail-local-domain "mpe.mpg.de")
+   ;; 	       (smtpmail-default-smtp-server . "smtp.mpe.mpg.de")
+   ;; 	       (smtpmail-smtp-server . "smtp.mpe.mpg.de")
+   ;; 	       (smtpmail-smtp-service . 587)
+   ;; 					;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
+
+   ;; 	       ))))
+
+   ;; ;  (add-hook 'mu4e-compose-mode-hook #'turn-off-auto-fill)
+   ;; ;  (add-hook 'mu4e-compose-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
+
+   ;;   (setq mu4e-view-actions
+   ;; 	'(("capture message" . mu4e-action-capture-message)
+   ;; 	  ("view in browser" . mu4e-action-view-in-browser)
+   ;; 	  ("show this thread" . mu4e-action-show-thread)
+   ;; 	  ("View as pdf" . mu4e-action-view-as-pdf)))
 
 
-  
-  ;; (add-to-list
-  ;;  'mu4e-header-info-custom
-  ;;  '(:foldername . (:name "Folder information"
-  ;; 			  :shortname "Folder"
-  ;; 			  :help "Message short storage information"
-  ;; 			  :function (lambda (msg)
-  ;; 				      (let ((shortaccount)
-  ;; 					    (maildir (or (mu4e-message-field msg :maildir) ""))
-  ;; 					    (mailinglist (or (mu4e-message-field msg :mailing-list) "")))
-  ;; 					(if (not (string= mailinglist ""))
-  ;; 					    (setq mailinglist (mu4e-get-mailing-list-shortname mailinglist)))
-  ;; 					(when (not (string= maildir ""))
-  ;; 					  (setq shortaccount
-  ;; 						(substring
-  ;; 						 (replace-regexp-in-string "^/\\(\\w+\\)/.*$" "\\1" maildir)
-  ;; 						 0 1))
-  ;; 					  (setq maildir (replace-regexp-in-string ".*/\\([^/]+\\)$" "\\1" maildir))
-  ;; 					  (if (> (length maildir) 15)
-  ;; 					      (setq maildir (concat (substring maildir 0 14) "…")))
-  ;; 					  (setq maildir (concat "[" shortaccount "] " maildir)))
-  ;; 					(cond
-  ;; 					 ((and (string= maildir "")
-  ;; 					       (not (string= mailinglist "")))
-  ;; 					  mailinglist)
-  ;; 					 ((and (not (string= maildir ""))
-  ;; 					       (string= mailinglist ""))
-  ;; 					  maildir)
-  ;; 					 ((and (not (string= maildir ""))
-  ;; 					       (not (string= mailinglist "")))
-  ;; 					  (concat maildir " (" mailinglist ")"))
-  ;; 					 (t "")))))))
-  
-  ;; (defun ed/get-mail-header (header-name path)
-  ;;   (replace-regexp-in-string
-  ;;    "[ \t\n]*$"
-  ;;    ""
-  ;;    (shell-command-to-string
-  ;;     (concat "/usr/bin/sed -n '/^" header-name ":/I{:loop t;h;n;/^ /{H;x;s/\\n//;t loop};x;p}' '" path "' | sed -n 's/^" header-name ": \\(.*\\)$/\\1/Ip'"))))
-  
-  ;; (defun ed/get-origin-mail-system-header (msg)
-  ;;   (let ((path (or (mu4e-message-field msg :path) "")))
-  ;;     (if (or (string= path "")
-  ;; 	      (not (file-readable-p path)))
-  ;; 	  "no path found"
-  ;; 	(let ((xmailer (ed/get-mail-header "x-mailer" path))
-  ;; 	      (useragent (ed/get-mail-header "user-agent" path)))
-  ;; 	  (if (string= xmailer useragent)
-  ;; 	      xmailer
-  ;; 	    (cond
-  ;; 	     ((string= xmailer "") useragent)
-  ;; 	     ((string= useragent "") xmailer)
-  ;; 	     (t (concat xmailer " (xmailer)\n" useragent " (user-agent)"))))))))
-  
-  ;; (add-to-list 'mu4e-header-info-custom
-  ;; 	       '(:useragent . (:name "User-Agent"
-  ;; 				     :shortname "UserAgt."
-  ;; 				     :help "Mail client used by correspondant"
-  ;; 				     :function ed/get-origin-mail-system-header)))
-  
-  ;; (setq mu4e-headers-fields
-  ;; 	'((:flags . 5)
-  ;; 	  (:human-date . 22)
-  ;; 	  (:size . 6)
-  ;; 	  (:foldername . 25)
-  ;; 	  (:from-or-to . 25)
-  ;; 	  (:subject . nil))
-	
-  ;; 	mu4e-headers-date-format "%a %d %b %Y %H:%M"
-  ;; 	mu4e-headers-time-format "%H:%M"
-  ;; 	mu4e-use-fancy-chars nil
-  ;; 	mu4e-view-fields '(:from :to :cc :subject :flags :date :maildir :mailing-list :tags  :attachments :signature :decryption))
+   ;; (setq mu4e-user-mail-address-list
+   ;;       (delq nil
+   ;; 	    (mapcar (lambda (context)
+   ;; 		      (when (mu4e-context-vars context)
+   ;; 			(cdr (assq 'user-mail-address (mu4e-context-vars context)))))
+   ;; 		    mu4e-contexts)))
 
 
 
+   ;;   ;; (add-to-list
+   ;;   ;;  'mu4e-header-info-custom
+   ;;   ;;  '(:foldername . (:name "Folder information"
+   ;;   ;; 			  :shortname "Folder"
+   ;;   ;; 			  :help "Message short storage information"
+   ;;   ;; 			  :function (lambda (msg)
+   ;;   ;; 				      (let ((shortaccount)
+   ;;   ;; 					    (maildir (or (mu4e-message-field msg :maildir) ""))
+   ;;   ;; 					    (mailinglist (or (mu4e-message-field msg :mailing-list) "")))
+   ;;   ;; 					(if (not (string= mailinglist ""))
+   ;;   ;; 					    (setq mailinglist (mu4e-get-mailing-list-shortname mailinglist)))
+   ;;   ;; 					(when (not (string= maildir ""))
+   ;;   ;; 					  (setq shortaccount
+   ;;   ;; 						(substring
+   ;;   ;; 						 (replace-regexp-in-string "^/\\(\\w+\\)/.*$" "\\1" maildir)
+   ;;   ;; 						 0 1))
+   ;;   ;; 					  (setq maildir (replace-regexp-in-string ".*/\\([^/]+\\)$" "\\1" maildir))
+   ;;   ;; 					  (if (> (length maildir) 15)
+   ;;   ;; 					      (setq maildir (concat (substring maildir 0 14) "…")))
+   ;;   ;; 					  (setq maildir (concat "[" shortaccount "] " maildir)))
+   ;;   ;; 					(cond
+   ;;   ;; 					 ((and (string= maildir "")
+   ;;   ;; 					       (not (string= mailinglist "")))
+   ;;   ;; 					  mailinglist)
+   ;;   ;; 					 ((and (not (string= maildir ""))
+   ;;   ;; 					       (string= mailinglist ""))
+   ;;   ;; 					  maildir)
+   ;;   ;; 					 ((and (not (string= maildir ""))
+   ;;   ;; 					       (not (string= mailinglist "")))
+   ;;   ;; 					  (concat maildir " (" mailinglist ")"))
+   ;;   ;; 					 (t "")))))))
 
-;;  ;; I have my "default" parameters from Gmail
-;; (setq mu4e-sent-folder "~/mail/gmail-personal/sent"
-;;       ;; mu4e-sent-messages-behavior 'delete ;; Unsure how this should be configured
-;;       mu4e-drafts-folder "~/mail/gmail-personal/drafts"
-;;       user-mail-address "jmichaelburgess@gmail.com"
-;;       smtpmail-default-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-service 587)
+   ;;   ;; (defun ed/get-mail-header (header-name path)
+   ;;   ;;   (replace-regexp-in-string
+   ;;   ;;    "[ \t\n]*$"
+   ;;   ;;    ""
+   ;;   ;;    (shell-command-to-string
+   ;;   ;;     (concat "/usr/bin/sed -n '/^" header-name ":/I{:loop t;h;n;/^ /{H;x;s/\\n//;t loop};x;p}' '" path "' | sed -n 's/^" header-name ": \\(.*\\)$/\\1/Ip'"))))
 
-;; Now I set a list of 
-;; (defvar my-mu4e-account-alist
-;;   '(("Gmail"
-;;      (mu4e-sent-folder "~/mail/gmail-personal/sent")
-;;      (user-mail-address "jmichaelburgess@gmail.com")
-;;      (smtpmail-smtp-user "jmichaelburgess")
-;;      (smtpmail-local-domain "gmail.com")
-;;      (smtpmail-default-smtp-server "smtp.gmail.com")
-;;      (smtpmail-smtp-server "smtp.gmail.com")
-;;      (smtpmail-smtp-service 587)
-;;      )
+   ;;   ;; (defun ed/get-origin-mail-system-header (msg)
+   ;;   ;;   (let ((path (or (mu4e-message-field msg :path) "")))
+   ;;   ;;     (if (or (string= path "")
+   ;;   ;; 	      (not (file-readable-p path)))
+   ;;   ;; 	  "no path found"
+   ;;   ;; 	(let ((xmailer (ed/get-mail-header "x-mailer" path))
+   ;;   ;; 	      (useragent (ed/get-mail-header "user-agent" path)))
+   ;;   ;; 	  (if (string= xmailer useragent)
+   ;;   ;; 	      xmailer
+   ;;   ;; 	    (cond
+   ;;   ;; 	     ((string= xmailer "") useragent)
+   ;;   ;; 	     ((string= useragent "") xmailer)
+   ;;   ;; 	     (t (concat xmailer " (xmailer)\n" useragent " (user-agent)"))))))))
+
+   ;;   ;; (add-to-list 'mu4e-header-info-custom
+   ;;   ;; 	       '(:useragent . (:name "User-Agent"
+   ;;   ;; 				     :shortname "UserAgt."
+   ;;   ;; 				     :help "Mail client used by correspondant"
+   ;;   ;; 				     :function ed/get-origin-mail-system-header)))
+
+   ;;   ;; (setq mu4e-headers-fields
+   ;;   ;; 	'((:flags . 5)
+   ;;   ;; 	  (:human-date . 22)
+   ;;   ;; 	  (:size . 6)
+   ;;   ;; 	  (:foldername . 25)
+   ;;   ;; 	  (:from-or-to . 25)
+   ;;   ;; 	  (:subject . nil))
+
+   ;;   ;; 	mu4e-headers-date-format "%a %d %b %Y %H:%M"
+   ;;   ;; 	mu4e-headers-time-format "%H:%M"
+   ;;   ;; 	mu4e-use-fancy-chars nil
+   ;;   ;; 	mu4e-view-fields '(:from :to :cc :subject :flags :date :maildir :mailing-list :tags  :attachments :signature :decryption))
 
 
-;;     ("MPE"
-;;      (mu4e-sent-folder "~/mail/mpe/sent")
-;;      (user-mail-address "jburgess@mpe.mpg.de")
-;;      (smtpmail-smtp-user "jburgess")
-;;      (smtpmail-local-domain "mpe.mpg.de")
-;;      (smtpmail-default-smtp-server "smtp.mpe.mpg.de")
-;;      (smtpmail-smtp-server "smtp.mpe.mpg.de")
-;;      (smtpmail-smtp-service 587)
-;;      )
-;;      ;; Include any other accounts here ...
-;;     ))
 
-;; (defun my-mu4e-set-account ()
-;;   "Set the account for composing a message.
-;;    This function is taken from: 
-;;      https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
-;;   (let* ((account
-;;     (if mu4e-compose-parent-message
-;;         (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-;;     (string-match "/\\(.*?\\)/" maildir)
-;;     (match-string 1 maildir))
-;;       (completing-read (format "Compose with account: (%s) "
-;;              (mapconcat #'(lambda (var) (car var))
-;;             my-mu4e-account-alist "/"))
-;;            (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-;;            nil t nil nil (caar my-mu4e-account-alist))))
-;;    (account-vars (cdr (assoc account my-mu4e-account-alist))))
-;;     (if account-vars
-;;   (mapc #'(lambda (var)
-;;       (set (car var) (cadr var)))
-;;         account-vars)
-;;       (error "No email account found"))))
 
-;; (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+   ;; ;;  ;; I have my "default" parameters from Gmail
+   ;; ;; (setq mu4e-sent-folder "~/mail/gmail-personal/sent"
+   ;; ;;       ;; mu4e-sent-messages-behavior 'delete ;; Unsure how this should be configured
+   ;; ;;       mu4e-drafts-folder "~/mail/gmail-personal/drafts"
+   ;; ;;       user-mail-address "jmichaelburgess@gmail.com"
+   ;; ;;       smtpmail-default-smtp-server "smtp.gmail.com"
+   ;; ;;       smtpmail-smtp-server "smtp.gmail.com"
+   ;; ;;       smtpmail-smtp-service 587)
 
-;; (setq mu4e-user-mail-address-list
-;;       (mapcar (lambda (account) (cadr (assq 'user-mail-address account)))
-;;               my-mu4e-account-alist))
-  
-(mu4e-maildirs-extension)
-  )
+   ;; ;; Now I set a list of 
+   ;; ;; (defvar my-mu4e-account-alist
+   ;; ;;   '(("Gmail"
+   ;; ;;      (mu4e-sent-folder "~/mail/gmail-personal/sent")
+   ;; ;;      (user-mail-address "jmichaelburgess@gmail.com")
+   ;; ;;      (smtpmail-smtp-user "jmichaelburgess")
+   ;; ;;      (smtpmail-local-domain "gmail.com")
+   ;; ;;      (smtpmail-default-smtp-server "smtp.gmail.com")
+   ;; ;;      (smtpmail-smtp-server "smtp.gmail.com")
+   ;; ;;      (smtpmail-smtp-service 587)
+   ;; ;;      )
+
+
+   ;; ;;     ("MPE"
+   ;; ;;      (mu4e-sent-folder "~/mail/mpe/sent")
+   ;; ;;      (user-mail-address "jburgess@mpe.mpg.de")
+   ;; ;;      (smtpmail-smtp-user "jburgess")
+   ;; ;;      (smtpmail-local-domain "mpe.mpg.de")
+   ;; ;;      (smtpmail-default-smtp-server "smtp.mpe.mpg.de")
+   ;; ;;      (smtpmail-smtp-server "smtp.mpe.mpg.de")
+   ;; ;;      (smtpmail-smtp-service 587)
+   ;; ;;      )
+   ;; ;;      ;; Include any other accounts here ...
+   ;; ;;     ))
+
+   ;; ;; (defun my-mu4e-set-account ()
+   ;; ;;   "Set the account for composing a message.
+   ;; ;;    This function is taken from: 
+   ;; ;;      https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
+   ;; ;;   (let* ((account
+   ;; ;;     (if mu4e-compose-parent-message
+   ;; ;;         (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+   ;; ;;     (string-match "/\\(.*?\\)/" maildir)
+   ;; ;;     (match-string 1 maildir))
+   ;; ;;       (completing-read (format "Compose with account: (%s) "
+   ;; ;;              (mapconcat #'(lambda (var) (car var))
+   ;; ;;             my-mu4e-account-alist "/"))
+   ;; ;;            (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+   ;; ;;            nil t nil nil (caar my-mu4e-account-alist))))
+   ;; ;;    (account-vars (cdr (assoc account my-mu4e-account-alist))))
+   ;; ;;     (if account-vars
+   ;; ;;   (mapc #'(lambda (var)
+   ;; ;;       (set (car var) (cadr var)))
+   ;; ;;         account-vars)
+   ;; ;;       (error "No email account found"))))
+
+   ;; ;; (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+
+   ;; ;; (setq mu4e-user-mail-address-list
+   ;; ;;       (mapcar (lambda (account) (cadr (assq 'user-mail-address account)))
+   ;; ;;               my-mu4e-account-alist))
+
+   ;; (mu4e-maildirs-extension)
+   ;;   )
 
 
    #+END_SRC
@@ -857,7 +885,7 @@
    programming modes using the =prog-mode-hook=.
 
    #+BEGIN_SRC emacs-lisp
-   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   ;;(add-hook 'prog-mode-hook 'flyspell-prog-mode)
    #+END_SRC
 
    When working with several languages, we should be able to cycle through
@@ -866,40 +894,7 @@
    state in a different buffer (this problem occurs if you only have one
    global cycle). We can implement this by using a [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Closures.html][closure]].
 
-   #+BEGIN_SRC emacs-lisp
-   (defun cycle-languages ()
-     "Changes the ispell dictionary to the first element in
-   ISPELL-LANGUAGES, and returns an interactive function that cycles
-   the languages in ISPELL-LANGUAGES when invoked."
-     (lexical-let ((ispell-languages '#1=("american" "norsk" . #1#)))
-       (ispell-change-dictionary (car ispell-languages))
-       (lambda ()
-         (interactive)
-         ;; Rotates the languages cycle and changes the ispell dictionary.
-         (ispell-change-dictionary
-          (car (setq ispell-languages (cdr ispell-languages)))))))
-   #+END_SRC
-
-   =flyspell= signals an error if there is no spell-checking tool is
-   installed. We can advice =turn-on-flyspell= and =flyspell-prog-mode= to
-   only try to enable =flyspell= if a spell-checking tool is available. Also
-   we want to enable cycling the languages by typing =C-c l=, so we bind the
-   function returned from =cycle-languages=.
-
-   #+BEGIN_SRC emacs-lisp
-   (defadvice turn-on-flyspell (before check nil activate)
-     "Turns on flyspell only if a spell-checking tool is installed."
-     (when (executable-find ispell-program-name)
-       (local-set-key (kbd "C-c l") (cycle-languages))))
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-   (defadvice flyspell-prog-mode (before check nil activate)
-     "Turns on flyspell only if a spell-checking tool is installed."
-     (when (executable-find ispell-program-name)
-       (local-set-key (kbd "C-c l") (cycle-languages))))
-   #+END_SRC
-
+   
 ** Org
 
    I use =org-agenda= along with =org-capture= for appointments and such.
@@ -918,6 +913,7 @@
    (global-set-key "\C-ca" 'org-agenda)
    (setq org-todo-keywords
    '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
+
    
    
    
