@@ -139,6 +139,7 @@
 	     diminish
 	     which-key
 	     cyberpunk-2019-theme
+	     cyberpunk-theme
 	     doom-modeline
 	     git-gutter-fringe
 	     org-bullets
