@@ -416,7 +416,7 @@
    Change the color-theme to =forrest=.
 
    #+BEGIN_SRC emacs-lisp
-   (load-theme 'seti t)
+   (load-theme 'cyberpunk t)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
@@ -568,33 +568,7 @@
    #+END_SRC
 
 
-
-   [[http://www.eskimo.com/~seldon/diminish.el][diminish.el]] allows you to hide or abbreviate their presence in the
-   modeline. I rarely look at the modeline to find out what minor-modes are
-   enabled, so I disable every global minor-mode, and some for lisp editing.
-
-   To ensure that the mode is loaded before diminish it, we should use
-   ~with-eval-after-load~. To avoid typing this multiple times a small macro
-   is provided.
-
-
-   [[https://github.com/syohex/emacs-git-gutter-fringe][git-gutter-fringe]] gives a great visual indication of where you've made
-   changes since your last commit. There are several packages that performs
-   this task; the reason I've ended up with =git-gutter-fringe= is that it
-   reuses the (already present) fringe, saving a tiny bit of screen-estate.
-
-   I smuggled some configurations from [[https://github.com/torenord/.emacs.d/][torenord]], providing a cleaner look.
-
-   #+BEGIN_SRC emacs-lisp
-   (require 'git-gutter-fringe)
-
-   (dolist (p '((git-gutter:added    . "#0c0")
-		(git-gutter:deleted  . "#c00")
-		(git-gutter:modified . "#c0c")))
-     (set-face-foreground (car p) (cdr p))
-     (set-face-background (car p) (cdr p)))
-   #+END_SRC
-
+  
    New in Emacs 24.4 is the =prettify-symbols-mode=! It's neat.
 
    #+BEGIN_SRC emacs-lisp
@@ -956,7 +930,6 @@
    I use [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu4e]] (which is a part of [[http://www.djcbsoftware.nl/code/mu/][mu]]) along with [[http://docs.offlineimap.org/en/latest/][offlineimap]] on one of my
    computers.
 
-
 ** Flyspell
 
    Flyspell offers on-the-fly spell checking. We can enable flyspell for all
@@ -1048,9 +1021,9 @@
 	
 	("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
 	
-	("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+	("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
 	
-	("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description} %^g \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n") 
+	("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description}  %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n") 
 	      
 	)
 	)
@@ -1231,38 +1204,6 @@
    (defadvice load-theme
        (before disable-before-load (theme &optional no-confirm no-enable) activate)
      (mapc 'disable-theme custom-enabled-themes))
-   #+END_SRC
-
-** global-scale-mode
-
-   These functions provide something close to ~text-scale-mode~, but for every
-   buffer, including the minibuffer and mode line.
-
-   #+BEGIN_SRC emacs-lisp
-   (lexical-let* ((default (face-attribute 'default :height))
-                  (size default))
-
-     (defun global-scale-default ()
-       (interactive)
-       (setq size default)
-       (global-scale-internal size))
-
-     (defun global-scale-up ()
-       (interactive)
-       (global-scale-internal (incf size 20)))
-
-     (defun global-scale-down ()
-       (interactive)
-       (global-scale-internal (decf size 20)))
-
-     (defun global-scale-internal (arg)
-       (set-face-attribute 'default (selected-frame) :height arg)
-       (set-temporary-overlay-map
-        (let ((map (make-sparse-keymap)))
-          (define-key map (kbd "C-=") 'global-scale-up)
-          (define-key map (kbd "C-+") 'global-scale-up)
-          (define-key map (kbd "C--") 'global-scale-down)
-          (define-key map (kbd "C-0") 'global-scale-default) map))))
    #+END_SRC
 
 * Mode specific
@@ -1600,9 +1541,6 @@
     "A keymap for custom bindings.")
   #+END_SRC
 
-** Bindings for [[https://github.com/abo-abo/define-word][define-word]]
-
-
 ** Bindings for [[http://magit.github.io][Magit]]
 
   #+BEGIN_SRC emacs-lisp
@@ -1616,7 +1554,6 @@
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   #+END_SRC
-
 
 ** Bindings for built-ins
 
@@ -1637,7 +1574,7 @@
   #+END_SRC
 
 ** Bindings for functions defined [[sec:defuns][above]].
-
+   
   #+BEGIN_SRC emacs-lisp
   (define-key global-map          (kbd "M-p")     'jump-to-previous-like-this)
   (define-key global-map          (kbd "M-n")     'jump-to-next-like-this)
@@ -1657,7 +1594,7 @@
   (dolist (n (number-sequence 1 9))
     (global-set-key (kbd (concat "M-" (int-to-string n)))
 		    (lambda () (interactive) (switch-shell n))))
-  (define-key custom-bindings-map (kbd "C-c C-q")
+  (define-key custom-bindings-map (kbd "C-c C-f")
       '(lambda ()
 	 (interactive)
 	 (focus-mode 1)
@@ -1674,6 +1611,7 @@
     "A mode that activates custom-bindings."
     t nil custom-bindings-map)
   #+END_SRC
+** Bindings for [[https://github.com/abo-abo/define-word][define-word]]
 * License
 
   
