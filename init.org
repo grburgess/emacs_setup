@@ -34,6 +34,7 @@
    #+BEGIN_SRC emacs-lisp :tangle no
    ;; This file replaces itself with the actual configuration at first run.
 
+
    ;; We can't tangle without org!
    (require 'org)
    ;;(setq my_dir "/Users/jburgess/.emacs.d")
@@ -439,7 +440,7 @@
    (require 'sublimity-attractive)
    (sublimity-mode 1)
 
-   (setq sublimity-attractive-centering-width 130)
+   (setq sublimity-attractive-centering-width 110)
 
    ;; (require 'sublimity-scroll)
 
@@ -534,7 +535,15 @@
 				(filename . ".init.org")))
 	    ("Org" (or (mode . org-mode)
 		       (filename . "OrgMode")))
-	    ("code" (filename . "code"))
+	    ("latex" ( or (filename . "*.tex")
+			  (filename . "*.bib")
+			  (filename . "*.bbl")
+			  )
+
+
+	     )
+
+
 	    ("python" (or (filename . "*.py")
 			  (filename . "*.pyx")
 			  (filename . "*.ipynb")
@@ -542,6 +551,8 @@
 			  )
 
 	     )
+
+	    ("yaml" (or (filename . "*.yaml") (filename . "*.yml") )   )
 	    ("Magit" (name . "\*magit"))
 	    ("ERC" (mode . erc-mode))
 	    ("Help" (or (name . "\*Help\*")
@@ -1194,7 +1205,7 @@
        (before disable-before-load (theme &optional no-confirm no-enable) activate)
      (mapc 'disable-theme custom-enabled-themes))
    #+END_SRC
-
+   
 * Mode specific
 
 ** Python  
@@ -1243,29 +1254,29 @@
    #+BEGIN_SRC emacs-lisp
    (load "auctex.el" nil t t)
    (with-eval-after-load 'latex
-   
-   
+
+     (auto-fill-mode 1)
    (require 'reftex)
-   
+
    (setq TeX-auto-save t)
    (setq TeX-parse-self t)
    (setq-default TeX-master nil)
-   
+
    (add-hook 'LaTeX-mode-hook 'reftex-mode)
    (add-hook 'LaTeX-mode-hook 'visual-line-mode)
    (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
    (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
-   
+
    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
    ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
    (setq reftex-plug-into-AUCTeX t)
    (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
-   
-   
+
+
    )
-   
+
    #+END_SRC
 ** Compilation
 
@@ -1583,11 +1594,11 @@
   (dolist (n (number-sequence 1 9))
     (global-set-key (kbd (concat "M-" (int-to-string n)))
 		    (lambda () (interactive) (switch-shell n))))
-  (define-key custom-bindings-map (kbd "C-c C-f")
-      '(lambda ()
-	 (interactive)
-	 (focus-mode 1)
-	 (focus-read-only-mode 1)))
+  ;; (define-key custom-bindings-map (kbd "C-c C-q")
+  ;;     '(lambda ()
+  ;;        (interactive)
+  ;;        (focus-mode 1)
+  ;;        (focus-read-only-mode 1)))
     (with-eval-after-load 'org
       (define-key org-mode-map (kbd "C-'") 'org-sync-pdf))
   #+END_SRC
