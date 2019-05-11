@@ -138,6 +138,7 @@
 	     pdf-tools            ; Emacs support library for PDF files
 	     slime                ; Superior Lisp Interaction Mode for Emacs
 	     diminish
+	     company-jedi
 	     which-key
 	     cyberpunk-2019-theme
 	     cyberpunk-theme
@@ -617,6 +618,31 @@
    )
 
 
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp   
+   (defun org-keyword-backend (command &optional arg &rest ignored)
+     (interactive (list 'interactive))
+     (cl-case command
+       (interactive (company-begin-backend 'org-keyword-backend))
+       (prefix (and (eq major-mode 'org-mode)
+		    (cons (company-grab-line "^#\\+\\(\\w*\\)" 1)
+			  t)))
+       (candidates (mapcar #'upcase
+			   (cl-remove-if-not
+			    (lambda (c) (string-prefix-p arg c))
+			    (pcomplete-completions))))
+       (ignore-case t)
+       (duplicates t)))
+
+   (add-to-list 'company-backends 'org-keyword-backend)
+
+
+
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+   
    #+END_SRC
 
 ** IDO/SMEX/ACE
@@ -1214,35 +1240,35 @@
    I use elpy for python. 
 
    #+BEGIN_SRC emacs-lisp
-   (elpy-enable)
+    (elpy-enable)
 
-   (with-eval-after-load 'elpy
+    (with-eval-after-load 'elpy
 
-     (add-hook 'python-mode-hook (lambda ()
-				   (require 'sphinx-doc)
-				   (sphinx-doc-mode t)))
+      (add-hook 'python-mode-hook (lambda ()
+				    (require 'sphinx-doc)
+				    (sphinx-doc-mode t)))
 
-     ;; Activate python highlighting for PYX and PPL files
-     (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
-     (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
+      ;; Activate python highlighting for PYX and PPL files
+      (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
+      (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
 
+      (add-to-list 'company-backends 'company-jedi)
 
-
-     (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
-     (define-key global-map (kbd "C-c o") 'iedit-mode)
-
-
-     (add-hook 'python-mode-hook 'elpy-mode)
-
-     (remove-hook 'elpy-modules 'elpy-module-flymake)
-     (add-hook 'elpy-mode-hook 'flycheck-mode)
-     (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
-   
+      (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+      (define-key global-map (kbd "C-c o") 'iedit-mode)
 
 
-  )
+      (add-hook 'python-mode-hook 'elpy-mode)
 
-   
+      (remove-hook 'elpy-modules 'elpy-module-flymake)
+      (add-hook 'elpy-mode-hook 'flycheck-mode)
+      (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+
+
+
+   )
+
+
 
 
 
