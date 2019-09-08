@@ -1,3 +1,4 @@
+
 #+TITLE: Emacs configuration file
 #+AUTHOR: J. Michael Burgess
 #+BABEL: :cache yes
@@ -11,7 +12,7 @@
   This is an Emacs configuration file written in [[http://orgmode.org][Org mode]]. It is an attempt
   to keep my =~/.emacs.d= tidy, but still be able to keep it all in one
   file. I aim to briefly explain all my configurations as I go along!
-  
+    
 * Configurations
 ** Meta
 
@@ -77,6 +78,7 @@
    =org=-document after changes.
 
    #+BEGIN_SRC emacs-lisp
+
    (defun tangle-init ()
      "If the current buffer is 'init.org' the code-blocks are
    tangled, and the tangled file is compiled."
@@ -92,6 +94,8 @@
 
    I'd like to keep a few settings private, so we load a =private.el= if it
    exists after the init-file has loaded.
+
+
    
 ** Packages
 
@@ -111,10 +115,18 @@
    archive and is well maintained.
 
    #+BEGIN_SRC emacs-lisp
-   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-   (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
-   (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+   (setq package-check-signiture nil)
+
+   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			     ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+
+
+     ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+     ;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+     ;; (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+
+
    #+END_SRC
 
    The configuration assumes that the packages listed below are
@@ -426,26 +438,23 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-   (defun cycle-themes ()
-     "Returns a function that lets you cycle your themes."
-     (lexical-let ((themes '#1=(seti cyberpunk nimbus atom-one-dark darktooth . #1#)))
-       (lambda ()
-         (interactive)
-         ;; Rotates the thme cycle and changes the current theme.
-
-         (load-theme (car (setq themes (cdr themes))) t)
-
-)))
+      (defun cycle-themes ()
+	"Returns a function that lets you cycle your themes."
+	(lexical-let ((themes '#1=(seti cyberpunk nimbus atom-one-dark darktooth . #1#)))
+	  (lambda ()
+	    (interactive)
+	    ;; Rotates the thme cycle and changes the current theme.
+	    (load-theme (car (setq themes (cdr themes))) t) )))
    #+END_SRC
 
 
    #+BEGIN_SRC emacs-lisp
 
-   ;; (require 'sublimity)
-   ;; (require 'sublimity-attractive)
-   ;; (sublimity-mode 1)
+   (require 'sublimity)
+   (require 'sublimity-attractive)
+   (sublimity-mode 1)
 
-   ;; (setq sublimity-attractive-centering-width 110)
+   (setq sublimity-attractive-centering-width 130)
 
    ;; (require 'sublimity-scroll)
 
@@ -1218,6 +1227,38 @@
                    :test 'string-equal)))))
    #+END_SRC
 
+
+   #+BEGIN_SRC emacs-lisp
+
+   (defun xah-space-to-newline ()
+     "Replace space sequence to a newline char.
+   Works on current block or selection.
+
+   URL `http://ergoemacs.org/emacs/emacs_space_to_newline.html'
+   Version 2017-08-19"
+     (interactive)
+     (let* ( $p1 $p2 )
+       (if (use-region-p)
+	   (progn
+	     (setq $p1 (region-beginning))
+	     (setq $p2 (region-end)))
+	 (save-excursion
+	   (if (re-search-backward "\n[ \t]*\n" nil "move")
+	       (progn (re-search-forward "\n[ \t]*\n")
+		      (setq $p1 (point)))
+	     (setq $p1 (point)))
+	   (re-search-forward "\n[ \t]*\n" nil "move")
+	   (skip-chars-backward " \t\n" )
+	   (setq $p2 (point))))
+       (save-excursion
+	 (save-restriction
+	   (narrow-to-region $p1 $p2)
+	   (goto-char (point-min))
+	   (while (re-search-forward " +" nil t)
+	     (replace-match "\n" ))))))
+   #+END_SRC
+
+
 ** Advice
 
    An advice can be given to a function to make it behave differently. This
@@ -1293,30 +1334,30 @@
 
    LaTeX Setup
    #+BEGIN_SRC emacs-lisp
-   (load "auctex.el" nil t t)
-   (with-eval-after-load 'latex
+      (load "auctex.el" nil t t)
+      (with-eval-after-load 'latex
 
-     (auto-fill-mode 1)
-   (require 'reftex)
+	(auto-fill-mode 1)
+      (require 'reftex)
+      (setq-default TeX-engine 'xetex)
+      (setq TeX-auto-save t)
+      (setq TeX-parse-self t)
+      (setq-default TeX-master nil)
 
-   (setq TeX-auto-save t)
-   (setq TeX-parse-self t)
-   (setq-default TeX-master nil)
+      (add-hook 'LaTeX-mode-hook 'reftex-mode)
+      (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+      (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
+      (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
 
-   (add-hook 'LaTeX-mode-hook 'reftex-mode)
-   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-   (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
-   (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
-
-   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-   ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
-   (setq reftex-plug-into-AUCTeX t)
-   (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
+      (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+      (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+      ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
+      (setq reftex-plug-into-AUCTeX t)
+      (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
 
 
-   )
+      )
 
    #+END_SRC
 ** Compilation
