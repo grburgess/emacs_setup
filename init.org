@@ -95,6 +95,14 @@
    I'd like to keep a few settings private, so we load a =private.el= if it
    exists after the init-file has loaded.
 
+   #+BEGIN_SRC emacs-lisp
+
+   (setq custom-file "~/.emacs.d/custom.el")
+   (load custom-file)
+
+   #+END_SRC
+
+
 
    
 ** Packages
@@ -154,6 +162,8 @@
 	     company-jedi
 	     which-key
 	     iedit
+	     easy-jekyll
+	     bug-hunter
 	     cyberpunk-2019-theme
 	     cyberpunk-theme
 	     doom-modeline
@@ -386,7 +396,7 @@
    #+BEGIN_SRC emacs-lisp
 
    (setq inhibit-splash-screen t)
-   (add-hook 'after-init-hook 'global-color-identifiers-mode)
+   ;;(add-hook 'after-init-hook 'global-color-identifiers-mode)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
    (require 'highlight-indent-guides)
@@ -414,9 +424,7 @@
 
    #+BEGIN_SRC emacs-lisp
    (dolist (mode
-            '(abbrev-mode                  ; E.g. sopl -> System.out.println
-            
-            
+            '(abbrev-mode                  ; E.g. sopl -> System.out.println       
               dirtrack-mode                ; directory tracking in *shell*
               global-company-mode          ; Auto-completion everywhere
               global-prettify-symbols-mode ; Greek letters should look gree
@@ -434,13 +442,13 @@
    Change the color-theme to =forrest=.
 
    #+BEGIN_SRC emacs-lisp
-   (load-theme 'cyberpunk t)
+   (load-theme 'kaolin-aurora t)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
       (defun cycle-themes ()
 	"Returns a function that lets you cycle your themes."
-	(lexical-let ((themes '#1=(seti cyberpunk nimbus atom-one-dark darktooth . #1#)))
+	(lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy noctilux cyberpunk cyberpunk-2019 kaolin-aurora . #1#)))
 	  (lambda ()
 	    (interactive)
 	    ;; Rotates the thme cycle and changes the current theme.
@@ -543,26 +551,27 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-   (setq ibuffer-saved-filter-groups
-	 '(("home"
-	    ("emacs-config" (or (filename . ".emacs.d")
-				(filename . ".init.org")))
-	    ("Org" (or (mode . org-mode)
-		       (filename . "OrgMode")))
-	    ("latex" (or (mode . tex-mode) 
-			 (mode . auctex-mode)
-			 (mode . latex-mode))
-)
-	    ("stan" (mode . stan-mode) )
-	    ("python" (mode . python-mode))
-	    ("Magit" (name . "\*magit"))
-	    ("Help" (or (name . "\*Help\*")
-			(name . "\*Apropos\*")
-			(name . "\*info\*"))))))
+      (setq ibuffer-saved-filter-groups
+	    '(("home"
+	       ("emacs-config" (or (filename . ".emacs.d")
+				   (filename . ".init.org")))
+	       ("Org" (or (mode . org-mode)
+			  (filename . "OrgMode")))
+	       ("latex" (or (mode . tex-mode) 
+			    (mode . auctex-mode)
+			    (mode . latex-mode))
+   )
+	       ("stan" (mode . stan-mode) )
 
-   (add-hook 'ibuffer-mode-hook
-	     '(lambda ()
-		(ibuffer-switch-to-saved-filter-groups "home")))
+	       ("python" (mode . python-mode))
+	       ("Magit" (name . "\*magit"))
+	       ("Help" (or (name . "\*Help\*")
+			   (name . "\*Apropos\*")
+			   (name . "\*info\*"))))))
+
+      (add-hook 'ibuffer-mode-hook
+		'(lambda ()
+		   (ibuffer-switch-to-saved-filter-groups "home")))
 
 
 
@@ -1103,6 +1112,21 @@
 
 #+END_SRC
 
+** Jekyll
+   Setup for easy blogging 
+
+   #+BEGIN_SRC emacs-lisp
+
+   (setq easy-jekyll-basedir "~/coding/grburgess.github.io/")
+   (setq easy-jekyll-url "https://grburgess.github.io")
+  ;; (setq easy-jekyll-sshdomain "blogdomain")
+  ;; (setq easy-jekyll-root "/home/blog/")
+  ;; (setq easy-jekyll-previewtime "300")
+
+
+
+   #+END_SRC
+
 ** Interactive functions
    <<sec:defuns>>
 
@@ -1320,6 +1344,7 @@
       (add-hook 'elpy-mode-hook 'flycheck-mode)
       (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
 
+      (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
 
 
    )
@@ -1595,7 +1620,7 @@
              (lambda ()
                (auto-fill-mode 0)
                (visual-line-mode 1)
-               (ispell-change-dictionary "norsk")
+               (ispell-change-dictionary "american")
                (local-set-key (kbd "C-c b") 'insert-markdown-inline-math-block)) t)
    #+END_SRC
 
