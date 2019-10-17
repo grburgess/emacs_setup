@@ -169,6 +169,7 @@
              cyberpunk-2019-theme
              cyberpunk-theme
              doom-modeline
+             doom-themes
              git-gutter-fringe
              org-bullets
              abyss-theme
@@ -451,16 +452,19 @@
    #+BEGIN_SRC emacs-lisp
    (defun cycle-themes ()
      "Returns a function that lets you cycle your themes."
-     (lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy noctilux cyberpunk cyberpunk-2019 kaolin-aurora . #1#)))
+     (lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy 
+					       noctilux doom-moonlight doom-city-lights
+					    sexy-monochrome lush
+					       cyberpunk cyberpunk-2019 kaolin-aurora . #1#)))
        (lambda ()
-         (interactive)
-         ;; Rotates the thme cycle and changes the current theme.
-         (load-theme (car (setq themes (cdr themes))) t) )))
+	 (interactive)
+	 ;; Rotates the thme cycle and changes the current theme.
+	 (load-theme (car (setq themes (cdr themes))) t) )))
    #+END_SRC
 
    Some nice visual modes
    #+BEGIN_SRC emacs-lisp
-
+   (require 'doom-themes)
 
    (beacon-mode 1)
    (setq beacon-color "#1BFFA5")
@@ -470,6 +474,12 @@
    (sublimity-mode 1)
 
    (setq sublimity-attractive-centering-width 130)
+
+   ;; Enable flashing mode-line on errors
+   (doom-themes-visual-bell-config)
+
+   ;; Corrects (and improves) org-mode's native fontification.
+   (doom-themes-org-config)
 
    ;; (require 'sublimity-scroll)
 
