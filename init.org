@@ -118,6 +118,7 @@
    (require 'cl)
    (require 'package)
    (package-initialize)
+   (package-refresh-contents)
    #+END_SRC
 
    Packages can be fetched from different mirrors, [[http://melpa.milkbox.net/#/][melpa]] is the largest
@@ -159,6 +160,7 @@
 	     pdf-tools            ; Emacs support library for PDF files
 	     slime                ; Superior Lisp Interaction Mode for Emacs
 	     diminish
+	     crux
 	     org-cliplink
 	     company-jedi
 	     which-key
@@ -287,6 +289,7 @@
 	     dockerfile-mode
 	     cython-mode
 	     context-coloring
+	     beacon
 
 	     company-irony-c-headers
 	     color-identifiers-mode
@@ -313,6 +316,7 @@
    =Command=-key as the =Meta=-key.
 
    #+BEGIN_SRC emacs-lisp
+
    (defun copy-from-osx ()
    (shell-command-to-string "pbpaste"))
    
@@ -411,15 +415,14 @@
    (set-face-background 'highlight-indent-guides-even-face "seagreen")
    (set-face-foreground 'highlight-indent-guides-character-face "seagreen")
 
-
-
-      (dolist (mode
-	       '(tool-bar-mode                ; No toolbars, more room for text
-		 scroll-bar-mode              ; No scroll bars either
-		 ))
-	(funcall mode 0))
+   
+   (dolist (mode
+	    '(tool-bar-mode                ; No toolbars, more room for text
+	      scroll-bar-mode              ; No scroll bars either
+	      ))
+     (funcall mode 0))
    #+END_SRC
-
+   
    Let's apply the same technique for enabling modes that are disabled by
    default.
 
@@ -456,19 +459,21 @@
 	    (load-theme (car (setq themes (cdr themes))) t) )))
    #+END_SRC
 
-
+   Some nice visual modes\
    #+BEGIN_SRC emacs-lisp
 
+
+   (beacon-mode 1)
    (require 'sublimity)
    (require 'sublimity-attractive)
    (sublimity-mode 1)
 
    (setq sublimity-attractive-centering-width 130)
 
-   ;; (require 'sublimity-scroll)
+      ;; (require 'sublimity-scroll)
 
-   ;; (setq sublimity-scroll-weight 10
-   ;;       sublimity-scroll-drift-length 5)
+      ;; (setq sublimity-scroll-weight 10
+      ;;       sublimity-scroll-drift-length 5)
 
 
    #+END_SRC
@@ -1642,6 +1647,7 @@
   the end of the init-file to make sure that all functions are actually
   defined.
 
+
   #+BEGIN_SRC emacs-lisp
     ;; join the line below with the current line
   (global-set-key (kbd "M-j") (lambda () (interactive)
@@ -1729,6 +1735,18 @@
     t nil custom-bindings-map)
   #+END_SRC
 ** Bindings for [[https://github.com/abo-abo/define-word][define-word]]
+** Bindings for crux
+   #+BEGIN_SRC emacs-lisp
+
+     ;; crux
+   (define-key (current-global-map) [remap move-beginning-of-line] 'crux-move-beginning-of-line)
+   (define-key (current-global-map)  (kbd "C-<backspace>") 'crux-kill-line-backwards)
+   (define-key (current-global-map)  [remap kill-whole-line] 'crux-kill-whole-line)
+   (define-key (current-global-map)  [(shift return)] 'crux-smart-open-line)
+   (define-key (current-global-map)  (kbd "C-c I")     'crux-find-user-init-file)
+
+   #+END_SRC
+
 * License
 
   
