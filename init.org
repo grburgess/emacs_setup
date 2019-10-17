@@ -1,4 +1,3 @@
-
 #+TITLE: Emacs configuration file
 #+AUTHOR: J. Michael Burgess
 #+BABEL: :cache yes
@@ -12,7 +11,7 @@
   This is an Emacs configuration file written in [[http://orgmode.org][Org mode]]. It is an attempt
   to keep my =~/.emacs.d= tidy, but still be able to keep it all in one
   file. I aim to briefly explain all my configurations as I go along!
-    
+
 * Configurations
 ** Meta
 
@@ -56,7 +55,7 @@
    There is no reason to track the =init.el= that is generated; by running
    the following command =git= will not bother tracking it:
 
-  
+
    If one wishes to make changes to the repo-version of =init.el= start
    tracking again with:
 
@@ -105,7 +104,7 @@
 
 
 
-   
+
 ** Packages
 
    Managing extensions for Emacs is simplified using =package= which is
@@ -129,12 +128,12 @@
    (setq package-check-signiture nil)
 
    (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			     ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+                            ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 
-     ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-     ;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-     ;; (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+   ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+   ;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+   ;; (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
 
    #+END_SRC
@@ -144,166 +143,166 @@
 
    #+BEGIN_SRC emacs-lisp
    (let* ((package--builtins nil)
-	  (packages
-	   '(auto-compile         ; automatically compile Emacs Lisp libraries
-	     company              ; Modular text completion framework
-	     focus                ; Dim color of text in surrounding sections
-	     idle-require         ; load elisp libraries while Emacs is idle
-	     jedi                 ; Python auto-completion for Emacs
-	     magit                ; control Git from Emacs
-	     markdown-mode        ; Emacs Major mode for Markdown-formatted files
-	     multiple-cursors     ; Multiple cursors for Emacs
-	     olivetti             ; Minor mode for a nice writing environment
-	     org                  ; Outline-based notes management and organizer
-	     org-ref              ; citations bibliographies in org-mode
-	     paredit              ; minor mode for editing parentheses
-	     pdf-tools            ; Emacs support library for PDF files
-	     slime                ; Superior Lisp Interaction Mode for Emacs
-	     diminish
-	     crux
-	     org-cliplink
-	     company-jedi
-	     which-key
-	     iedit
-	     easy-jekyll
-	     bug-hunter
-	     cyberpunk-2019-theme
-	     cyberpunk-theme
-	     doom-modeline
-	     git-gutter-fringe
-	     org-bullets
-	     abyss-theme
-	     afternoon-theme
-	     ample-theme
-	     arjen-grey-theme
-	     atom-dark-theme
-	     badger-theme
-	     birds-of-paradise-plus-theme
-	     calmer-forest-theme
-	     constant-theme
-	     dakrone-theme
-	     dark-krystal-theme
-	     dark-mint-theme
-	     darkmine-theme
-	     darkokai-theme
-	     distinguished-theme
-	     exotica-theme
-	     flatui-dark-theme
-	     forest-blue-theme
-	     gotham-theme
-	     grandshell-theme
-	     gruber-darker-theme
-	     hamburg-theme
-	     idea-darkula-theme
-	     klere-theme
-	     kooten-theme
-	     liso-theme
-	     lush-theme
-	     madhat2r-theme
-	     majapahit-theme
-	     metalheart-theme
-	     monochrome-theme
-	     monokai-alt-theme
-	     noctilux-theme
-	     northcode-theme
-	     nyx-theme
-	     paganini-theme
-	     planet-theme
-	     reykjavik-theme
-	     rimero-theme
-	     sexy-monochrome-theme
-	     smart-mode-line-atom-one-dark-theme
-	     soft-charcoal-theme
-	     soothe-theme
-	     toxi-theme
-	     twilight-anti-bright-theme
-	     warm-night-theme
-	     zeno-theme
-	     zerodark-theme
-	     zweilight-theme
-	     alect-themes
-	     apropospriate-theme
-	     arc-dark-theme
-	     atom-one-dark-theme
-	     darktooth-theme
-	     eziam-theme
-	     foggy-night-theme
-	     minimal-theme
-	     mood-one-theme
-	     nimbus-theme
-	     nova-theme
-	     overcast-theme
-	     seti-theme
-	     srcery-theme
-	     tablist
-	     magit-popup
-	     neotree
-	     browse-kill-ring
-	     spotify
-	     shell-pop
-	     use-package
-	     magithub
-	     smart-mode-line-powerline-theme
-	     moe-theme
-	     undo-tree
-	     mu4e-maildirs-extension
-	     mu4e-conversation
-	     mutt-mode
-	     blacken
-	     company-reftex
-	     company-auctex
-	     ace-jump-mode
-	     sublime-themes
-	     auto-complete-auctex
-	     sublimity
-	     yasnippet
-	     yasnippet-classic-snippets
-	     standoff-mode
-	     elpygen
-	     projectile
-	     auto-complete
-	     smex
-	     yasnippet-snippets
-	     yaml-mode
-	     stan-snippets
-	     ssh
-	     sphinx-doc
-	     spacemacs-theme
-	     rope-read-mode
-	     rainbow-identifiers
-	     rainbow-delimiters
-	     python-docstring
-	     origami
-	     omtose-phellack-theme
-	     markdown-mode
-	     magit
-	     kaolin-themes
-	     js2-mode
-	     highlight-numbers
-	     highlight-indent-guides
-	     gist
-	     flymake-python-pyflakes
-	     flycheck
-	     ess
-	     elpy
-	     dockerfile-mode
-	     cython-mode
-	     context-coloring
-	     beacon
+          (packages
+           '(auto-compile         ; automatically compile Emacs Lisp libraries
+             company              ; Modular text completion framework
+             focus                ; Dim color of text in surrounding sections
+             idle-require         ; load elisp libraries while Emacs is idle
+             jedi                 ; Python auto-completion for Emacs
+             magit                ; control Git from Emacs
+             markdown-mode        ; Emacs Major mode for Markdown-formatted files
+             multiple-cursors     ; Multiple cursors for Emacs
+             olivetti             ; Minor mode for a nice writing environment
+             org                  ; Outline-based notes management and organizer
+             org-ref              ; citations bibliographies in org-mode
+             paredit              ; minor mode for editing parentheses
+             pdf-tools            ; Emacs support library for PDF files
+             slime                ; Superior Lisp Interaction Mode for Emacs
+             diminish
+             crux
+             org-cliplink
+             company-jedi
+             which-key
+             iedit
+             easy-jekyll
+             bug-hunter
+             cyberpunk-2019-theme
+             cyberpunk-theme
+             doom-modeline
+             git-gutter-fringe
+             org-bullets
+             abyss-theme
+             afternoon-theme
+             ample-theme
+             arjen-grey-theme
+             atom-dark-theme
+             badger-theme
+             birds-of-paradise-plus-theme
+             calmer-forest-theme
+             constant-theme
+             dakrone-theme
+             dark-krystal-theme
+             dark-mint-theme
+             darkmine-theme
+             darkokai-theme
+             distinguished-theme
+             exotica-theme
+             flatui-dark-theme
+             forest-blue-theme
+             gotham-theme
+             grandshell-theme
+             gruber-darker-theme
+             hamburg-theme
+             idea-darkula-theme
+             klere-theme
+             kooten-theme
+             liso-theme
+             lush-theme
+             madhat2r-theme
+             majapahit-theme
+             metalheart-theme
+             monochrome-theme
+             monokai-alt-theme
+             noctilux-theme
+             northcode-theme
+             nyx-theme
+             paganini-theme
+             planet-theme
+             reykjavik-theme
+             rimero-theme
+             sexy-monochrome-theme
+             smart-mode-line-atom-one-dark-theme
+             soft-charcoal-theme
+             soothe-theme
+             toxi-theme
+             twilight-anti-bright-theme
+             warm-night-theme
+             zeno-theme
+             zerodark-theme
+             zweilight-theme
+             alect-themes
+             apropospriate-theme
+             arc-dark-theme
+             atom-one-dark-theme
+             darktooth-theme
+             eziam-theme
+             foggy-night-theme
+             minimal-theme
+             mood-one-theme
+             nimbus-theme
+             nova-theme
+             overcast-theme
+             seti-theme
+             srcery-theme
+             tablist
+             magit-popup
+             neotree
+             browse-kill-ring
+             spotify
+             shell-pop
+             use-package
+             magithub
+             smart-mode-line-powerline-theme
+             moe-theme
+             undo-tree
+             mu4e-maildirs-extension
+             mu4e-conversation
+             mutt-mode
+             blacken
+             company-reftex
+             company-auctex
+             ace-jump-mode
+             sublime-themes
+             auto-complete-auctex
+             sublimity
+             yasnippet
+             yasnippet-classic-snippets
+             standoff-mode
+             elpygen
+             projectile
+             auto-complete
+             smex
+             yasnippet-snippets
+             yaml-mode
+             stan-snippets
+             ssh
+             sphinx-doc
+             spacemacs-theme
+             rope-read-mode
+             rainbow-identifiers
+             rainbow-delimiters
+             python-docstring
+             origami
+             omtose-phellack-theme
+             markdown-mode
+             magit
+             kaolin-themes
+             js2-mode
+             highlight-numbers
+             highlight-indent-guides
+             gist
+             flymake-python-pyflakes
+             flycheck
+             ess
+             elpy
+             dockerfile-mode
+             cython-mode
+             context-coloring
+             beacon
 
-	     company-irony-c-headers
-	     color-identifiers-mode
-	     colonoscopy-theme
-	     auctex
-	     )))
-	     ; Display available keybindings in popup
-	     (ignore-errors ;; This package is only relevant for Mac OS X.
+             company-irony-c-headers
+             color-identifiers-mode
+             colonoscopy-theme
+             auctex
+             )))
+                                           ; Display available keybindings in popup
+     (ignore-errors ;; This package is only relevant for Mac OS X.
 
-	     (let ((packages (remove-if 'package-installed-p packages)))
-	     (when packages
-	     ;; Install uninstalled packages
-	     (package-refresh-contents)
-	     (mapc 'package-install packages)))))
+       (let ((packages (remove-if 'package-installed-p packages)))
+         (when packages
+           ;; Install uninstalled packages
+           (package-refresh-contents)
+           (mapc 'package-install packages)))))
    #+END_SRC
 
 ** Mac OS X
@@ -318,17 +317,17 @@
    #+BEGIN_SRC emacs-lisp
 
    (defun copy-from-osx ()
-   (shell-command-to-string "pbpaste"))
-   
+     (shell-command-to-string "pbpaste"))
+
    (defun paste-to-osx (text &optional push)
-   (let ((process-connection-type nil))
-   (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-   (process-send-string proc text)
-   (process-send-eof proc))))
-   
+     (let ((process-connection-type nil))
+       (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+         (process-send-string proc text)
+         (process-send-eof proc))))
+
    (setq interprogram-cut-function 'paste-to-osx)
-   (setq interprogram-paste-function 'copy-from-osx) 
-   
+   (setq interprogram-paste-function 'copy-from-osx)
+
    #+END_SRC
 
 ** Sane defaults
@@ -356,17 +355,17 @@
 
    #+BEGIN_SRC emacs-lisp
    (defvar user-temporary-file-directory
-   "~/.emacs-autosaves/")
+     "~/.emacs-autosaves/")
 
    (make-directory user-temporary-file-directory t)
    (setq backup-by-copying t)
    (setq backup-directory-alist
-   `(("." . ,user-temporary-file-directory)
-   (tramp-file-name-regexp nil)))
+         `(("." . ,user-temporary-file-directory)
+           (tramp-file-name-regexp nil)))
    (setq auto-save-list-file-prefix
-   (concat user-temporary-file-directory ".auto-saves-"))
+         (concat user-temporary-file-directory ".auto-saves-"))
    (setq auto-save-file-name-transforms
-   `((".*" ,user-temporary-file-directory t)))
+         `((".*" ,user-temporary-file-directory t)))
 
 
 
@@ -389,7 +388,7 @@
    Automaticly revert =doc-view=-buffers when the file changes on disk.
 
    #+BEGIN_SRC emacs-lisp
-   ;  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+                                           ;  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
    #+END_SRC
 
 ** Modes
@@ -415,20 +414,20 @@
    (set-face-background 'highlight-indent-guides-even-face "seagreen")
    (set-face-foreground 'highlight-indent-guides-character-face "seagreen")
 
-   
+
    (dolist (mode
-	    '(tool-bar-mode                ; No toolbars, more room for text
-	      scroll-bar-mode              ; No scroll bars either
-	      ))
+            '(tool-bar-mode                ; No toolbars, more room for text
+              scroll-bar-mode              ; No scroll bars either
+              ))
      (funcall mode 0))
    #+END_SRC
-   
+
    Let's apply the same technique for enabling modes that are disabled by
    default.
 
    #+BEGIN_SRC emacs-lisp
    (dolist (mode
-            '(abbrev-mode                  ; E.g. sopl -> System.out.println       
+            '(abbrev-mode                  ; E.g. sopl -> System.out.println
               dirtrack-mode                ; directory tracking in *shell*
               global-company-mode          ; Auto-completion everywhere
               global-prettify-symbols-mode ; Greek letters should look gree
@@ -450,30 +449,32 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-      (defun cycle-themes ()
-	"Returns a function that lets you cycle your themes."
-	(lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy noctilux cyberpunk cyberpunk-2019 kaolin-aurora . #1#)))
-	  (lambda ()
-	    (interactive)
-	    ;; Rotates the thme cycle and changes the current theme.
-	    (load-theme (car (setq themes (cdr themes))) t) )))
+   (defun cycle-themes ()
+     "Returns a function that lets you cycle your themes."
+     (lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy noctilux cyberpunk cyberpunk-2019 kaolin-aurora . #1#)))
+       (lambda ()
+         (interactive)
+         ;; Rotates the thme cycle and changes the current theme.
+         (load-theme (car (setq themes (cdr themes))) t) )))
    #+END_SRC
 
-   Some nice visual modes\
+   Some nice visual modes
    #+BEGIN_SRC emacs-lisp
 
 
    (beacon-mode 1)
+   (setq beacon-color "#1BFFA5")
+   (setq beacon-push-mark 60)
    (require 'sublimity)
    (require 'sublimity-attractive)
    (sublimity-mode 1)
 
    (setq sublimity-attractive-centering-width 130)
 
-      ;; (require 'sublimity-scroll)
+   ;; (require 'sublimity-scroll)
 
-      ;; (setq sublimity-scroll-weight 10
-      ;;       sublimity-scroll-drift-length 5)
+   ;; (setq sublimity-scroll-weight 10
+   ;;       sublimity-scroll-drift-length 10)
 
 
    #+END_SRC
@@ -533,16 +534,16 @@
    ;; Or for individual languages
    (setq doom-modeline-env-enable-python t)
    (setq doom-modeline-env-enable-ruby t)
-   
-   
-   
+
+
+
 
 
 
    ;; Change the executables to use for the language version string
    (setq doom-modeline-env-python-executable "python")
    (setq doom-modeline-env-ruby-executable "ruby")
-   
+
    ;; Whether display mu4e notifications or not. Requires `mu4e-alert' package.
    (setq doom-modeline-mu4e nil)
 
@@ -557,34 +558,34 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-      (setq ibuffer-saved-filter-groups
-	    '(("home"
-	       ("emacs-config" (or (filename . ".emacs.d")
-				   (filename . ".init.org")))
-	       ("Org" (or (mode . org-mode)
-			  (filename . "OrgMode")))
-	       ("latex" (or (mode . tex-mode) 
-			    (mode . auctex-mode)
-			    (mode . latex-mode))
-   )
-	       ("stan" (mode . stan-mode) )
+   (setq ibuffer-saved-filter-groups
+         '(("home"
+            ("emacs-config" (or (filename . ".emacs.d")
+                                (filename . ".init.org")))
+            ("Org" (or (mode . org-mode)
+                       (filename . "OrgMode")))
+            ("latex" (or (mode . tex-mode)
+                         (mode . auctex-mode)
+                         (mode . latex-mode))
+             )
+            ("stan" (mode . stan-mode) )
 
-	       ("python" (mode . python-mode))
-	       ("Magit" (name . "\*magit"))
-	       ("Help" (or (name . "\*Help\*")
-			   (name . "\*Apropos\*")
-			   (name . "\*info\*"))))))
+            ("python" (mode . python-mode))
+            ("Magit" (name . "\*magit"))
+            ("Help" (or (name . "\*Help\*")
+                        (name . "\*Apropos\*")
+                        (name . "\*info\*"))))))
 
-      (add-hook 'ibuffer-mode-hook
-		'(lambda ()
-		   (ibuffer-switch-to-saved-filter-groups "home")))
+   (add-hook 'ibuffer-mode-hook
+             '(lambda ()
+                (ibuffer-switch-to-saved-filter-groups "home")))
 
 
 
    #+END_SRC
 
 
-  
+
    New in Emacs 24.4 is the =prettify-symbols-mode=! It's neat.
 
    #+BEGIN_SRC emacs-lisp
@@ -594,7 +595,7 @@
                                           ("phi" . ?φ)
                                           ("psi" . ?ψ)))
    #+END_SRC
-   
+
 ** Completion
 
    [[https://github.com/auto-complete/auto-complete][Auto-Complete]] has been a part of my config for years, but I want to try
@@ -606,28 +607,28 @@
    #+BEGIN_SRC emacs-lisp
 
    (add-hook 'after-init-hook 'global-company-mode)
-					   ;   (add-to-list 'load-path "path/to/company-auctex.el")
+                                           ;   (add-to-list 'load-path "path/to/company-auctex.el")
    (require 'company-auctex)
    (company-auctex-init)
 
 
    (setq company-idle-delay 0
-	 company-echo-delay 0
-	 company-dabbrev-downcase nil
-	      company-minimum-prefix-length 2
-	      company-selection-wrap-around t
-	      company-transformers '(company-sort-by-occurrence
-				     company-sort-by-backend-importance))
+         company-echo-delay 0
+         company-dabbrev-downcase nil
+         company-minimum-prefix-length 2
+         company-selection-wrap-around t
+         company-transformers '(company-sort-by-occurrence
+                                company-sort-by-backend-importance))
 
-   (require 'yasnippet)	
+   (require 'yasnippet)
    (yas-global-mode 1)
    (defun check-expansion ()
      (save-excursion
        (if (looking-at "\\_>") t
-	 (backward-char 1)
-	 (if (looking-at "\\.") t
-	   (backward-char 1)
-	   (if (looking-at "->") t nil)))))
+         (backward-char 1)
+         (if (looking-at "\\.") t
+           (backward-char 1)
+           (if (looking-at "->") t nil)))))
 
    (defun do-yas-expand ()
      (let ((yas/fallback-behavior 'return-nil))
@@ -636,14 +637,14 @@
    (defun tab-indent-or-complete ()
      (interactive)
      (if (minibufferp)
-	 (minibuffer-complete)
+         (minibuffer-complete)
        (if (or (not yas/minor-mode)
-	       (null (do-yas-expand)))
-	   (if (check-expansion)
-	       (company-complete-common)
-	     (indent-for-tab-command)))))
+               (null (do-yas-expand)))
+           (if (check-expansion)
+               (company-complete-common)
+             (indent-for-tab-command)))))
 
-   
+
 
    (require 'stan-mode)
 
@@ -652,24 +653,24 @@
      (require 'stan-snippets)
      (yas-global-mode 1)
      (add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
-  
-	  )
+
+     )
 
 
    #+END_SRC
 
-   #+BEGIN_SRC emacs-lisp   
+   #+BEGIN_SRC emacs-lisp
    (defun org-keyword-backend (command &optional arg &rest ignored)
      (interactive (list 'interactive))
      (cl-case command
        (interactive (company-begin-backend 'org-keyword-backend))
        (prefix (and (eq major-mode 'org-mode)
-		    (cons (company-grab-line "^#\\+\\(\\w*\\)" 1)
-			  t)))
+                    (cons (company-grab-line "^#\\+\\(\\w*\\)" 1)
+                          t)))
        (candidates (mapcar #'upcase
-			   (cl-remove-if-not
-			    (lambda (c) (string-prefix-p arg c))
-			    (pcomplete-completions))))
+                           (cl-remove-if-not
+                            (lambda (c) (string-prefix-p arg c))
+                            (pcomplete-completions))))
        (ignore-case t)
        (duplicates t)))
 
@@ -679,7 +680,7 @@
 
    #+END_SRC
 
-  
+
 ** IDO/SMEX/ACE
 
    Just some jumping around and easy menus
@@ -701,14 +702,14 @@
 
    #+BEGIN_SRC emacs-lisp
    (autoload
-   'ace-jump-mode
-   "ace-jump-mode"
-   "Emacs quick move minor mode"
-   t)
+     'ace-jump-mode
+     "ace-jump-mode"
+     "Emacs quick move minor mode"
+     t)
    ;; you can select the key you prefer to
    ;;(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
    ;;(define-key global-map (kbd "C-c C-c SPC") 'ace-jump-line-mode)
-   
+
    ;; (define-key global-map (kbd "C-o SPC") 'ace-jump-line-mode)
    #+END_SRC
 
@@ -735,42 +736,42 @@
 
 
    ;;   (setq mu4e-maildir "/Users/jburgess/mail"
-   ;; 	mu4e-get-mail-command "mbsync -a --verbose"
-   ;; 	mu4e-update-interval 600
-   ;; 	mu4e-compose-signature-auto-include nil
-   ;; 	mu4e-view-show-images t
-   ;; 	mu4e-view-show-addresses t
-   ;; 	mu4e-enable-notifications nil
-   ;; 	mu4e-enable-mode-line t
-   ;; 	mu4e-headers-skip-duplicates t
-   ;; 	;; rename files when moving, needed for mbsync
-   ;; 	mu4e-change-filenames-when-moving t
+   ;;   mu4e-get-mail-command "mbsync -a --verbose"
+   ;;   mu4e-update-interval 600
+   ;;   mu4e-compose-signature-auto-include nil
+   ;;   mu4e-view-show-images t
+   ;;   mu4e-view-show-addresses t
+   ;;   mu4e-enable-notifications nil
+   ;;   mu4e-enable-mode-line t
+   ;;   mu4e-headers-skip-duplicates t
+   ;;   ;; rename files when moving, needed for mbsync
+   ;;   mu4e-change-filenames-when-moving t
 
-   ;; 	mu4e-compose-dont-reply-to-self t
+   ;;   mu4e-compose-dont-reply-to-self t
    ;; ;        mu4e-compose-format-flowed nil
-   ;; 	fill-flowed-encode-column 280
-   ;; 	mu4e-user-mail-address-list '("jmichaelburgess@gmail.com" "jburgess@mpe.mpg.de, jmichael.gcn@gmail.com")
-   ;; 	mu4e-compose-complete-only-personal t
-   ;; 	mu4e-enable-async-operations t
-   ;; 	org-mu4e-link-query-in-headers-mode nil
-   ;; 	org-mu4e-convert-to-html t
-   ;; 	;; customize the reply-quote-string
-   ;; 	message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
-   ;; 	;; choose to use the formatted string
-   ;; 	message-citation-line-function 'message-insert-formatted-citation-line)
+   ;;   fill-flowed-encode-column 280
+   ;;   mu4e-user-mail-address-list '("jmichaelburgess@gmail.com" "jburgess@mpe.mpg.de, jmichael.gcn@gmail.com")
+   ;;   mu4e-compose-complete-only-personal t
+   ;;   mu4e-enable-async-operations t
+   ;;   org-mu4e-link-query-in-headers-mode nil
+   ;;   org-mu4e-convert-to-html t
+   ;;   ;; customize the reply-quote-string
+   ;;   message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
+   ;;   ;; choose to use the formatted string
+   ;;   message-citation-line-function 'message-insert-formatted-citation-line)
 
 
    ;;   ;; (setq smtpmail-smtp-server "smtp.gmail.com"
-   ;;   ;; 	smtpmail-smtp-service 587
-   ;;   ;; 	smtpmail-queue-mail nil
-   ;;   ;; 	smtpmail-queue-dir "~/mail/queue/cur"
-   ;;   ;; 	send-mail-function 'smtpmail-send-it
-   ;;   ;; 	message-send-mail-function 'smtpmail-send-it
-   ;;   ;; 	mu4e-sent-messages-behavior 'delete
-   ;;   ;; 	mail-envelope-from 'header
-   ;;   ;; 	mail-user-agent 'mu4e-user-agent
-   ;;   ;; 	smtpmail-debug-info t
-   ;;   ;; 	smtpmail-debug-verb t)
+   ;;   ;;      smtpmail-smtp-service 587
+   ;;   ;;      smtpmail-queue-mail nil
+   ;;   ;;      smtpmail-queue-dir "~/mail/queue/cur"
+   ;;   ;;      send-mail-function 'smtpmail-send-it
+   ;;   ;;      message-send-mail-function 'smtpmail-send-it
+   ;;   ;;      mu4e-sent-messages-behavior 'delete
+   ;;   ;;      mail-envelope-from 'header
+   ;;   ;;      mail-user-agent 'mu4e-user-agent
+   ;;   ;;      smtpmail-debug-info t
+   ;;   ;;      smtpmail-debug-verb t)
 
    ;;   ;; (defun mu4e-message-maildir-matches (msg rx)
    ;;   ;;   (string-match rx (mu4e-message-field msg :maildir)))
@@ -782,101 +783,101 @@
    ;;    `(,(make-mu4e-context
    ;;        :name "home"
    ;;        :enter-func (lambda ()
-   ;; 		     (mu4e-message "Switch to jmichaelburgess@gmail.com"))
+   ;;                (mu4e-message "Switch to jmichaelburgess@gmail.com"))
    ;;        ;; leave-func not defined
    ;;        :match-func (lambda (msg)
-   ;; 		     (when msg
+   ;;                (when msg
 
-   ;; 		       (mu4e-message-contact-field-matches msg :to "jmichaelburgess@gmail.com")
-   ;; 		       ))
+   ;;                  (mu4e-message-contact-field-matches msg :to "jmichaelburgess@gmail.com")
+   ;;                  ))
    ;;        :vars '((mu4e-sent-folder . "/gmail-personal/sent")
-   ;; 	       (mu4e-trash-folder . "/gmail-personal/trash")
-   ;; 	       (mu4e-refile-folder . "/gmail-personal/INBOX")
-   ;; 	       (mu4e-drafts-folder . "/gmail-personal/drafts")
-   ;; 	       (user-mail-address . "jmichaelburgess@gmail.com")
-   ;; 	       (user-full-name . "J. Michael Burgess")
-   ;; 	       (smtpmail-smtp-user . "jmichaelburgess@gmail.com")
-   ;; 	       ;(smtpmail-local-domain "gmail.com")
-   ;; 	       (smtpmail-default-smtp-server . "smtp.gmail.com")
-   ;; 	       (smtpmail-smtp-server . "smtp.gmail.com")
-   ;; 	       (smtpmail-smtp-service . 587)
-   ;; 					;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
-   ;; 	       ))
+   ;;          (mu4e-trash-folder . "/gmail-personal/trash")
+   ;;          (mu4e-refile-folder . "/gmail-personal/INBOX")
+   ;;          (mu4e-drafts-folder . "/gmail-personal/drafts")
+   ;;          (user-mail-address . "jmichaelburgess@gmail.com")
+   ;;          (user-full-name . "J. Michael Burgess")
+   ;;          (smtpmail-smtp-user . "jmichaelburgess@gmail.com")
+   ;;          ;(smtpmail-local-domain "gmail.com")
+   ;;          (smtpmail-default-smtp-server . "smtp.gmail.com")
+   ;;          (smtpmail-smtp-server . "smtp.gmail.com")
+   ;;          (smtpmail-smtp-service . 587)
+   ;;                                   ;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
+   ;;          ))
    ;;      ,(make-mu4e-context
    ;;        :name "work"
    ;;        :enter-func (lambda ()
-   ;; 		     (mu4e-message "Switch to jburgess@mpe.mpg.de"))
+   ;;                (mu4e-message "Switch to jburgess@mpe.mpg.de"))
    ;;        ;; leave-func not defined
    ;;        :match-func (lambda (msg)
-   ;; 		     (when msg
-   ;; ;		       (mu4e-message-maildir-matches msg "^/mpe/")
-   ;; 		       (mu4e-message-contact-field-matches msg :to "jburgess@mpe.mpg.de")
-   ;; 		       ))
+   ;;                (when msg
+   ;; ;                (mu4e-message-maildir-matches msg "^/mpe/")
+   ;;                  (mu4e-message-contact-field-matches msg :to "jburgess@mpe.mpg.de")
+   ;;                  ))
    ;;        :vars '((mu4e-sent-folder . "/mpe/sent")
-   ;; 	       (mu4e-trash-folder . "/mpe/trash")
-   ;; 	       (mu4e-refile-folder . "/mpe/INBOX")
-   ;; 	       (mu4e-drafts-folder . "/mpe/drafts")
-   ;; 	       (user-mail-address . "jburgess@mpe.mpg.de")
-   ;; 	       (user-full-name . "J. Michael Burgess")
-   ;; 	       (smtpmail-smtp-user . "jburgess@mpe.mpg.de")
-   ;; 	       ;(smtpmail-local-domain "mpe.mpg.de")
-   ;; 	       (smtpmail-default-smtp-server . "smtp.mpe.mpg.de")
-   ;; 	       (smtpmail-smtp-server . "smtp.mpe.mpg.de")
-   ;; 	       (smtpmail-smtp-service . 587)
-   ;; 					;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
+   ;;          (mu4e-trash-folder . "/mpe/trash")
+   ;;          (mu4e-refile-folder . "/mpe/INBOX")
+   ;;          (mu4e-drafts-folder . "/mpe/drafts")
+   ;;          (user-mail-address . "jburgess@mpe.mpg.de")
+   ;;          (user-full-name . "J. Michael Burgess")
+   ;;          (smtpmail-smtp-user . "jburgess@mpe.mpg.de")
+   ;;          ;(smtpmail-local-domain "mpe.mpg.de")
+   ;;          (smtpmail-default-smtp-server . "smtp.mpe.mpg.de")
+   ;;          (smtpmail-smtp-server . "smtp.mpe.mpg.de")
+   ;;          (smtpmail-smtp-service . 587)
+   ;;                                   ;(mu4e-compose-signature . (concat "Thanks,\n" "Ag\n"))
 
-   ;; 	       ))))
+   ;;          ))))
 
    ;; ;  (add-hook 'mu4e-compose-mode-hook #'turn-off-auto-fill)
    ;; ;  (add-hook 'mu4e-compose-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
 
    ;;   (setq mu4e-view-actions
-   ;; 	'(("capture message" . mu4e-action-capture-message)
-   ;; 	  ("view in browser" . mu4e-action-view-in-browser)
-   ;; 	  ("show this thread" . mu4e-action-show-thread)
-   ;; 	  ("View as pdf" . mu4e-action-view-as-pdf)))
+   ;;   '(("capture message" . mu4e-action-capture-message)
+   ;;     ("view in browser" . mu4e-action-view-in-browser)
+   ;;     ("show this thread" . mu4e-action-show-thread)
+   ;;     ("View as pdf" . mu4e-action-view-as-pdf)))
 
 
    ;; (setq mu4e-user-mail-address-list
    ;;       (delq nil
-   ;; 	    (mapcar (lambda (context)
-   ;; 		      (when (mu4e-context-vars context)
-   ;; 			(cdr (assq 'user-mail-address (mu4e-context-vars context)))))
-   ;; 		    mu4e-contexts)))
+   ;;       (mapcar (lambda (context)
+   ;;                 (when (mu4e-context-vars context)
+   ;;                   (cdr (assq 'user-mail-address (mu4e-context-vars context)))))
+   ;;               mu4e-contexts)))
 
 
 
    ;;   ;; (add-to-list
    ;;   ;;  'mu4e-header-info-custom
    ;;   ;;  '(:foldername . (:name "Folder information"
-   ;;   ;; 			  :shortname "Folder"
-   ;;   ;; 			  :help "Message short storage information"
-   ;;   ;; 			  :function (lambda (msg)
-   ;;   ;; 				      (let ((shortaccount)
-   ;;   ;; 					    (maildir (or (mu4e-message-field msg :maildir) ""))
-   ;;   ;; 					    (mailinglist (or (mu4e-message-field msg :mailing-list) "")))
-   ;;   ;; 					(if (not (string= mailinglist ""))
-   ;;   ;; 					    (setq mailinglist (mu4e-get-mailing-list-shortname mailinglist)))
-   ;;   ;; 					(when (not (string= maildir ""))
-   ;;   ;; 					  (setq shortaccount
-   ;;   ;; 						(substring
-   ;;   ;; 						 (replace-regexp-in-string "^/\\(\\w+\\)/.*$" "\\1" maildir)
-   ;;   ;; 						 0 1))
-   ;;   ;; 					  (setq maildir (replace-regexp-in-string ".*/\\([^/]+\\)$" "\\1" maildir))
-   ;;   ;; 					  (if (> (length maildir) 15)
-   ;;   ;; 					      (setq maildir (concat (substring maildir 0 14) "…")))
-   ;;   ;; 					  (setq maildir (concat "[" shortaccount "] " maildir)))
-   ;;   ;; 					(cond
-   ;;   ;; 					 ((and (string= maildir "")
-   ;;   ;; 					       (not (string= mailinglist "")))
-   ;;   ;; 					  mailinglist)
-   ;;   ;; 					 ((and (not (string= maildir ""))
-   ;;   ;; 					       (string= mailinglist ""))
-   ;;   ;; 					  maildir)
-   ;;   ;; 					 ((and (not (string= maildir ""))
-   ;;   ;; 					       (not (string= mailinglist "")))
-   ;;   ;; 					  (concat maildir " (" mailinglist ")"))
-   ;;   ;; 					 (t "")))))))
+   ;;   ;;                        :shortname "Folder"
+   ;;   ;;                        :help "Message short storage information"
+   ;;   ;;                        :function (lambda (msg)
+   ;;   ;;                                    (let ((shortaccount)
+   ;;   ;;                                          (maildir (or (mu4e-message-field msg :maildir) ""))
+   ;;   ;;                                          (mailinglist (or (mu4e-message-field msg :mailing-list) "")))
+   ;;   ;;                                      (if (not (string= mailinglist ""))
+   ;;   ;;                                          (setq mailinglist (mu4e-get-mailing-list-shortname mailinglist)))
+   ;;   ;;                                      (when (not (string= maildir ""))
+   ;;   ;;                                        (setq shortaccount
+   ;;   ;;                                              (substring
+   ;;   ;;                                               (replace-regexp-in-string "^/\\(\\w+\\)/.*$" "\\1" maildir)
+   ;;   ;;                                               0 1))
+   ;;   ;;                                        (setq maildir (replace-regexp-in-string ".*/\\([^/]+\\)$" "\\1" maildir))
+   ;;   ;;                                        (if (> (length maildir) 15)
+   ;;   ;;                                            (setq maildir (concat (substring maildir 0 14) "…")))
+   ;;   ;;                                        (setq maildir (concat "[" shortaccount "] " maildir)))
+   ;;   ;;                                      (cond
+   ;;   ;;                                       ((and (string= maildir "")
+   ;;   ;;                                             (not (string= mailinglist "")))
+   ;;   ;;                                        mailinglist)
+   ;;   ;;                                       ((and (not (string= maildir ""))
+   ;;   ;;                                             (string= mailinglist ""))
+   ;;   ;;                                        maildir)
+   ;;   ;;                                       ((and (not (string= maildir ""))
+   ;;   ;;                                             (not (string= mailinglist "")))
+   ;;   ;;                                        (concat maildir " (" mailinglist ")"))
+   ;;   ;;                                       (t "")))))))
 
    ;;   ;; (defun ed/get-mail-header (header-name path)
    ;;   ;;   (replace-regexp-in-string
@@ -888,35 +889,35 @@
    ;;   ;; (defun ed/get-origin-mail-system-header (msg)
    ;;   ;;   (let ((path (or (mu4e-message-field msg :path) "")))
    ;;   ;;     (if (or (string= path "")
-   ;;   ;; 	      (not (file-readable-p path)))
-   ;;   ;; 	  "no path found"
-   ;;   ;; 	(let ((xmailer (ed/get-mail-header "x-mailer" path))
-   ;;   ;; 	      (useragent (ed/get-mail-header "user-agent" path)))
-   ;;   ;; 	  (if (string= xmailer useragent)
-   ;;   ;; 	      xmailer
-   ;;   ;; 	    (cond
-   ;;   ;; 	     ((string= xmailer "") useragent)
-   ;;   ;; 	     ((string= useragent "") xmailer)
-   ;;   ;; 	     (t (concat xmailer " (xmailer)\n" useragent " (user-agent)"))))))))
+   ;;   ;;            (not (file-readable-p path)))
+   ;;   ;;        "no path found"
+   ;;   ;;      (let ((xmailer (ed/get-mail-header "x-mailer" path))
+   ;;   ;;            (useragent (ed/get-mail-header "user-agent" path)))
+   ;;   ;;        (if (string= xmailer useragent)
+   ;;   ;;            xmailer
+   ;;   ;;          (cond
+   ;;   ;;           ((string= xmailer "") useragent)
+   ;;   ;;           ((string= useragent "") xmailer)
+   ;;   ;;           (t (concat xmailer " (xmailer)\n" useragent " (user-agent)"))))))))
 
    ;;   ;; (add-to-list 'mu4e-header-info-custom
-   ;;   ;; 	       '(:useragent . (:name "User-Agent"
-   ;;   ;; 				     :shortname "UserAgt."
-   ;;   ;; 				     :help "Mail client used by correspondant"
-   ;;   ;; 				     :function ed/get-origin-mail-system-header)))
+   ;;   ;;             '(:useragent . (:name "User-Agent"
+   ;;   ;;                                   :shortname "UserAgt."
+   ;;   ;;                                   :help "Mail client used by correspondant"
+   ;;   ;;                                   :function ed/get-origin-mail-system-header)))
 
    ;;   ;; (setq mu4e-headers-fields
-   ;;   ;; 	'((:flags . 5)
-   ;;   ;; 	  (:human-date . 22)
-   ;;   ;; 	  (:size . 6)
-   ;;   ;; 	  (:foldername . 25)
-   ;;   ;; 	  (:from-or-to . 25)
-   ;;   ;; 	  (:subject . nil))
+   ;;   ;;      '((:flags . 5)
+   ;;   ;;        (:human-date . 22)
+   ;;   ;;        (:size . 6)
+   ;;   ;;        (:foldername . 25)
+   ;;   ;;        (:from-or-to . 25)
+   ;;   ;;        (:subject . nil))
 
-   ;;   ;; 	mu4e-headers-date-format "%a %d %b %Y %H:%M"
-   ;;   ;; 	mu4e-headers-time-format "%H:%M"
-   ;;   ;; 	mu4e-use-fancy-chars nil
-   ;;   ;; 	mu4e-view-fields '(:from :to :cc :subject :flags :date :maildir :mailing-list :tags  :attachments :signature :decryption))
+   ;;   ;;      mu4e-headers-date-format "%a %d %b %Y %H:%M"
+   ;;   ;;      mu4e-headers-time-format "%H:%M"
+   ;;   ;;      mu4e-use-fancy-chars nil
+   ;;   ;;      mu4e-view-fields '(:from :to :cc :subject :flags :date :maildir :mailing-list :tags  :attachments :signature :decryption))
 
 
 
@@ -930,7 +931,7 @@
    ;; ;;       smtpmail-smtp-server "smtp.gmail.com"
    ;; ;;       smtpmail-smtp-service 587)
 
-   ;; ;; Now I set a list of 
+   ;; ;; Now I set a list of
    ;; ;; (defvar my-mu4e-account-alist
    ;; ;;   '(("Gmail"
    ;; ;;      (mu4e-sent-folder "~/mail/gmail-personal/sent")
@@ -957,7 +958,7 @@
 
    ;; ;; (defun my-mu4e-set-account ()
    ;; ;;   "Set the account for composing a message.
-   ;; ;;    This function is taken from: 
+   ;; ;;    This function is taken from:
    ;; ;;      https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
    ;; ;;   (let* ((account
    ;; ;;     (if mu4e-compose-parent-message
@@ -1014,78 +1015,78 @@
    state in a different buffer (this problem occurs if you only have one
    global cycle). We can implement this by using a [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Closures.html][closure]].
 
-   
+
 ** Org
 
    I use =org-agenda= along with =org-capture= for appointments and such.
 
    #+BEGIN_SRC emacs-lisp
 
-	 (add-hook 'org-mode-hook 'turn-on-auto-fill)
+   (add-hook 'org-mode-hook 'turn-on-auto-fill)
 
-	 (setq org-directory "~/org")
-	 (setq org-agenda-files (list "~/org/"))
-	 (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
-	 (setq org-mobile-inbox-for-pull "~/org/flagged.org")
-	 ;; Set to <your Dropbox root directory>/MobileOrg.
-	 (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-	 (global-set-key "\C-cl" 'org-store-link)
-	 (global-set-key "\C-ca" 'org-agenda)
-	 (setq org-todo-keywords
-	 '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
-
-
+   (setq org-directory "~/org")
+   (setq org-agenda-files (list "~/org/"))
+   (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
+   (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+   ;; Set to <your Dropbox root directory>/MobileOrg.
+   (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+   (global-set-key "\C-cl" 'org-store-link)
+   (global-set-key "\C-ca" 'org-agenda)
+   (setq org-todo-keywords
+         '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
 
 
-	 ;(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
-	 ;(sequence "⚑ WAITING(w)" "|")
-	 ;(sequence "|" "✘ CANCELED(c)")))
 
 
-	 (require 'org-bullets)
-	 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+                                           ;(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
+                                           ;(sequence "⚑ WAITING(w)" "|")
+                                           ;(sequence "|" "✘ CANCELED(c)")))
 
 
-	 (setq org-todo-keyword-faces
-	 '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
-	      ("CANCELED" . (:foreground "pink" :weight bold))
-	      ("WRITING" . (:foreground "red" :weight bold))
-	      ("RECIEVED" . (:foreground "red" :background "green" :weight bold))
-	      ("SUBMITTED" . (:foreground "blue"))
-	      ("ACCEPTED" . (:foreground "green"))
+   (require 'org-bullets)
+   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 
-	      ))
-
-	      ;;; ORG TEMPLATES
-	      (setq org-default-notes-file (concat org-directory "/notes.org"))
-	      (define-key global-map "\C-cc" 'org-capture)
-
-
-	      (setq org-capture-templates
-	      '(("t" "Todo" entry (file "~/org/notes.org")
-	      "* TODO %?\n%U" :empty-lines 1)
-
-	      ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
+   (setq org-todo-keyword-faces
+         '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
+           ("CANCELED" . (:foreground "pink" :weight bold))
+           ("WRITING" . (:foreground "red" :weight bold))
+           ("RECIEVED" . (:foreground "red" :background "green" :weight bold))
+           ("SUBMITTED" . (:foreground "blue"))
+           ("ACCEPTED" . (:foreground "green"))
 
 
-	      ("P" "Research project" entry (file "~/org/projects.org")
-	      "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
+           ))
 
-	      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+        ;;; ORG TEMPLATES
+   (setq org-default-notes-file (concat org-directory "/notes.org"))
+   (define-key global-map "\C-cc" 'org-capture)
 
-	      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
 
-	      ("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+   (setq org-capture-templates
+         '(("t" "Todo" entry (file "~/org/notes.org")
+            "* TODO %?\n%U" :empty-lines 1)
 
-					      ;	("C" "Cliplink capture code" entry (file+headline  "~/org/coding.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+           ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
 
-	      ("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description}  %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n") 
 
-					   ;	   ("F" "Cliplink capture fitting" entry (file+headline  "~/org/fitting.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+           ("P" "Research project" entry (file "~/org/projects.org")
+            "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
 
-	      )
-	      )
+           ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+           ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+           ("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+                                           ;    ("C" "Cliplink capture code" entry (file+headline  "~/org/coding.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+
+           ("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description}  %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+                                           ;       ("F" "Cliplink capture fitting" entry (file+headline  "~/org/fitting.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+
+           )
+         )
 
 
 
@@ -1112,22 +1113,22 @@
         (custom-set-variables `(org-emphasis-alist ',org-emphasis-alist))))
    #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 
 
 
-#+END_SRC
+   #+END_SRC
 
 ** Jekyll
-   Setup for easy blogging 
+   Setup for easy blogging
 
    #+BEGIN_SRC emacs-lisp
 
    (setq easy-jekyll-basedir "~/coding/grburgess.github.io/")
    (setq easy-jekyll-url "https://grburgess.github.io")
-  ;; (setq easy-jekyll-sshdomain "blogdomain")
-  ;; (setq easy-jekyll-root "/home/blog/")
-  ;; (setq easy-jekyll-previewtime "300")
+   ;; (setq easy-jekyll-sshdomain "blogdomain")
+   ;; (setq easy-jekyll-root "/home/blog/")
+   ;; (setq easy-jekyll-previewtime "300")
 
 
 
@@ -1269,23 +1270,23 @@
      (interactive)
      (let* ( $p1 $p2 )
        (if (use-region-p)
-	   (progn
-	     (setq $p1 (region-beginning))
-	     (setq $p2 (region-end)))
-	 (save-excursion
-	   (if (re-search-backward "\n[ \t]*\n" nil "move")
-	       (progn (re-search-forward "\n[ \t]*\n")
-		      (setq $p1 (point)))
-	     (setq $p1 (point)))
-	   (re-search-forward "\n[ \t]*\n" nil "move")
-	   (skip-chars-backward " \t\n" )
-	   (setq $p2 (point))))
+           (progn
+             (setq $p1 (region-beginning))
+             (setq $p2 (region-end)))
+         (save-excursion
+           (if (re-search-backward "\n[ \t]*\n" nil "move")
+               (progn (re-search-forward "\n[ \t]*\n")
+                      (setq $p1 (point)))
+             (setq $p1 (point)))
+           (re-search-forward "\n[ \t]*\n" nil "move")
+           (skip-chars-backward " \t\n" )
+           (setq $p2 (point))))
        (save-excursion
-	 (save-restriction
-	   (narrow-to-region $p1 $p2)
-	   (goto-char (point-min))
-	   (while (re-search-forward " +" nil t)
-	     (replace-match "\n" ))))))
+         (save-restriction
+           (narrow-to-region $p1 $p2)
+           (goto-char (point-min))
+           (while (re-search-forward " +" nil t)
+             (replace-match "\n" ))))))
    #+END_SRC
 
 
@@ -1317,87 +1318,87 @@
        (before disable-before-load (theme &optional no-confirm no-enable) activate)
      (mapc 'disable-theme custom-enabled-themes))
    #+END_SRC
-   
+
 * Mode specific
 
-** Python  
-   
+** Python
 
-   I use elpy for python. 
+
+   I use elpy for python.
 
    #+BEGIN_SRC emacs-lisp
-    (elpy-enable)
+   (elpy-enable)
 
-    (with-eval-after-load 'elpy
+   (with-eval-after-load 'elpy
 
-      (add-hook 'python-mode-hook (lambda ()
-				    (require 'sphinx-doc)
-				    (sphinx-doc-mode t)))
+     (add-hook 'python-mode-hook (lambda ()
+                                   (require 'sphinx-doc)
+                                   (sphinx-doc-mode t)))
 
-      ;; Activate python highlighting for PYX and PPL files
-      (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
-      (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
+     ;; Activate python highlighting for PYX and PPL files
+     (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
+     (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
 
-      (add-to-list 'company-backends 'company-jedi)
+     (add-to-list 'company-backends 'company-jedi)
 
-      (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
-      (define-key global-map (kbd "C-c o") 'iedit-mode)
-
-
-      (add-hook 'python-mode-hook 'elpy-mode)
-
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (add-hook 'elpy-mode-hook 'flycheck-mode)
-      (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
-
-      (defun elpy-goto-definition-or-rgrep ()
-	"Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
-	(interactive)
-	(ring-insert find-tag-marker-ring (point-marker))
-	(condition-case nil (elpy-goto-definition)
-	  (error (elpy-rgrep-symbol
-		  ((concat ) "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
-
-      (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
+     (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+     (define-key global-map (kbd "C-c o") 'iedit-mode)
 
 
+     (add-hook 'python-mode-hook 'elpy-mode)
 
-   )
+     (remove-hook 'elpy-modules 'elpy-module-flymake)
+     (add-hook 'elpy-mode-hook 'flycheck-mode)
+     (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+
+     (defun elpy-goto-definition-or-rgrep ()
+       "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
+       (interactive)
+       (ring-insert find-tag-marker-ring (point-marker))
+       (condition-case nil (elpy-goto-definition)
+         (error (elpy-rgrep-symbol
+                 ((concat ) "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
+
+     (define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
 
 
 
+     )
 
 
-  #+END_SRC
+
+
+
+   #+END_SRC
 
 ** LaTeX and org-mode LaTeX export
 
    LaTeX Setup
    #+BEGIN_SRC emacs-lisp
-      (load "auctex.el" nil t t)
-      (with-eval-after-load 'latex
+   (load "auctex.el" nil t t)
+   (with-eval-after-load 'latex
 
-	(auto-fill-mode 1)
-      (require 'reftex)
-      (setq-default TeX-engine 'xetex)
-      (setq TeX-auto-save t)
-      (setq TeX-parse-self t)
-      (setq-default TeX-master nil)
+     (auto-fill-mode 1)
+     (require 'reftex)
+     (setq-default TeX-engine 'xetex)
+     (setq TeX-auto-save t)
+     (setq TeX-parse-self t)
+     (setq-default TeX-master nil)
 
-      (add-hook 'LaTeX-mode-hook 'reftex-mode)
-      (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-      (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
-      (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
+     (add-hook 'LaTeX-mode-hook 'reftex-mode)
+     (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+     (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
+     (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
 
-      (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-      (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-      ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
-      (setq reftex-plug-into-AUCTeX t)
-      (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
+     (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+     (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+     (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+                                           ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
+     (setq reftex-plug-into-AUCTeX t)
+     (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
 
 
-      )
+     )
 
    #+END_SRC
 ** Compilation
@@ -1639,7 +1640,7 @@
    #+END_SRC
 
 * Key bindings
-  
+
   Inspired by [[http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs][this StackOverflow post]] I keep a =custom-bindings-map= that
   holds all my custom bindings. This map can be activated by toggling a
   simple =minor-mode= that does nothing more than activating the map. This
@@ -1649,14 +1650,14 @@
 
 
   #+BEGIN_SRC emacs-lisp
-    ;; join the line below with the current line
+  ;; join the line below with the current line
   (global-set-key (kbd "M-j") (lambda () (interactive)
-		    (join-line -1)))
+                                (join-line -1)))
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (autoload 'ibuffer "ibuffer" "List buffers." t)
 
   #+END_SRC
-  
+
 
   #+BEGIN_SRC emacs-lisp
   (defvar custom-bindings-map (make-keymap)
@@ -1665,88 +1666,86 @@
 
 ** Bindings for [[http://magit.github.io][Magit]]
 
-  #+BEGIN_SRC emacs-lisp
-  (define-key custom-bindings-map (kbd "C-c m") 'magit-status)
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+   (define-key custom-bindings-map (kbd "C-c m") 'magit-status)
+   #+END_SRC
 
 ** Bindings for [[http://company-mode.github.io/][company-mode]]
 
-  #+BEGIN_SRC emacs-lisp
-  (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+   (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
+   (define-key company-active-map (kbd "C-n") 'company-select-next)
+   (define-key company-active-map (kbd "C-p") 'company-select-previous)
+   #+END_SRC
 
 ** Bindings for built-ins
 
-  #+BEGIN_SRC emacs-lisp
-  (define-key custom-bindings-map (kbd "M-u")         'upcase-dwim)
-  (define-key custom-bindings-map (kbd "M-c")         'capitalize-dwim)
-  (define-key custom-bindings-map (kbd "M-l")         'downcase-dwim)
-  (define-key custom-bindings-map (kbd "M-]")         'other-frame)
-  
-  (define-key custom-bindings-map (kbd "C-c s")       'ispell-word)
-  (define-key custom-bindings-map (kbd "C-x m")       'mu4e)
-  (define-key custom-bindings-map (kbd "C-c <up>")    'windmove-up)
-  (define-key custom-bindings-map (kbd "C-c <down>")  'windmove-down)
-  (define-key custom-bindings-map (kbd "C-c <left>")  'windmove-left)
-  (define-key custom-bindings-map (kbd "C-c <right>") 'windmove-right)
-  (define-key custom-bindings-map (kbd "C-c t")
-    (lambda () (interactive) (org-agenda nil "n")))
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+   (define-key custom-bindings-map (kbd "M-u")         'upcase-dwim)
+   (define-key custom-bindings-map (kbd "M-c")         'capitalize-dwim)
+   (define-key custom-bindings-map (kbd "M-l")         'downcase-dwim)
+   (define-key custom-bindings-map (kbd "M-]")         'other-frame)
 
-** Bindings for functions defined [[sec:defuns][above]].
-   
-  #+BEGIN_SRC emacs-lisp
-  (define-key global-map          (kbd "M-p")     'jump-to-previous-like-this)
-  (define-key global-map          (kbd "M-n")     'jump-to-next-like-this)
-  ;; (define-key custom-bindings-map (kbd "M-,")     'jump-to-previous-like-this)
-  ;; (define-key custom-bindings-map (kbd "M-.")     'jump-to-next-like-this)
-  (define-key custom-bindings-map (kbd "C-x a ") 'ace-jump-mode)
-  (define-key custom-bindings-map (kbd "M-z") 'tab-indent-or-complete)
-  (define-key custom-bindings-map (kbd "C-c .")   (cycle-themes))
-  (define-key custom-bindings-map (kbd "C-x k")   'kill-this-buffer-unless-scratch)
-  (define-key custom-bindings-map (kbd "C-c C-0") 'global-scale-default)
-  (define-key custom-bindings-map (kbd "C-c C-=") 'global-scale-up)
-  (define-key custom-bindings-map (kbd "C-c C-+") 'global-scale-up)
-  (define-key custom-bindings-map (kbd "C-c C--") 'global-scale-down)
-  (define-key custom-bindings-map (kbd "C-c j")   'cycle-spacing-delete-newlines)
-  (define-key custom-bindings-map (kbd "C-c d")   'duplicate-thing)
-  (define-key custom-bindings-map (kbd "<C-tab>") 'tidy)
-  (define-key custom-bindings-map (kbd "M-§")     'toggle-shell)
-  (dolist (n (number-sequence 1 9))
-      (global-set-key (kbd (concat "M-" (int-to-string n)))
-		      (lambda () (interactive) (switch-shell n))))
-  ;; (define-key custom-bindings-map (kbd "C-c C-q")
-  ;;     '(lambda ()
-  ;;        (interactive)
-  ;;        (focus-mode 1)
-    ;;        (focus-read-only-mode 1)))
-  (with-eval-after-load 'org
-	(define-key org-mode-map (kbd "C-'") 'org-sync-pdf))
-  #+END_SRC
-  
-  Lastly we need to activate the map by creating and activating the
-  =minor-mode=.
-
-  #+BEGIN_SRC emacs-lisp
-  (define-minor-mode custom-bindings-mode
-    "A mode that activates custom-bindings."
-    t nil custom-bindings-map)
-  #+END_SRC
-** Bindings for [[https://github.com/abo-abo/define-word][define-word]]
+   (define-key custom-bindings-map (kbd "C-c s")       'ispell-word)
+   (define-key custom-bindings-map (kbd "C-x m")       'mu4e)
+   (define-key custom-bindings-map (kbd "C-c <up>")    'windmove-up)
+   (define-key custom-bindings-map (kbd "C-c <down>")  'windmove-down)
+   (define-key custom-bindings-map (kbd "C-c <left>")  'windmove-left)
+   (define-key custom-bindings-map (kbd "C-c <right>") 'windmove-right)
+   (define-key custom-bindings-map (kbd "C-c t")
+     (lambda () (interactive) (org-agenda nil "n")))
+   #+END_SRC
 ** Bindings for crux
    #+BEGIN_SRC emacs-lisp
 
-     ;; crux
-   (define-key (current-global-map) [remap move-beginning-of-line] 'crux-move-beginning-of-line)
-   (define-key (current-global-map)  (kbd "C-<backspace>") 'crux-kill-line-backwards)
-   (define-key (current-global-map)  [remap kill-whole-line] 'crux-kill-whole-line)
-   (define-key (current-global-map)  [(shift return)] 'crux-smart-open-line)
-   (define-key (current-global-map)  (kbd "C-c I")     'crux-find-user-init-file)
+   ;; crux
+   (define-key custom-bindings-map  [remap move-beginning-of-line] 'crux-move-beginning-of-line)
+   (define-key custom-bindings-map  (kbd "C-<backspace>") 'crux-kill-line-backwards)
+   (define-key custom-bindings-map  [remap kill-whole-line] 'crux-kill-whole-line)
+   (define-key custom-bindings-map   [(shift return)] 'crux-smart-open-line)
+   (define-key custom-bindings-map  (kbd "C-c I")     'crux-find-user-init-file)
 
    #+END_SRC
 
-* License
+** Bindings for functions defined [[sec:defuns][above]].
 
-  
+   #+BEGIN_SRC emacs-lisp
+   (define-key global-map          (kbd "M-p")     'jump-to-previous-like-this)
+   (define-key global-map          (kbd "M-n")     'jump-to-next-like-this)
+   ;; (define-key custom-bindings-map (kbd "M-,")     'jump-to-previous-like-this)
+   ;; (define-key custom-bindings-map (kbd "M-.")     'jump-to-next-like-this)
+   (define-key custom-bindings-map (kbd "C-x a ") 'ace-jump-mode)
+   (define-key custom-bindings-map (kbd "M-z") 'tab-indent-or-complete)
+   (define-key custom-bindings-map (kbd "C-c .")   (cycle-themes))
+   (define-key custom-bindings-map (kbd "C-x k")   'kill-this-buffer-unless-scratch)
+   (define-key custom-bindings-map (kbd "C-c C-0") 'global-scale-default)
+   (define-key custom-bindings-map (kbd "C-c C-=") 'global-scale-up)
+   (define-key custom-bindings-map (kbd "C-c C-+") 'global-scale-up)
+   (define-key custom-bindings-map (kbd "C-c C--") 'global-scale-down)
+   (define-key custom-bindings-map (kbd "C-c j")   'cycle-spacing-delete-newlines)
+   (define-key custom-bindings-map (kbd "C-c d")   'duplicate-thing)
+   (define-key custom-bindings-map (kbd "<C-tab>") 'tidy)
+   (define-key custom-bindings-map (kbd "M-§")     'toggle-shell)
+   (dolist (n (number-sequence 1 9))
+     (global-set-key (kbd (concat "M-" (int-to-string n)))
+		     (lambda () (interactive) (switch-shell n))))
+   ;; (define-key custom-bindings-map (kbd "C-c C-q")
+   ;;     '(lambda ()
+   ;;        (interactive)
+   ;;        (focus-mode 1)
+   ;;        (focus-read-only-mode 1)))
+   (with-eval-after-load 'org
+     (define-key org-mode-map (kbd "C-'") 'org-sync-pdf))
+   #+END_SRC
+
+   Lastly we need to activate the map by creating and activating the
+   =minor-mode=.
+
+   #+BEGIN_SRC emacs-lisp
+   (define-minor-mode custom-bindings-mode
+     "A mode that activates custom-bindings."
+     t nil custom-bindings-map)
+   #+END_SRC
+** Bindings for [[https://github.com/abo-abo/define-word][define-word]]
+
+* License
