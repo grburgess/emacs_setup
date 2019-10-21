@@ -144,167 +144,168 @@
 
    #+BEGIN_SRC emacs-lisp
    (let* ((package--builtins nil)
-          (packages
-           '(auto-compile         ; automatically compile Emacs Lisp libraries
-             company              ; Modular text completion framework
-             focus                ; Dim color of text in surrounding sections
-             idle-require         ; load elisp libraries while Emacs is idle
-             jedi                 ; Python auto-completion for Emacs
-             magit                ; control Git from Emacs
-             markdown-mode        ; Emacs Major mode for Markdown-formatted files
-             multiple-cursors     ; Multiple cursors for Emacs
-             olivetti             ; Minor mode for a nice writing environment
-             org                  ; Outline-based notes management and organizer
-             org-ref              ; citations bibliographies in org-mode
-             paredit              ; minor mode for editing parentheses
-             pdf-tools            ; Emacs support library for PDF files
-             slime                ; Superior Lisp Interaction Mode for Emacs
-             diminish
-             crux
-             org-cliplink
-             company-jedi
-             which-key
-             iedit
-             easy-jekyll
-             bug-hunter
-             cyberpunk-2019-theme
-             cyberpunk-theme
-             doom-modeline
-             doom-themes
-             git-gutter-fringe
-             org-bullets
-             abyss-theme
-             afternoon-theme
-             ample-theme
-             arjen-grey-theme
-             atom-dark-theme
-             badger-theme
-             birds-of-paradise-plus-theme
-             calmer-forest-theme
-             constant-theme
-             dakrone-theme
-             dark-krystal-theme
-             dark-mint-theme
-             darkmine-theme
-             darkokai-theme
-             distinguished-theme
-             exotica-theme
-             flatui-dark-theme
-             forest-blue-theme
-             gotham-theme
-             grandshell-theme
-             gruber-darker-theme
-             hamburg-theme
-             idea-darkula-theme
-             klere-theme
-             kooten-theme
-             liso-theme
-             lush-theme
-             madhat2r-theme
-             majapahit-theme
-             metalheart-theme
-             monochrome-theme
-             monokai-alt-theme
-             noctilux-theme
-             northcode-theme
-             nyx-theme
-             paganini-theme
-             planet-theme
-             reykjavik-theme
-             rimero-theme
-             sexy-monochrome-theme
-             smart-mode-line-atom-one-dark-theme
-             soft-charcoal-theme
-             soothe-theme
-             toxi-theme
-             twilight-anti-bright-theme
-             warm-night-theme
-             zeno-theme
-             zerodark-theme
-             zweilight-theme
-             alect-themes
-             apropospriate-theme
-             arc-dark-theme
-             atom-one-dark-theme
-             darktooth-theme
-             eziam-theme
-             foggy-night-theme
-             minimal-theme
-             mood-one-theme
-             nimbus-theme
-             nova-theme
-             overcast-theme
-             seti-theme
-             srcery-theme
-             tablist
-             magit-popup
-             neotree
-             browse-kill-ring
-             spotify
-             shell-pop
-             use-package
-             magithub
-             smart-mode-line-powerline-theme
-             moe-theme
-             undo-tree
-             mu4e-maildirs-extension
-             mu4e-conversation
-             mutt-mode
-             blacken
-             company-reftex
-             company-auctex
-             ace-jump-mode
-             sublime-themes
-             auto-complete-auctex
-             sublimity
-             yasnippet
-             yasnippet-classic-snippets
-             standoff-mode
-             elpygen
-             projectile
-             auto-complete
-             smex
-             yasnippet-snippets
-             yaml-mode
-             stan-snippets
-             ssh
-             sphinx-doc
-             spacemacs-theme
-             rope-read-mode
-             rainbow-identifiers
-             rainbow-delimiters
-             python-docstring
-             origami
-             omtose-phellack-theme
-             markdown-mode
-             magit
-             kaolin-themes
-             js2-mode
-             highlight-numbers
-             highlight-indent-guides
-             gist
-             flymake-python-pyflakes
-             flycheck
-             ess
-             elpy
-             dockerfile-mode
-             cython-mode
-             context-coloring
-             beacon
+	  (packages
+	   '(auto-compile         ; automatically compile Emacs Lisp libraries
+	     company              ; Modular text completion framework
+	     focus                ; Dim color of text in surrounding sections
+	     idle-require         ; load elisp libraries while Emacs is idle
+	     jedi                 ; Python auto-completion for Emacs
+	     magit                ; control Git from Emacs
+	     markdown-mode        ; Emacs Major mode for Markdown-formatted files
+	     multiple-cursors     ; Multiple cursors for Emacs
+	     olivetti             ; Minor mode for a nice writing environment
+	     org                  ; Outline-based notes management and organizer
+	     org-ref              ; citations bibliographies in org-mode
+	     paredit              ; minor mode for editing parentheses
+	     pdf-tools            ; Emacs support library for PDF files
+	     slime                ; Superior Lisp Interaction Mode for Emacs
+	     diminish
+	     crux
+	     swiper
+	     ivy
+	     counsel
 
-             company-irony-c-headers
-             color-identifiers-mode
-             colonoscopy-theme
-             auctex
-             )))
-                                           ; Display available keybindings in popup
+	     org-cliplink
+	     company-jedi
+	     which-key
+	     iedit
+	     easy-jekyll
+	     bug-hunter
+	     cyberpunk-2019-theme
+	     cyberpunk-theme
+	     doom-modeline
+	     doom-themes
+	     git-gutter-fringe
+	     org-bullets
+	     abyss-theme
+	     afternoon-theme
+	     ample-theme
+	     arjen-grey-theme
+	     atom-dark-theme
+	     badger-theme
+	     birds-of-paradise-plus-theme
+	     calmer-forest-theme
+	     constant-theme
+	     dakrone-theme
+	     dark-krystal-theme
+	     dark-mint-theme
+	     darkmine-theme
+	     darkokai-theme
+	     distinguished-theme
+	     exotica-theme
+	     flatui-dark-theme
+	     forest-blue-theme
+	     gotham-theme
+	     grandshell-theme
+	     gruber-darker-theme
+	     hamburg-theme
+	     idea-darkula-theme
+	     klere-theme
+	     kooten-theme
+	     liso-theme
+	     lush-theme
+	     madhat2r-theme
+	     majapahit-theme
+	     metalheart-theme
+	     monochrome-theme
+	     monokai-alt-theme
+	     noctilux-theme
+	     northcode-theme
+	     nyx-theme
+	     paganini-theme
+	     planet-theme
+	     reykjavik-theme
+	     rimero-theme
+	     sexy-monochrome-theme
+	     smart-mode-line-atom-one-dark-theme
+	     soft-charcoal-theme
+	     soothe-theme
+	     toxi-theme
+	     twilight-anti-bright-theme
+	     warm-night-theme
+	     zeno-theme
+	     zerodark-theme
+	     zweilight-theme
+	     alect-themes
+	     apropospriate-theme
+	     arc-dark-theme
+	     atom-one-dark-theme
+	     darktooth-theme
+	     eziam-theme
+	     foggy-night-theme
+	     minimal-theme
+	     mood-one-theme
+	     nimbus-theme
+	     nova-theme
+	     overcast-theme
+	     seti-theme
+	     srcery-theme
+	     tablist
+	     magit-popup
+	     neotree
+	     browse-kill-ring
+
+	     shell-pop
+	     use-package
+	     magithub
+	     smart-mode-line-powerline-theme
+	     moe-theme
+	     undo-tree
+	     blacken
+	     company-reftex
+	     company-auctex
+	     ace-jump-mode
+	     sublime-themes
+	     auto-complete-auctex
+	     sublimity
+	     yasnippet
+	     yasnippet-classic-snippets
+	     standoff-mode
+	     elpygen
+	     projectile
+	     auto-complete
+	     smex
+	     yasnippet-snippets
+	     yaml-mode
+	     stan-snippets
+	     ssh
+	     sphinx-doc
+	     spacemacs-theme
+	     rope-read-mode
+	     rainbow-identifiers
+	     rainbow-delimiters
+	     python-docstring
+	     origami
+	     omtose-phellack-theme
+	     markdown-mode
+	     magit
+	     kaolin-themes
+	     js2-mode
+	     highlight-numbers
+	     highlight-indent-guides
+	     gist
+	     flymake-python-pyflakes
+	     flycheck
+	     ess
+	     elpy
+	     dockerfile-mode
+	     cython-mode
+	     context-coloring
+	     beacon
+
+	     company-irony-c-headers
+	     color-identifiers-mode
+	     colonoscopy-theme
+	     auctex
+	     )))
+					   ; Display available keybindings in popup
      (ignore-errors ;; This package is only relevant for Mac OS X.
 
        (let ((packages (remove-if 'package-installed-p packages)))
-         (when packages
-           ;; Install uninstalled packages
-           (package-refresh-contents)
-           (mapc 'package-install packages)))))
+	 (when packages
+	   ;; Install uninstalled packages
+	   (package-refresh-contents)
+	   (mapc 'package-install packages)))))
    #+END_SRC
 
 ** Mac OS X
@@ -453,14 +454,14 @@
    #+BEGIN_SRC emacs-lisp
    (defun cycle-themes ()
      "Returns a function that lets you cycle your themes."
-     (lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy 
-					       noctilux doom-moonlight doom-city-lights
-					    sexy-monochrome lush
-					       cyberpunk cyberpunk-2019 kaolin-aurora . #1#)))
+     (lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy
+                                               noctilux doom-moonlight doom-city-lights
+                                               sexy-monochrome lush
+                                               cyberpunk cyberpunk-2019 kaolin-aurora . #1#)))
        (lambda ()
-	 (interactive)
-	 ;; Rotates the thme cycle and changes the current theme.
-	 (load-theme (car (setq themes (cdr themes))) t) )))
+         (interactive)
+         ;; Rotates the thme cycle and changes the current theme.
+         (load-theme (car (setq themes (cdr themes))) t) )))
    #+END_SRC
 
    Some nice visual modes
@@ -692,38 +693,68 @@
    #+END_SRC
 
 
-** IDO/SMEX/ACE
+** IDO/SMEX/ACE/IVY
 
    Just some jumping around and easy menus
 
-   #+BEGIN_SRC emacs-lisp
-   (global-set-key (kbd "M-x") 'smex)
-   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-   ;; This is your old M-x.
-   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-   #+END_SRC
+*** SMEX
 
+    #+BEGIN_SRC emacs-lisp
+    ;; (global-set-key (kbd "M-x") 'smex)
+    ;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+    ;; ;; This is your old M-x.
+    ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+    #+END_SRC
 
+*** IDO
 
-   #+BEGIN_SRC emacs-lisp
-   (require 'ido)
-   (ido-mode t)
-   #+END_SRC
+    #+BEGIN_SRC emacs-lisp
+    ;; (require 'ido)
+    ;; (ido-mode t)                                ;
+    #+END_SRC
 
+*** ace
+    #+BEGIN_SRC emacs-lisp
+    (autoload
+      'ace-jump-mode
+      "ace-jump-mode"
+      "Emacs quick move minor mode"
+      t)
+    ;; you can select the key you prefer to
+    ;;(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+    ;;(define-key global-map (kbd "C-c C-c SPC") 'ace-jump-line-mode)
 
-   #+BEGIN_SRC emacs-lisp
-   (autoload
-     'ace-jump-mode
-     "ace-jump-mode"
-     "Emacs quick move minor mode"
-     t)
-   ;; you can select the key you prefer to
-   ;;(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-   ;;(define-key global-map (kbd "C-c C-c SPC") 'ace-jump-line-mode)
+    ;; (define-key global-map (kbd "C-o SPC") 'ace-jump-line-mode)
+    #+END_SRC
+*** IVY
 
-   ;; (define-key global-map (kbd "C-o SPC") 'ace-jump-line-mode)
-   #+END_SRC
+    #+BEGIN_SRC emacs-lisp
 
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    ;; enable this if you want `swiper' to use it
+    ;; (setq search-default-mode #'char-fold-to-regexp)
+    (global-set-key "\C-s" 'swiper)
+    (global-set-key (kbd "C-c C-r") 'ivy-resume)
+    (global-set-key (kbd "<f6>") 'ivy-resume)
+    (global-set-key (kbd "M-x") 'counsel-M-x)
+    (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+    (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+    (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+    (global-set-key (kbd "<f1> l") 'counsel-find-library)
+    (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+    (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+    (global-set-key (kbd "C-c g") 'counsel-git)
+    (global-set-key (kbd "C-c j") 'counsel-git-grep)
+    (global-set-key (kbd "C-c k") 'counsel-ag)
+    (global-set-key (kbd "C-x l") 'counsel-locate)
+    (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+    (global-set-key (kbd "C-y") 'counsel-yank-pop)
+
+    (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+
+    #+END_SRC
 
 ** Flyspell
 
