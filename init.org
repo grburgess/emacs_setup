@@ -144,168 +144,168 @@
 
    #+BEGIN_SRC emacs-lisp
    (let* ((package--builtins nil)
-	  (packages
-	   '(auto-compile         ; automatically compile Emacs Lisp libraries
-	     company              ; Modular text completion framework
-	     focus                ; Dim color of text in surrounding sections
-	     idle-require         ; load elisp libraries while Emacs is idle
-	     jedi                 ; Python auto-completion for Emacs
-	     magit                ; control Git from Emacs
-	     markdown-mode        ; Emacs Major mode for Markdown-formatted files
-	     multiple-cursors     ; Multiple cursors for Emacs
-	     olivetti             ; Minor mode for a nice writing environment
-	     org                  ; Outline-based notes management and organizer
-	     org-ref              ; citations bibliographies in org-mode
-	     paredit              ; minor mode for editing parentheses
-	     pdf-tools            ; Emacs support library for PDF files
-	     slime                ; Superior Lisp Interaction Mode for Emacs
-	     diminish
-	     crux
-	     swiper
-	     ivy
-	     counsel
+          (packages
+           '(auto-compile         ; automatically compile Emacs Lisp libraries
+             company              ; Modular text completion framework
+             focus                ; Dim color of text in surrounding sections
+             idle-require         ; load elisp libraries while Emacs is idle
+             jedi                 ; Python auto-completion for Emacs
+             magit                ; control Git from Emacs
+             markdown-mode        ; Emacs Major mode for Markdown-formatted files
+             multiple-cursors     ; Multiple cursors for Emacs
+             olivetti             ; Minor mode for a nice writing environment
+             org                  ; Outline-based notes management and organizer
+             org-ref              ; citations bibliographies in org-mode
+             paredit              ; minor mode for editing parentheses
+             pdf-tools            ; Emacs support library for PDF files
+             slime                ; Superior Lisp Interaction Mode for Emacs
+             diminish
+             crux
+             swiper
+             ivy
+             counsel
+             org-variable-pitch
+             org-cliplink
+             company-jedi
+             which-key
+             iedit
+             easy-jekyll
+             bug-hunter
+             cyberpunk-2019-theme
+             cyberpunk-theme
+             doom-modeline
+             doom-themes
+             git-gutter-fringe
+             org-bullets
+             abyss-theme
+             afternoon-theme
+             ample-theme
+             arjen-grey-theme
+             atom-dark-theme
+             badger-theme
+             birds-of-paradise-plus-theme
+             calmer-forest-theme
+             constant-theme
+             dakrone-theme
+             dark-krystal-theme
+             dark-mint-theme
+             darkmine-theme
+             darkokai-theme
+             distinguished-theme
+             exotica-theme
+             flatui-dark-theme
+             forest-blue-theme
+             gotham-theme
+             grandshell-theme
+             gruber-darker-theme
+             hamburg-theme
+             idea-darkula-theme
+             klere-theme
+             kooten-theme
+             liso-theme
+             lush-theme
+             madhat2r-theme
+             majapahit-theme
+             metalheart-theme
+             monochrome-theme
+             monokai-alt-theme
+             noctilux-theme
+             northcode-theme
+             nyx-theme
+             paganini-theme
+             planet-theme
+             reykjavik-theme
+             rimero-theme
+             sexy-monochrome-theme
+             smart-mode-line-atom-one-dark-theme
+             soft-charcoal-theme
+             soothe-theme
+             toxi-theme
+             twilight-anti-bright-theme
+             warm-night-theme
+             zeno-theme
+             zerodark-theme
+             zweilight-theme
+             alect-themes
+             apropospriate-theme
+             arc-dark-theme
+             atom-one-dark-theme
+             darktooth-theme
+             eziam-theme
+             foggy-night-theme
+             minimal-theme
+             mood-one-theme
+             nimbus-theme
+             nova-theme
+             overcast-theme
+             seti-theme
+             srcery-theme
+             tablist
+             magit-popup
+             neotree
+             browse-kill-ring
 
-	     org-cliplink
-	     company-jedi
-	     which-key
-	     iedit
-	     easy-jekyll
-	     bug-hunter
-	     cyberpunk-2019-theme
-	     cyberpunk-theme
-	     doom-modeline
-	     doom-themes
-	     git-gutter-fringe
-	     org-bullets
-	     abyss-theme
-	     afternoon-theme
-	     ample-theme
-	     arjen-grey-theme
-	     atom-dark-theme
-	     badger-theme
-	     birds-of-paradise-plus-theme
-	     calmer-forest-theme
-	     constant-theme
-	     dakrone-theme
-	     dark-krystal-theme
-	     dark-mint-theme
-	     darkmine-theme
-	     darkokai-theme
-	     distinguished-theme
-	     exotica-theme
-	     flatui-dark-theme
-	     forest-blue-theme
-	     gotham-theme
-	     grandshell-theme
-	     gruber-darker-theme
-	     hamburg-theme
-	     idea-darkula-theme
-	     klere-theme
-	     kooten-theme
-	     liso-theme
-	     lush-theme
-	     madhat2r-theme
-	     majapahit-theme
-	     metalheart-theme
-	     monochrome-theme
-	     monokai-alt-theme
-	     noctilux-theme
-	     northcode-theme
-	     nyx-theme
-	     paganini-theme
-	     planet-theme
-	     reykjavik-theme
-	     rimero-theme
-	     sexy-monochrome-theme
-	     smart-mode-line-atom-one-dark-theme
-	     soft-charcoal-theme
-	     soothe-theme
-	     toxi-theme
-	     twilight-anti-bright-theme
-	     warm-night-theme
-	     zeno-theme
-	     zerodark-theme
-	     zweilight-theme
-	     alect-themes
-	     apropospriate-theme
-	     arc-dark-theme
-	     atom-one-dark-theme
-	     darktooth-theme
-	     eziam-theme
-	     foggy-night-theme
-	     minimal-theme
-	     mood-one-theme
-	     nimbus-theme
-	     nova-theme
-	     overcast-theme
-	     seti-theme
-	     srcery-theme
-	     tablist
-	     magit-popup
-	     neotree
-	     browse-kill-ring
+             shell-pop
+             use-package
+             magithub
+             smart-mode-line-powerline-theme
+             moe-theme
+             undo-tree
+             blacken
+             company-reftex
+             company-auctex
+             ace-jump-mode
+             sublime-themes
+             auto-complete-auctex
+             sublimity
+             yasnippet
+             yasnippet-classic-snippets
+             standoff-mode
+             elpygen
+             projectile
+             auto-complete
+             smex
+             yasnippet-snippets
+             yaml-mode
+             stan-snippets
+             ssh
+             sphinx-doc
+             spacemacs-theme
+             rope-read-mode
+             rainbow-identifiers
+             rainbow-delimiters
+             python-docstring
+             origami
+             omtose-phellack-theme
+             markdown-mode
+             magit
+             kaolin-themes
+             js2-mode
+             highlight-numbers
+             highlight-indent-guides
+             gist
+             flymake-python-pyflakes
+             flycheck
+             ess
+             elpy
+             dockerfile-mode
+             cython-mode
+             context-coloring
+             beacon
 
-	     shell-pop
-	     use-package
-	     magithub
-	     smart-mode-line-powerline-theme
-	     moe-theme
-	     undo-tree
-	     blacken
-	     company-reftex
-	     company-auctex
-	     ace-jump-mode
-	     sublime-themes
-	     auto-complete-auctex
-	     sublimity
-	     yasnippet
-	     yasnippet-classic-snippets
-	     standoff-mode
-	     elpygen
-	     projectile
-	     auto-complete
-	     smex
-	     yasnippet-snippets
-	     yaml-mode
-	     stan-snippets
-	     ssh
-	     sphinx-doc
-	     spacemacs-theme
-	     rope-read-mode
-	     rainbow-identifiers
-	     rainbow-delimiters
-	     python-docstring
-	     origami
-	     omtose-phellack-theme
-	     markdown-mode
-	     magit
-	     kaolin-themes
-	     js2-mode
-	     highlight-numbers
-	     highlight-indent-guides
-	     gist
-	     flymake-python-pyflakes
-	     flycheck
-	     ess
-	     elpy
-	     dockerfile-mode
-	     cython-mode
-	     context-coloring
-	     beacon
-
-	     company-irony-c-headers
-	     color-identifiers-mode
-	     colonoscopy-theme
-	     auctex
-	     )))
-					   ; Display available keybindings in popup
+             company-irony-c-headers
+             color-identifiers-mode
+             colonoscopy-theme
+             auctex
+             )))
+                                           ; Display available keybindings in popup
      (ignore-errors ;; This package is only relevant for Mac OS X.
 
        (let ((packages (remove-if 'package-installed-p packages)))
-	 (when packages
-	   ;; Install uninstalled packages
-	   (package-refresh-contents)
-	   (mapc 'package-install packages)))))
+         (when packages
+           ;; Install uninstalled packages
+           (package-refresh-contents)
+           (mapc 'package-install packages)))))
    #+END_SRC
 
 ** Mac OS X
@@ -750,7 +750,7 @@
     (global-set-key (kbd "C-c k") 'counsel-ag)
     (global-set-key (kbd "C-x l") 'counsel-locate)
     (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-    (global-set-key (kbd "C-y") 'counsel-yank-pop)
+    (global-set-key (kbd "M-y") 'counsel-yank-pop)
 
     (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
@@ -786,71 +786,122 @@
 
    #+BEGIN_SRC emacs-lisp
 
-   (add-hook 'org-mode-hook 'turn-on-auto-fill)
+      (add-hook 'org-mode-hook 'turn-on-auto-fill)
 
-   (setq org-directory "~/org")
-   (setq org-agenda-files (list "~/org/"))
-   (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
-   (setq org-mobile-inbox-for-pull "~/org/flagged.org")
-   ;; Set to <your Dropbox root directory>/MobileOrg.
-   (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-   (global-set-key "\C-cl" 'org-store-link)
-   (global-set-key "\C-ca" 'org-agenda)
-   (setq org-todo-keywords
-         '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
-
-
+      (setq org-directory "~/org")
+      (setq org-agenda-files (list "~/org/"))
+      (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
+      (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+      ;; Set to <your Dropbox root directory>/MobileOrg.
+      (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+      (global-set-key "\C-cl" 'org-store-link)
+      (global-set-key "\C-ca" 'org-agenda)
+      (setq org-todo-keywords
+	    '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
 
 
-                                           ;(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
-                                           ;(sequence "⚑ WAITING(w)" "|")
-                                           ;(sequence "|" "✘ CANCELED(c)")))
 
 
-   (require 'org-bullets)
-   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+					      ;(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
+					      ;(sequence "⚑ WAITING(w)" "|")
+					      ;(sequence "|" "✘ CANCELED(c)")))
 
 
-   (setq org-todo-keyword-faces
-         '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
-           ("CANCELED" . (:foreground "pink" :weight bold))
-           ("WRITING" . (:foreground "red" :weight bold))
-           ("RECIEVED" . (:foreground "red" :background "green" :weight bold))
-           ("SUBMITTED" . (:foreground "blue"))
-           ("ACCEPTED" . (:foreground "green"))
+      (require 'org-bullets)
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 
-           ))
-
-        ;;; ORG TEMPLATES
-   (setq org-default-notes-file (concat org-directory "/notes.org"))
-   (define-key global-map "\C-cc" 'org-capture)
 
 
-   (setq org-capture-templates
-         '(("t" "Todo" entry (file "~/org/notes.org")
-            "* TODO %?\n%U" :empty-lines 1)
+      ;; some sexier setup
 
-           ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
+      (setq org-hide-emphasis-markers t)
+
+      ;; (font-lock-add-keywords 'org-mode
+      ;;                         '(("^ *\\([-]\\) "
+      ;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 
-           ("P" "Research project" entry (file "~/org/projects.org")
-            "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
+      (let* ((variable-tuple
+	      (cond ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
+		    ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
+		    ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
+		    ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
+		    (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+	     (base-font-color (face-foreground 'default nil 'default))
+	     (headline       `(:inherit default :weight bold :foreground ,base-font-color)))
 
-           ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+	(custom-theme-set-faces
+	 'user
+	 `(org-level-8        ((t (,@headline ,@variable-tuple))))
+	 `(org-level-7        ((t (,@headline ,@variable-tuple))))
+	 `(org-level-6        ((t (,@headline ,@variable-tuple))))
+	 `(org-level-5        ((t (,@headline ,@variable-tuple))))
+	 `(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
+	 `(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
+	 `(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
+	 `(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
+	 `(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
+	 `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
 
-           ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+      (require 'org-variable-pitch)
 
-           ("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+   (setq variable-pitch-mode 1)
+      ;; (setq variable-pitch ((t (:family "Source Sans Pro" :height 160 :weight light))))
 
-                                           ;    ("C" "Cliplink capture code" entry (file+headline  "~/org/coding.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+      ;; (setq fixed-pitch ((t (:family "Inconsolata"))))
 
-           ("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description}  %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+      (setq org-fontify-done-headline t)
 
-                                           ;       ("F" "Cliplink capture fitting" entry (file+headline  "~/org/fitting.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+      ;; (setq org-done ((t (:foreground "PaleGreen"
+      ;; 			      :strike-through t))))
 
-           )
-         )
+      ;; (setq org-mode . visual-line-mode)
+      ;; (setq org-mode . variable-pitch-mode)
+
+      ;;(org-tags-column 0)
+
+
+      (setq org-todo-keyword-faces
+	    '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
+	      ("CANCELED" . (:foreground "pink" :weight bold))
+	      ("WRITING" . (:foreground "red" :weight bold))
+	      ("RECIEVED" . (:foreground "red" :background "green" :weight bold))
+	      ("SUBMITTED" . (:foreground "blue"))
+	      ("ACCEPTED" . (:foreground "green"))
+
+
+	      ))
+
+		 ;;; ORG TEMPLATES
+      (setq org-default-notes-file (concat org-directory "/notes.org"))
+      (define-key global-map "\C-cc" 'org-capture)
+
+
+      (setq org-capture-templates
+	    '(("t" "Todo" entry (file "~/org/notes.org")
+	       "* TODO %?\n%U" :empty-lines 1)
+
+	      ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
+
+
+	      ("P" "Research project" entry (file "~/org/projects.org")
+	       "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
+
+	      ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+	      ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+	      ("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+					      ;    ("C" "Cliplink capture code" entry (file+headline  "~/org/coding.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+
+	      ("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description}  %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+					      ;       ("F" "Cliplink capture fitting" entry (file+headline  "~/org/fitting.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+
+	      )
+	    )
 
 
 
