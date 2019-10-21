@@ -117,6 +117,7 @@
    (require 'cl)
    (require 'package)
    (package-initialize)
+
    (package-refresh-contents)
    #+END_SRC
 
