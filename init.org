@@ -1,4 +1,4 @@
-#+TITLE: Emacs configuration file
+\0;95;0c#+TITLE: Emacs configuration file
 #+AUTHOR: J. Michael Burgess
 #+BABEL: :cache yes
 #+LATEX_HEADER: \usepackage{parskip}
@@ -1409,7 +1409,7 @@
 	    '(("t" "Todo" entry (file "~/org/notes.org")
 	       "* TODO %?\n%U" :empty-lines 1)
 
-	      ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}  :LOG:")
+	      ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}_ %^G :LOG:")
 
 
 	      ("P" "Research project" entry (file "~/org/projects.org")
@@ -1460,7 +1460,6 @@
 
 
    #+END_SRC
-
 
 * Key bindings
 
