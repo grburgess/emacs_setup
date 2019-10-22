@@ -12,3 +12,15 @@
 /init.el
 elpa/*
 /smex-items
+/.DS_Store
+/.python-environments/default/.Python
+/.python-environments/default/bin/activate
+/.python-environments/*
+elpy
+/bookmarks
+/ido.last
+/abbrev_defs
+/magithub/cache
+games/
+recentf
+transient/
