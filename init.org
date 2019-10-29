@@ -1349,7 +1349,8 @@
    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 
-
+   (setq org-use-speed-commands t)
+   (add-to-list 'org-speed-commands-user (cons "S" 'widen))
 
    ;; some sexier setup
 
@@ -1412,7 +1413,7 @@
 
            ))
 
-              ;;; ORG TEMPLATES
+                 ;;; ORG TEMPLATES
    (setq org-default-notes-file (concat org-directory "/notes.org"))
    (define-key global-map "\C-cc" 'org-capture)
 
