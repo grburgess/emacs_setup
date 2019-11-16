@@ -1,4 +1,4 @@
-\0;95;0c#+TITLE: Emacs configuration file
+#+TITLE: Emacs configuration file
 #+AUTHOR: J. Michael Burgess
 #+BABEL: :cache yes
 #+LATEX_HEADER: \usepackage{parskip}
@@ -1009,6 +1009,7 @@
                                    (require 'sphinx-doc)
                                    (sphinx-doc-mode t)))
 
+     (setq elpy-rpc-python-command "python3")
      ;; Activate python highlighting for PYX and PPL files
      (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
      (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
@@ -1348,9 +1349,6 @@
    (require 'org-bullets)
    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-
-   (setq org-use-speed-commands t)
-   (add-to-list 'org-speed-commands-user (cons "S" 'widen))
 
    ;; some sexier setup
 
