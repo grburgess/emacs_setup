@@ -26,3 +26,5 @@ recentf
 transient/
 /ivy-youtube-history
 /request/curl-cookie-jar
+custom.el
+/auto/
