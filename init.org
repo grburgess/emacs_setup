@@ -103,8 +103,7 @@
    #+END_SRC
 
 
-
-
+   
 ** Packages
 
    Managing extensions for Emacs is simplified using =package= which is
@@ -472,11 +471,11 @@
    (beacon-mode 1)
    (setq beacon-color "#1BFFA5")
    (setq beacon-push-mark 60)
-   (require 'sublimity)
-   (require 'sublimity-attractive)
-   (sublimity-mode 1)
+   ;; (require 'sublimity)
+   ;; (require 'sublimity-attractive)
+   ;; (sublimity-mode 1)
 
-   (setq sublimity-attractive-centering-width 130)
+   ;; (setq sublimity-attractive-centering-width 130)
 
    ;; Enable flashing mode-line on errors
    (doom-themes-visual-bell-config)
