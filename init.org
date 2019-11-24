@@ -103,7 +103,7 @@
    #+END_SRC
 
 
-   
+
 ** Packages
 
    Managing extensions for Emacs is simplified using =package= which is
@@ -172,6 +172,7 @@
              bug-hunter
              cyberpunk-2019-theme
              cyberpunk-theme
+             darkroom
              doom-modeline
              doom-themes
              git-gutter-fringe
