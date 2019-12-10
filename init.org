@@ -103,7 +103,7 @@
    #+END_SRC
 
 
-   
+
 ** Packages
 
    Managing extensions for Emacs is simplified using =package= which is
@@ -142,171 +142,172 @@
    installed. To ensure we install missing packages if they are missing.
 
    #+BEGIN_SRC emacs-lisp
-	 (let* ((package--builtins nil)
-		(packages
-		 '(auto-compile         ; automatically compile Emacs Lisp libraries
-		   company              ; Modular text completion framework
-		   focus                ; Dim color of text in surrounding sections
-		   idle-require         ; load elisp libraries while Emacs is idle
-		   jedi                 ; Python auto-completion for Emacs
-		   magit                ; control Git from Emacs
-		   markdown-mode        ; Emacs Major mode for Markdown-formatted files
-		   multiple-cursors     ; Multiple cursors for Emacs
-		   olivetti             ; Minor mode for a nice writing environment
-		   org                  ; Outline-based notes management and organizer
-		   org-ref              ; citations bibliographies in org-mode
-		   paredit              ; minor mode for editing parentheses
-		   pdf-tools            ; Emacs support library for PDF files
-		   slime                ; Superior Lisp Interaction Mode for Emacs
-		   diminish
-		   crux
-		   swiper
-		   ivy
-		   counsel
-		   org-variable-pitch
-		   org-cliplink
-		   company-jedi
-		   which-key
-		   iedit
-		   easy-jekyll
-		   bug-hunter
-		   cyberpunk-2019-theme
-		   cyberpunk-theme
-		   doom-modeline
-		   doom-themes
-		   git-gutter-fringe
-		   org-bullets
-		   abyss-theme
-		   afternoon-theme
-		   ample-theme
-		   arjen-grey-theme
-		   atom-dark-theme
-		   badger-theme
-		   birds-of-paradise-plus-theme
-		   calmer-forest-theme
-		   constant-theme
-		   dakrone-theme
-		   dark-krystal-theme
-		   dark-mint-theme
-		   darkmine-theme
-		   darkokai-theme
-		   distinguished-theme
-		   exotica-theme
-		   flatui-dark-theme
-		   forest-blue-theme
-		   gotham-theme
-		   grandshell-theme
-		   gruber-darker-theme
-		   hamburg-theme
-		   idea-darkula-theme
-		   klere-theme
-		   kooten-theme
-		   liso-theme
-		   lush-theme
-		   madhat2r-theme
-		   majapahit-theme
-		   metalheart-theme
-		   monochrome-theme
-		   monokai-alt-theme
-		   noctilux-theme
-		   northcode-theme
-		   nyx-theme
-		   paganini-theme
-		   planet-theme
-		   reykjavik-theme
-		   rimero-theme
-		   sexy-monochrome-theme
-		   smart-mode-line-atom-one-dark-theme
-		   soft-charcoal-theme
-		   soothe-theme
-		   toxi-theme
-		   twilight-anti-bright-theme
-		   warm-night-theme
-		   zeno-theme
-		   zerodark-theme
-		   zweilight-theme
-		   alect-themes
-		   apropospriate-theme
-		   arc-dark-theme
-		   atom-one-dark-theme
-		   darktooth-theme
-		   eziam-theme
-		   foggy-night-theme
-		   minimal-theme
-		   mood-one-theme
-		   nimbus-theme
-		   nova-theme
-		   overcast-theme
-		   seti-theme
-		   srcery-theme
-		   tablist
-		   magit-popup
-		   neotree
-		   browse-kill-ring
-		   shell-pop
-		   use-package
-		   magithub
-		   smart-mode-line-powerline-theme
-		   moe-theme
-		   undo-tree
-		   blacken
-		   company-reftex
-		   company-auctex
-		   ace-jump-mode
-		   sublime-themes
-		   auto-complete-auctex
-		   sublimity
-		   yasnippet
-		   yasnippet-classic-snippets
-		   standoff-mode
-		   elpygen
-		   projectile
-		   auto-complete
-		   smex
-		   yasnippet-snippets
-		   yaml-mode
-		   stan-snippets
-		   ssh
-		   sphinx-doc
-		   spacemacs-theme
-		   rope-read-mode
-		   rainbow-identifiers
-		   rainbow-delimiters
-		   python-docstring
-		   origami
-		   omtose-phellack-theme
-		   markdown-mode
-		   magit
-		   kaolin-themes
-		   js2-mode
-		   highlight-numbers
-		   highlight-indent-guides
-		   gist
-		   flymake-python-pyflakes
-		   flycheck
-		   ess
-		   elpy
-		   dockerfile-mode
-		   cython-mode
-		   context-coloring
-		   beacon
-		   fancy-battery
-		   company-irony-c-headers
-		   color-identifiers-mode
-		   auctex
-		   green-phosphor
-		   counsel-spotify
-		   green-screen
-		   challenger-deep
-		   )))
-						 ; Display available keybindings in popup
-	   (ignore-errors ;; This package is only relevant for Mac OS X.
+   (let* ((package--builtins nil)
+	  (packages
+	   '(auto-compile         ; automatically compile Emacs Lisp libraries
+	     company              ; Modular text completion framework
+	     focus                ; Dim color of text in surrounding sections
+	     idle-require         ; load elisp libraries while Emacs is idle
+	     jedi                 ; Python auto-completion for Emacs
+	     magit                ; control Git from Emacs
+	     markdown-mode        ; Emacs Major mode for Markdown-formatted files
+	     multiple-cursors     ; Multiple cursors for Emacs
+	     olivetti             ; Minor mode for a nice writing environment
+	     org                  ; Outline-based notes management and organizer
+	     org-ref              ; citations bibliographies in org-mode
+	     paredit              ; minor mode for editing parentheses
+	     pdf-tools            ; Emacs support library for PDF files
+	     slime                ; Superior Lisp Interaction Mode for Emacs
+	     diminish
+	     crux
+	     swiper
+	     ivy
+	     counsel
+	     org-variable-pitch
+	     org-cliplink
+	     company-jedi
+	     which-key
+	     iedit
+	     easy-jekyll
+	     bug-hunter
+	     cyberpunk-2019-theme
+	     cyberpunk-theme
+	     darkroom
+	     doom-modeline
+	     doom-themes
+	     git-gutter-fringe
+	     org-bullets
+	     abyss-theme
+	     afternoon-theme
+	     ample-theme
+	     arjen-grey-theme
+	     atom-dark-theme
+	     badger-theme
+	     birds-of-paradise-plus-theme
+	     calmer-forest-theme
+	     constant-theme
+	     dakrone-theme
+	     dark-krystal-theme
+	     dark-mint-theme
+	     darkmine-theme
+	     darkokai-theme
+	     distinguished-theme
+	     exotica-theme
+	     flatui-dark-theme
+	     forest-blue-theme
+	     gotham-theme
+	     grandshell-theme
+	     gruber-darker-theme
+	     hamburg-theme
+	     idea-darkula-theme
+	     klere-theme
+	     kooten-theme
+	     liso-theme
+	     lush-theme
+	     madhat2r-theme
+	     majapahit-theme
+	     metalheart-theme
+	     monochrome-theme
+	     monokai-alt-theme
+	     noctilux-theme
+	     northcode-theme
+	     nyx-theme
+	     paganini-theme
+	     planet-theme
+	     reykjavik-theme
+	     rimero-theme
+	     sexy-monochrome-theme
+	     smart-mode-line-atom-one-dark-theme
+	     soft-charcoal-theme
+	     soothe-theme
+	     toxi-theme
+	     twilight-anti-bright-theme
+	     warm-night-theme
+	     zeno-theme
+	     zerodark-theme
+	     zweilight-theme
+	     alect-themes
+	     apropospriate-theme
+	     arc-dark-theme
+	     atom-one-dark-theme
+	     darktooth-theme
+	     eziam-theme
+	     foggy-night-theme
+	     minimal-theme
+	     mood-one-theme
+	     nimbus-theme
+	     nova-theme
+	     overcast-theme
+	     seti-theme
+	     srcery-theme
+	     tablist
+	     magit-popup
+	     neotree
+	     browse-kill-ring
+	     shell-pop
+	     use-package
+	     magithub
+	     smart-mode-line-powerline-theme
+	     moe-theme
+	     undo-tree
+	     blacken
+	     company-reftex
+	     company-auctex
+	     ace-jump-mode
+	     sublime-themes
+	     auto-complete-auctex
+	     sublimity
+	     yasnippet
+	     yasnippet-classic-snippets
+	     standoff-mode
+	     elpygen
+	     projectile
+	     auto-complete
+	     smex
+	     yasnippet-snippets
+	     yaml-mode
+	     stan-snippets
+	     ssh
+	     sphinx-doc
+	     spacemacs-theme
+	     rope-read-mode
+	     rainbow-identifiers
+	     rainbow-delimiters
+	     python-docstring
+	     origami
+	     omtose-phellack-theme
+	     markdown-mode
+	     magit
+	     kaolin-themes
+	     js2-mode
+	     highlight-numbers
+	     highlight-indent-guides
+	     gist
+	     flymake-python-pyflakes
+	     flycheck
+	     ess
+	     elpy
+	     dockerfile-mode
+	     cython-mode
+	     context-coloring
+	     beacon
+	     fancy-battery
+	     company-irony-c-headers
+	     color-identifiers-mode
+	     auctex
+	     counsel-spotify
+	     green-screen
+	  challenger-deep
+	  green-phosphor
+	     )))
+					   ; Display available keybindings in popup
+     (ignore-errors ;; This package is only relevant for Mac OS X.
 
-	     (let ((packages (remove-if 'package-installed-p packages)))
-	       (when packages
-		 ;; Install uninstalled packages
-		 (package-refresh-contents)
-		 (mapc 'package-install packages)))))
+       (let ((packages (remove-if 'package-installed-p packages)))
+	 (when packages
+	   ;; Install uninstalled packages
+	   (package-refresh-contents)
+	   (mapc 'package-install packages)))))
    #+END_SRC
 
 ** Mac OS X
@@ -458,7 +459,7 @@
      (lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy
                                                noctilux doom-moonlight doom-city-lights
                                                sexy-monochrome gruvbox-dark-hard
-                                               cyberpunk cyberpunk-2019 kaolin-aurora  challenger-deep green phosphor green-screen  . #1#)))
+                                               cyberpunk cyberpunk-2019 kaolin-aurora  challenger-deep green-phosphor green-screen  . #1#)))
        (lambda ()
          (interactive)
          ;; Rotates the thme cycle and changes the current theme.
