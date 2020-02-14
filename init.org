@@ -99,6 +99,7 @@
    (setq custom-file "~/.emacs.d/custom.el")
    (load custom-file)
    (setq shell-file-name "/bin/bash")
+   (set-frame-font "JetBrains Mono 13" nil t)
 
    #+END_SRC
 
@@ -450,16 +451,15 @@
 
 
    #+BEGIN_SRC emacs-lisp
-   (load-theme 'kaolin-aurora t)
+   (load-theme 'challenger-deep t)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
+
    (defun cycle-themes ()
      "Returns a function that lets you cycle your themes."
-     (lexical-let ((themes '#1=( kaolin-temple granger kaolin-galaxy
-                                               noctilux doom-moonlight doom-city-lights
-                                               sexy-monochrome gruvbox-dark-hard
-                                               cyberpunk cyberpunk-2019 kaolin-aurora  challenger-deep green-phosphor green-screen  . #1#)))
+     (lexical-let ((themes '#1=( challenger-deep granger sexy-monochrome
+                                                 green-phosphor   . #1#)))
        (lambda ()
          (interactive)
          ;; Rotates the thme cycle and changes the current theme.
