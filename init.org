@@ -6,6 +6,7 @@
 #+LATEX_HEADER: \usepackage[utf8]{inputenc}
 #+PROPERTY: header-args :tangle yes
 
+
 * About
 
   This is an Emacs configuration file written in [[http://orgmode.org][Org mode]]. It is an attempt
@@ -329,18 +330,19 @@
 
    #+BEGIN_SRC emacs-lisp
 
-   (defun copy-from-osx ()
-     (shell-command-to-string "pbpaste"))
+   (if (eq system-type 'darwin)
+       (defun copy-from-osx ()
+         (shell-command-to-string "pbpaste"))
 
-   (defun paste-to-osx (text &optional push)
-     (let ((process-connection-type nil))
-       (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-         (process-send-string proc text)
-         (process-send-eof proc))))
+     (defun paste-to-osx (text &optional push)
+       (let ((process-connection-type nil))
+         (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+           (process-send-string proc text)
+           (process-send-eof proc))))
 
-   (setq interprogram-cut-function 'paste-to-osx)
-   (setq interprogram-paste-function 'copy-from-osx)
-
+     (setq interprogram-cut-function 'paste-to-osx)
+     (setq interprogram-paste-function 'copy-from-osx)
+     )
    #+END_SRC
 
 ** Sane defaults
@@ -704,6 +706,48 @@
 
    #+END_SRC
 
+** MAGIT
+   #+BEGIN_SRC emacs-lisp
+   (use-package magit
+     :ensure t
+     :bind (("C-c m" . magit-status)
+            ("s-g" . magit-status)))
+
+   (use-package git-commit
+     :after magit
+     :config
+     (setq git-commit-summary-max-length 50)
+     (setq git-commit-known-pseudo-headers
+           '("Signed-off-by"
+             "Acked-by"
+             "Modified-by"
+             "Cc"
+             "Suggested-by"
+             "Reported-by"
+             "Tested-by"
+             "Reviewed-by"))
+     (setq git-commit-style-convention-checks
+           '(non-empty-second-line
+             overlong-summary-line)))
+
+   (use-package magit-diff
+     :after magit
+     :config
+     (setq magit-diff-refine-hunk t))
+
+   (use-package magit-repos
+     :after magit
+     :commands magit-list-repositories
+     :config
+     (setq magit-repository-directories
+           '(("~/coding/projects" . 1))))
+
+   (use-package git-timemachine
+     :ensure t
+     :commands git-timemachine)
+
+
+   #+END_SRC
 
 ** ACE/IVY
 
@@ -1167,55 +1211,55 @@
 
 ** LaTeX and org-mode LaTeX export
    #+BEGIN_SRC emacs-lisp
-			    (use-package latex
-			      :mode
-			      ("\\.tex\\'" . latex-mode)
-			      :bind
-			      (:map LaTeX-mode-map
-				    ("M-<delete>" . TeX-remove-macro)
-				    ("C-c C-r" . reftex-query-replace-document)
-				    ("C-c C-g" . reftex-grep-document))
-			      :init
+   (use-package latex
+     :mode
+     ("\\.tex\\'" . latex-mode)
+     :bind
+     (:map LaTeX-mode-map
+           ("M-<delete>" . TeX-remove-macro)
+           ("C-c C-r" . reftex-query-replace-document)
+           ("C-c C-g" . reftex-grep-document))
+     :init
 
 
-			      :config
+     :config
 
-			      (setq-default TeX-master nil ; by each new fie AUCTEX will ask for a master fie.
-					    TeX-PDF-mode t
-					    TeX-engine 'xetex)     ; optional
-			      (auto-fill-mode 1)
-			      (setq TeX-auto-save t
-				    TeX-save-query nil       ; don't prompt for saving the .tex file
-				    TeX-parse-self t
-				    TeX-show-compilation nil         ; if `t`, automatically shows compilation log
-				    LaTeX-babel-hyphen nil ; Disable language-specific hyphen insertion.
-				    ;; `"` expands into csquotes macros (for this to work, babel pkg must be loaded after csquotes pkg).
-				    LaTeX-csquotes-close-quote "}"
-				    LaTeX-csquotes-open-quote "\\enquote{"
-				    TeX-file-extensions '("Rnw" "rnw" "Snw" "snw" "tex" "sty" "cls" "ltx" "texi" "texinfo" "dtx"))
+     (setq-default TeX-master nil ; by each new fie AUCTEX will ask for a master fie.
+                   TeX-PDF-mode t
+                   TeX-engine 'xetex)     ; optional
+     (auto-fill-mode 1)
+     (setq TeX-auto-save t
+           TeX-save-query nil       ; don't prompt for saving the .tex file
+           TeX-parse-self t
+           TeX-show-compilation nil         ; if `t`, automatically shows compilation log
+           LaTeX-babel-hyphen nil ; Disable language-specific hyphen insertion.
+           ;; `"` expands into csquotes macros (for this to work, babel pkg must be loaded after csquotes pkg).
+           LaTeX-csquotes-close-quote "}"
+           LaTeX-csquotes-open-quote "\\enquote{"
+           TeX-file-extensions '("Rnw" "rnw" "Snw" "snw" "tex" "sty" "cls" "ltx" "texi" "texinfo" "dtx"))
 
 
-			      (setq reftex-plug-into-AUCTeX t)
-			      (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
+     (setq reftex-plug-into-AUCTeX t)
+     (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
 
-			      ;; Font-lock for AuCTeX
-			      ;; Note: '«' and '»' is by pressing 'C-x 8 <' and 'C-x 8 >', respectively
-			      (font-lock-add-keywords 'latex-mode (list (list "\\(«\\(.+?\\|\n\\)\\)\\(+?\\)\\(»\\)" '(1 'font-latex-string-face t) '(2 'font-latex-string-face t) '(3 'font-latex-string-face t))))
-			      ;; Add standard Sweave file extensions to the list of files recognized  by AuCTeX.
-			      (add-hook 'TeX-mode-hook (lambda () (reftex-isearch-minor-mode)))
-			      (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
-			      (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
+     ;; Font-lock for AuCTeX
+     ;; Note: '«' and '»' is by pressing 'C-x 8 <' and 'C-x 8 >', respectively
+     (font-lock-add-keywords 'latex-mode (list (list "\\(«\\(.+?\\|\n\\)\\)\\(+?\\)\\(»\\)" '(1 'font-latex-string-face t) '(2 'font-latex-string-face t) '(3 'font-latex-string-face t))))
+     ;; Add standard Sweave file extensions to the list of files recognized  by AuCTeX.
+     (add-hook 'TeX-mode-hook (lambda () (reftex-isearch-minor-mode)))
+     (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
+     (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
 
-			      :hook (
+     :hook (
 
-				  (LaTeX-mode . reftex-mode)
-				  (LaTeX-mode . visual-line-mode)
-				  (LaTeX-mode . flyspell-mode)
-				  (LaTeX-mode . LaTeX-math-mode)
-				  (LaTeX-mode . turn-on-reftex)
+            (LaTeX-mode . reftex-mode)
+            (LaTeX-mode . visual-line-mode)
+            (LaTeX-mode . flyspell-mode)
+            (LaTeX-mode . LaTeX-math-mode)
+            (LaTeX-mode . turn-on-reftex)
 
-		      )
-			      )
+            )
+     )
 
 
    #+END_SRC
@@ -1483,7 +1527,7 @@
              (lambda ()
                (auto-fill-mode 0)
                (visual-line-mode 1)
-               (ispell-change-dictionary "american")
+
                (local-set-key (kbd "C-c b") 'insert-markdown-inline-math-block)) t)
    #+END_SRC
 
@@ -1666,11 +1710,6 @@
     "A keymap for custom bindings.")
   #+END_SRC
 
-** Bindings for [[http://magit.github.io][Magit]]
-
-   #+BEGIN_SRC emacs-lisp
-   (define-key custom-bindings-map (kbd "C-c m") 'magit-status)
-   #+END_SRC
 
 ** Bindings for [[http://company-mode.github.io/][company-mode]]
 
