@@ -883,19 +883,19 @@
 
 
 
-   (use-package flyspell
-     :commands (ispell-change-dictionary
-                ispell-word
-                flyspell-buffer
-                flyspell-mode
-                flyspell-region)
-     :config
-     (setq flyspell-issue-message-flag nil)
-     (setq flyspell-issue-welcome-flag nil)
-                                           ;     (setq ispell-program-name "aspell")
-     (setq ispell-dictionary "american")
-
-     )
+    (use-package flyspell
+      :commands (ispell-change-dictionary
+		 ispell-word
+		 flyspell-buffer
+		 flyspell-mode
+		 flyspell-region)
+      :config
+      (setq flyspell-issue-message-flag nil)
+      (setq flyspell-issue-welcome-flag nil)
+					    ;     (setq ispell-program-name "aspell")
+      (setq ispell-dictionary "american")
+      (add-hook 'text-mode-hook 'flyspell-mode)
+      )
    #+END_SRC
 
 ** Jekyll
