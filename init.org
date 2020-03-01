@@ -419,16 +419,22 @@
    ;;(add-hook 'after-init-hook 'global-color-identifiers-mode)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
-   (require 'highlight-indent-guides)
-   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-   (setq highlight-indent-guides-auto-enabled nil)
-   (setq highlight-indent-guides-method 'character)
 
-   (setq highlight-indent-guides-auto-enabled nil)
+   (use-package highlight-indent-guides
+     :ensure t
+     :init
+     (setq highlight-indent-guides-auto-enabled nil)
+     (setq highlight-indent-guides-method 'character)
 
-   (set-face-background 'highlight-indent-guides-odd-face "seagreen")
-   (set-face-background 'highlight-indent-guides-even-face "seagreen")
-   (set-face-foreground 'highlight-indent-guides-character-face "seagreen")
+     (setq highlight-indent-guides-auto-enabled nil)
+     :config
+
+     (set-face-background 'highlight-indent-guides-odd-face "seagreen")
+     (set-face-background 'highlight-indent-guides-even-face "seagreen")
+     (set-face-foreground 'highlight-indent-guides-character-face "seagreen")
+     :hook (prog-mode . highlight-indent-guides-mode)
+
+     )
 
 
    (dolist (mode
@@ -478,106 +484,144 @@
 
    Some nice visual modes
    #+BEGIN_SRC emacs-lisp
-   (require 'doom-themes)
+
+   (use-package beacon
+     :config
+     (progn
+
+       (setq beacon-color "#1BFFA5")
+       (setq beacon-push-mark 60)
+
+       (setq beacon-blink-when-point-moves-vertically nil) ; default nil
+       (setq beacon-blink-when-point-moves-horizontally nil) ; default nil
+       (setq beacon-blink-when-buffer-changes t) ; default t
+       (setq beacon-blink-when-window-scrolls t) ; default t
+       (setq beacon-blink-when-window-changes t) ; default t
+       (setq beacon-blink-when-focused nil) ; default nil
+
+       (setq beacon-blink-duration 0.3) ; default 0.3
+       (setq beacon-blink-delay 0.3) ; default 0.3
+       (setq beacon-size 20) ; default 40
+       ;; (setq beacon-color "yellow") ; default 0.5
+       (setq beacon-color 0.5) ; default 0.5
+
+       (add-to-list 'beacon-dont-blink-major-modes 'term-mode)
+
+       (beacon-mode 1)))
+
+   (use-package all-the-icons-ivy
+     :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
 
 
-   (all-the-icons-ivy-setup)
-   (beacon-mode 1)
-   (setq beacon-color "#1BFFA5")
-   (setq beacon-push-mark 60)
-   ;; (require 'sublimity)
-   ;; (require 'sublimity-attractive)
-   ;; (sublimity-mode 1)
+   (use-package doom-themes
+     :init
 
-   ;; (setq sublimity-attractive-centering-width 130)
+     ;; (require 'sublimity)
+     ;; (require 'sublimity-attractive)
+     ;; (sublimity-mode 1)
 
-   ;; Enable flashing mode-line on errors
-   (doom-themes-visual-bell-config)
+     ;; (setq sublimity-attractive-centering-width 130)
 
-   ;; Corrects (and improves) org-mode's native fontification.
-   (doom-themes-org-config)
+     ;; Enable flashing mode-line on errors
+     (doom-themes-visual-bell-config)
 
-   ;; (require 'sublimity-scroll)
+     ;; Corrects (and improves) org-mode's native fontification.
+     (doom-themes-org-config)
 
-   ;; (setq sublimity-scroll-weight 10
-   ;;       sublimity-scroll-drift-length 10)
+     ;; (require 'sublimity-scroll)
 
+     ;; (setq sublimity-scroll-weight 10
+     ;;       sublimity-scroll-drift-length 10)
+
+
+     )
 
    #+END_SRC
 
 
 
    #+BEGIN_SRC emacs-lisp
-   (require 'all-the-icons)
-   (require 'doom-modeline)
-   (doom-modeline-mode 1)
+   (use-package all-the-icons
+     :if window-system
+     :ensure t
+     :config
+     (when (not (member "all-the-icons" (font-family-list)))
+       (all-the-icons-install-fonts t)))
 
-   ;; Whether display icons in mode-line or not.
-   (setq doom-modeline-icon t)
+   (use-package doom-modeline
+     :init
+     (doom-modeline-mode 1)
 
-   ;; Whether display the icon for major mode. It respects `doom-modeline-icon'.
-   (setq doom-modeline-major-mode-icon t)
+     ;; Whether display icons in mode-line or not.
+     (setq doom-modeline-icon t)
 
-
-   ;; Whether display color icons for `major-mode'. It respects
-   ;; `doom-modeline-icon' and `all-the-icons-color-icons'.
-   (setq doom-modeline-major-mode-color-icon t)
-
-   ;; Whether display icons for buffer states. It respects `doom-modeline-icon'.
-   (setq doom-modeline-buffer-state-icon t)
-
-   ;; Whether display buffer modification icon. It respects `doom-modeline-icon'
-   ;; and `doom-modeline-buffer-state-icon'.
-   (setq doom-modeline-buffer-modification-icon t)
-
-   ;; Whether display minor modes in mode-line or not.
-   (setq doom-modeline-minor-modes t)
-
-   ;; If non-nil, a word count will be added to the selection-info modeline segment.
-   (setq doom-modeline-enable-word-count t)
-
-   ;; If non-nil, only display one number for checker information if applicable.
-   (setq doom-modeline-checker-simple-format t)
-
-   ;; The maximum displayed length of the branch name of version control.
-   (setq doom-modeline-vcs-max-length 12)
+     ;; Whether display the icon for major mode. It respects `doom-modeline-icon'.
+     (setq doom-modeline-major-mode-icon t)
 
 
-   ;; Whether display perspective name or not. Non-nil to display in mode-line.
-   (setq doom-modeline-persp-name t)
+     ;; Whether display color icons for `major-mode'. It respects
+     ;; `doom-modeline-icon' and `all-the-icons-color-icons'.
+     (setq doom-modeline-major-mode-color-icon t)
 
-   ;; Whether display `lsp' state or not. Non-nil to display in mode-line.
-   (setq doom-modeline-lsp t)
+     ;; Whether display icons for buffer states. It respects `doom-modeline-icon'.
+     (setq doom-modeline-buffer-state-icon t)
 
-   ;; Whether display github notifications or not. Requires `ghub` package.
-   (setq doom-modeline-github t)
+     ;; Whether display buffer modification icon. It respects `doom-modeline-icon'
+     ;; and `doom-modeline-buffer-state-icon'.
+     (setq doom-modeline-buffer-modification-icon t)
 
-   ;; The interval of checking github.
-   (setq doom-modeline-github-interval (* 30 60))
+     ;; Whether display minor modes in mode-line or not.
+     (setq doom-modeline-minor-modes t)
 
-   ;; Whether display environment version or not
-   (setq doom-modeline-env-version t)
-   ;; Or for individual languages
-   (setq doom-modeline-env-enable-python t)
-   (setq doom-modeline-env-enable-ruby nil)
+     ;; If non-nil, a word count will be added to the selection-info modeline segment.
+     (setq doom-modeline-enable-word-count t)
+
+     ;; If non-nil, only display one number for checker information if applicable.
+     (setq doom-modeline-checker-simple-format t)
+
+     ;; The maximum displayed length of the branch name of version control.
+     (setq doom-modeline-vcs-max-length 12)
+
+
+     ;; Whether display perspective name or not. Non-nil to display in mode-line.
+     (setq doom-modeline-persp-name t)
+
+     ;; Whether display `lsp' state or not. Non-nil to display in mode-line.
+     (setq doom-modeline-lsp t)
+
+     ;; Whether display github notifications or not. Requires `ghub` package.
+     (setq doom-modeline-github t)
+
+     ;; The interval of checking github.
+     (setq doom-modeline-github-interval (* 30 60))
+
+     ;; Whether display environment version or not
+     (setq doom-modeline-env-version t)
+     ;; Or for individual languages
+     (setq doom-modeline-env-enable-python t)
+     (setq doom-modeline-env-enable-ruby nil)
 
 
 
 
 
 
-   ;; Change the executables to use for the language version string
-   (setq doom-modeline-env-python-executable "python")
-   (setq doom-modeline-env-ruby-executable "ruby")
+     ;; Change the executables to use for the language version string
+     (setq doom-modeline-env-python-executable "python")
+     (setq doom-modeline-env-ruby-executable "ruby")
 
-   ;; Whether display mu4e notifications or not. Requires `mu4e-alert' package.
-   (setq doom-modeline-mu4e nil)
+     ;; Whether display mu4e notifications or not. Requires `mu4e-alert' package.
+     (setq doom-modeline-mu4e nil)
 
-   ;; Whether display irc notifications or not. Requires `circe' package.
-   (setq doom-modeline-irc nil)
+     ;; Whether display irc notifications or not. Requires `circe' package.
+     (setq doom-modeline-irc nil)
 
-   ;; Function to stylize the irc buffer names.
-   (setq doom-modeline-irc-stylize 'identity)
+     ;; Function to stylize the irc buffer names.
+     (setq doom-modeline-irc-stylize 'identity)
+
+
+     )
+
 
 
 
@@ -632,55 +676,98 @@
 
    #+BEGIN_SRC emacs-lisp
 
-   (add-hook 'after-init-hook 'global-company-mode)
-                                           ;   (add-to-list 'load-path "path/to/company-auctex.el")
-   (require 'company-auctex)
-   (company-auctex-init)
+
+   (setq completion-ignored-extensions
+	 '(".o" ".elc" "~" ".bin" ".class" ".exe" ".ps" ".abs" ".mx"
+	   ".~jv" ".rbc" ".pyc" ".beam" ".aux" ".out" ".pdf" ".hbc"))
 
 
-   (setq company-idle-delay 0
-         company-echo-delay 0
-         company-dabbrev-downcase nil
-         company-minimum-prefix-length 2
-         company-selection-wrap-around t
-         company-transformers '(company-sort-by-occurrence
-                                company-sort-by-backend-importance))
+   (use-package company
+     :ensure t
+     :diminish ""
+     :init
+     ;; (add-hook 'prog-mode-hook 'company-mode)
+     ;; (add-hook 'comint-mode-hook 'company-mode)
+     :config
+     (global-company-mode)
+     (setq company-tooltip-limit 10)
+     (setq company-dabbrev-downcase 0)
+     (setq company-idle-delay 0)
+     (setq company-echo-delay 0)
+     (setq company-minimum-prefix-length 2)
+     (setq company-require-match nil)
+     (setq company-selection-wrap-around t)
+     (setq company-tooltip-align-annotations t)
+     ;; (setq company-tooltip-flip-when-above t)
+     (setq company-transformers '(company-sort-by-occurrence)) ; weight by frequency
+     (define-key company-active-map (kbd "M-n") nil)
+     (define-key company-active-map (kbd "M-p") nil)
+     (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+     (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+     (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+     (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
+     (define-key company-active-map (kbd "C-n") 'company-select-next)
+     (define-key company-active-map (kbd "C-p") 'company-select-previous)
 
-   (require 'yasnippet)
-   (yas-global-mode 1)
-   (defun check-expansion ()
-     (save-excursion
-       (if (looking-at "\\_>") t
-         (backward-char 1)
-         (if (looking-at "\\.") t
-           (backward-char 1)
-           (if (looking-at "->") t nil)))))
-
-   (defun do-yas-expand ()
-     (let ((yas/fallback-behavior 'return-nil))
-       (yas/expand)))
-
-   (defun tab-indent-or-complete ()
-     (interactive)
-     (if (minibufferp)
-         (minibuffer-complete)
-       (if (or (not yas/minor-mode)
-               (null (do-yas-expand)))
-           (if (check-expansion)
-               (company-complete-common)
-             (indent-for-tab-command)))))
-
+     (add-hook 'after-init-hook 'global-company-mode))
+					   ;   (add-to-list 'load-path "path/to/company-auctex.el")
 
 
-   (require 'stan-mode)
+     (use-package company-auctex
+       :ensure t
+       :defer t
+       :hook ((LaTeX-mode . company-auctex-init)))
 
-   (with-eval-after-load 'stan
 
-     (require 'stan-snippets)
+     (setq company-idle-delay 0
+	   company-echo-delay 0
+	   company-dabbrev-downcase nil
+	   company-minimum-prefix-length 2
+	   company-selection-wrap-around t
+	   company-transformers '(company-sort-by-occurrence
+				  company-sort-by-backend-importance))
+
+
+     (use-package company-jedi
+       :ensure t)
+
+
+     (require 'yasnippet)
      (yas-global-mode 1)
-     (add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
+     (defun check-expansion ()
+       (save-excursion
+	 (if (looking-at "\\_>") t
+	   (backward-char 1)
+	   (if (looking-at "\\.") t
+	     (backward-char 1)
+	     (if (looking-at "->") t nil)))))
 
-     )
+     (defun do-yas-expand ()
+       (let ((yas/fallback-behavior 'return-nil))
+	 (yas/expand)))
+
+     (defun tab-indent-or-complete ()
+       (interactive)
+       (if (minibufferp)
+	   (minibuffer-complete)
+	 (if (or (not yas/minor-mode)
+		 (null (do-yas-expand)))
+	     (if (check-expansion)
+		 (company-complete-common)
+	       (indent-for-tab-command)))))
+
+
+
+     (require 'stan-mode)
+
+     (with-eval-after-load 'stan
+
+       (require 'stan-snippets)
+       (yas-global-mode 1)
+       (add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
+
+       )
 
 
    #+END_SRC
@@ -883,19 +970,19 @@
 
 
 
-    (use-package flyspell
-      :commands (ispell-change-dictionary
-		 ispell-word
-		 flyspell-buffer
-		 flyspell-mode
-		 flyspell-region)
-      :config
-      (setq flyspell-issue-message-flag nil)
-      (setq flyspell-issue-welcome-flag nil)
-					    ;     (setq ispell-program-name "aspell")
-      (setq ispell-dictionary "american")
-      (add-hook 'text-mode-hook 'flyspell-mode)
-      )
+   (use-package flyspell
+     :commands (ispell-change-dictionary
+                ispell-word
+                flyspell-buffer
+                flyspell-mode
+                flyspell-region)
+     :config
+     (setq flyspell-issue-message-flag nil)
+     (setq flyspell-issue-welcome-flag nil)
+                                           ;     (setq ispell-program-name "aspell")
+     (setq ispell-dictionary "american")
+     (add-hook 'text-mode-hook 'flyspell-mode)
+     )
    #+END_SRC
 
 ** Jekyll
@@ -1137,6 +1224,11 @@
      (add-to-list 'auto-mode-alist '("\\.ppl\\'" . cython-mode))
 
      (setq elpy-rpc-python-command "python3")
+
+     (defun my/python-mode-hook ()
+       (set (make-local-variable 'company-backends) '(company-jedi)))
+     (add-hook 'python-mode-hook 'my/python-mode-hook)
+
      (defun elpy-goto-definition-or-rgrep ()
        "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
        (interactive)
@@ -1152,7 +1244,7 @@
                              (require 'sphinx-doc)
                              (sphinx-doc-mode t)))
             (python-mode . elpy-mode)
-            (elpy-mode . flycheck-mode)
+            ;;            (elpy-mode . flycheck-mode)
             (elpy-mode . (lambda () (highlight-indentation-mode -1)))
             )
      )
@@ -1539,7 +1631,7 @@
    #+BEGIN_SRC emacs-lisp
 
    (add-hook 'org-mode-hook 'turn-on-auto-fill)
-
+   (add-hook 'org-mode-hook 'turn-on-flyspell)
    (setq org-directory "~/org")
    (setq org-agenda-files (list "~/org/"))
    (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
@@ -1624,7 +1716,7 @@
 
            ))
 
-                 ;;; ORG TEMPLATES
+                    ;;; ORG TEMPLATES
    (setq org-default-notes-file (concat org-directory "/notes.org"))
    (define-key global-map "\C-cc" 'org-capture)
 
@@ -1714,9 +1806,7 @@
 ** Bindings for [[http://company-mode.github.io/][company-mode]]
 
    #+BEGIN_SRC emacs-lisp
-   (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
-   (define-key company-active-map (kbd "C-n") 'company-select-next)
-   (define-key company-active-map (kbd "C-p") 'company-select-previous)
+ 
    #+END_SRC
 ** Bindings for crux
    #+BEGIN_SRC emacs-lisp
