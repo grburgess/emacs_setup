@@ -1181,64 +1181,153 @@
    (use-package multiple-cursors
      :bind (
 
-	    ("C->" . mc/mark-next-like-this)
-	    ("C-<" . mc/mark-previous-like-this)
-	     ("C-c C-<" . mc/mark-all-like-this)
-	     ("C-S-<mouse-1>" . mc/add-cursor-on-click))
-	    :bind (:map region-bindings-mode-map
-			("a" . mc/mark-all-like-this)
-			("p" . mc/mark-previous-like-this)
-			("n" . mc/mark-next-like-this)
-			("P" . mc/unmark-previous-like-this)
-			("N" . mc/unmark-next-like-this)
-			("[" . mc/cycle-backward)
-			("]" . mc/cycle-forward)
-			("m" . mc/mark-more-like-this-extended)
-			("h" . mc-hide-unmatched-lines-mode)
-			("\\" . mc/vertical-align-with-space)
-			("#" . mc/insert-numbers) ; use num prefix to set the starting number
-			("^" . mc/edit-beginnings-of-lines)
-			("$" . mc/edit-ends-of-lines))
-	    :init
-	    (progn
-	      ;; Temporary hack to get around bug # 28524 in emacs 26+
-	      ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=28524
-	      (setq mc/mode-line
-		    `(" mc:" (:eval (format ,(propertize "%-2d" 'face 'font-lock-warning-face)
-					    (mc/num-cursors)))))
+            ("C->" . mc/mark-next-like-this)
+            ("C-<" . mc/mark-previous-like-this)
+            ("C-c C-<" . mc/mark-all-like-this)
+            ("C-S-<mouse-1>" . mc/add-cursor-on-click))
+     :bind (:map region-bindings-mode-map
+                 ("a" . mc/mark-all-like-this)
+                 ("p" . mc/mark-previous-like-this)
+                 ("n" . mc/mark-next-like-this)
+                 ("P" . mc/unmark-previous-like-this)
+                 ("N" . mc/unmark-next-like-this)
+                 ("[" . mc/cycle-backward)
+                 ("]" . mc/cycle-forward)
+                 ("m" . mc/mark-more-like-this-extended)
+                 ("h" . mc-hide-unmatched-lines-mode)
+                 ("\\" . mc/vertical-align-with-space)
+                 ("#" . mc/insert-numbers) ; use num prefix to set the starting number
+                 ("^" . mc/edit-beginnings-of-lines)
+                 ("$" . mc/edit-ends-of-lines))
+     :init
+     (progn
+       ;; Temporary hack to get around bug # 28524 in emacs 26+
+       ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=28524
+       (setq mc/mode-line
+             `(" mc:" (:eval (format ,(propertize "%-2d" 'face 'font-lock-warning-face)
+                                     (mc/num-cursors)))))
 
-	      (setq mc/list-file (locate-user-emacs-file "mc-lists"))
+       (setq mc/list-file (locate-user-emacs-file "mc-lists"))
 
-	      ;; Disable the annoying sluggish matching paren blinks for all cursors
-	      ;; when you happen to type a ")" or "}" at all cursor locations.
-	      (defvar modi/mc-blink-matching-paren--store nil
-		"Internal variable used to restore the value of `blink-matching-paren'
+       ;; Disable the annoying sluggish matching paren blinks for all cursors
+       ;; when you happen to type a ")" or "}" at all cursor locations.
+       (defvar modi/mc-blink-matching-paren--store nil
+         "Internal variable used to restore the value of `blink-matching-paren'
    after `multiple-cursors-mode' is quit.")
 
-	      ;; The `multiple-cursors-mode-enabled-hook' and
-	      ;; `multiple-cursors-mode-disabled-hook' are run in the
-	      ;; `multiple-cursors-mode' minor mode definition, but they are not declared
-	      ;; (not `defvar'd). So do that first before using `add-hook'.
-	      (defvar multiple-cursors-mode-enabled-hook nil
-		"Hook that is run after `multiple-cursors-mode' is enabled.")
-	      (defvar multiple-cursors-mode-disabled-hook nil
-		"Hook that is run after `multiple-cursors-mode' is disabled.")
+       ;; The `multiple-cursors-mode-enabled-hook' and
+       ;; `multiple-cursors-mode-disabled-hook' are run in the
+       ;; `multiple-cursors-mode' minor mode definition, but they are not declared
+       ;; (not `defvar'd). So do that first before using `add-hook'.
+       (defvar multiple-cursors-mode-enabled-hook nil
+         "Hook that is run after `multiple-cursors-mode' is enabled.")
+       (defvar multiple-cursors-mode-disabled-hook nil
+         "Hook that is run after `multiple-cursors-mode' is disabled.")
 
-	      (defun modi/mc-when-enabled ()
-		"Function to be added to `multiple-cursors-mode-enabled-hook'."
-		(setq modi/mc-blink-matching-paren--store blink-matching-paren)
-		(setq blink-matching-paren nil))
+       (defun modi/mc-when-enabled ()
+         "Function to be added to `multiple-cursors-mode-enabled-hook'."
+         (setq modi/mc-blink-matching-paren--store blink-matching-paren)
+         (setq blink-matching-paren nil))
 
-	      (defun modi/mc-when-disabled ()
-		"Function to be added to `multiple-cursors-mode-disabled-hook'."
-		(setq blink-matching-paren modi/mc-blink-matching-paren--store))
+       (defun modi/mc-when-disabled ()
+         "Function to be added to `multiple-cursors-mode-disabled-hook'."
+         (setq blink-matching-paren modi/mc-blink-matching-paren--store))
 
-	      (add-hook 'multiple-cursors-mode-enabled-hook #'modi/mc-when-enabled)
-	      (add-hook 'multiple-cursors-mode-disabled-hook #'modi/mc-when-disabled)))
+       (add-hook 'multiple-cursors-mode-enabled-hook #'modi/mc-when-enabled)
+       (add-hook 'multiple-cursors-mode-disabled-hook #'modi/mc-when-disabled)))
 
 
    #+END_SRC
 
+** Dired
+
+
+   #+BEGIN_SRC emacs-lisp
+
+   (use-package dired
+     :config
+     (setq dired-recursive-copies 'always)
+     (setq dired-recursive-deletes 'always)
+     (setq delete-by-moving-to-trash t)
+     ;(setq dired-listing-switches "-AFhlv --group-directories-first")
+     (setq dired-dwim-target t)
+     :hook ((dired-mode . dired-hide-details-mode)
+	    (dired-mode . hl-line-mode)))
+
+   (use-package dired-aux
+     :config
+     (setq dired-isearch-filenames 'dwim)
+     ;; The following variables were introduced in Emacs 27.1
+     (setq dired-create-destination-dirs 'ask)
+     (setq dired-vc-rename-file t)
+     :bind (:map dired-mode-map
+		 ("C-c +" . dired-create-empty-file)
+		 ("M-s f" . nil)))
+
+   (use-package find-dired
+     :after dired
+     :config
+     ;; (setq find-ls-option
+     ;;       '("-ls" . "-AFhlv --group-directories-first"))
+     (setq find-name-arg "-iname"))
+
+   (use-package async
+     :ensure t)
+
+   (use-package dired-async
+     :after (dired async)
+     :hook (dired-mode . dired-async-mode))
+   #+END_SRC
+
+
+   This is the editable state of a dired buffer. You can access it with
+   C-x C-q. Write changes to files or directories, as if it were a
+   regular buffer, then confirm them with C-c C-c.
+
+   While in writable state, allow the changing of permissions.  While
+   renaming a file, any forward slash is treated like a directory and is
+   created directly upon successful exit.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package wdired
+     :after dired
+     :commands wdired-change-to-wdired-mode
+     :config
+     (setq wdired-allow-to-change-permissions t)
+     (setq wdired-create-parent-directories t))
+
+   #+END_SRC
+
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package peep-dired
+     :ensure t
+     :after dired
+     :config
+     (setq peep-dired-cleanup-on-disable t)
+     (setq peep-dired-enable-on-directories nil)
+     (setq peep-dired-ignored-extensions
+           '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
+     :bind (:map dired-mode-map
+                 ("P" . peep-dired)))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package dired-subtree
+     :ensure t
+     :after dired
+     :config
+     (setq dired-subtree-use-backgrounds nil)
+     :bind (:map dired-mode-map
+                 ("<tab>" . dired-subtree-toggle)
+                 ("<C-tab>" . dired-subtree-cycle)
+                 ("<S-iso-lefttab>" . dired-subtree-remove)))
+
+   (use-package diredfl
+     :ensure t
+     :hook (dired-mode . diredfl-mode))
+
+   #+END_SRC
 
 ** Advice
 
