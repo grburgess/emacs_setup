@@ -1249,10 +1249,10 @@
      (setq dired-recursive-copies 'always)
      (setq dired-recursive-deletes 'always)
      (setq delete-by-moving-to-trash t)
-     ;(setq dired-listing-switches "-AFhlv --group-directories-first")
+                                           ;(setq dired-listing-switches "-AFhlv --group-directories-first")
      (setq dired-dwim-target t)
      :hook ((dired-mode . dired-hide-details-mode)
-	    (dired-mode . hl-line-mode)))
+            (dired-mode . hl-line-mode)))
 
    (use-package dired-aux
      :config
@@ -1261,8 +1261,8 @@
      (setq dired-create-destination-dirs 'ask)
      (setq dired-vc-rename-file t)
      :bind (:map dired-mode-map
-		 ("C-c +" . dired-create-empty-file)
-		 ("M-s f" . nil)))
+                 ("C-c +" . dired-create-empty-file)
+                 ("M-s f" . nil)))
 
    (use-package find-dired
      :after dired
@@ -1326,6 +1326,14 @@
    (use-package diredfl
      :ensure t
      :hook (dired-mode . diredfl-mode))
+
+
+   (use-package wgrep
+     :ensure t
+     :config
+     (setq wgrep-auto-save-buffer t)
+     (setq wgrep-change-readonly-file t))
+
 
    #+END_SRC
 
@@ -1545,6 +1553,159 @@
    ;;   )
 
    #+END_SRC
+
+
+
+** Org
+
+   I use =org-agenda= along with =org-capture= for appointments and such.
+
+   #+BEGIN_SRC emacs-lisp
+
+   (add-hook 'org-mode-hook 'turn-on-auto-fill)
+   (add-hook 'org-mode-hook 'turn-on-flyspell)
+   (setq org-directory "~/org")
+   (setq org-agenda-files (list "~/org/"))
+   (setq org-default-notes-file "~/org/notes.org")
+   (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
+   (global-set-key "\C-cl" 'org-store-link)
+   (global-set-key "\C-ca" 'org-agenda)
+   (setq org-todo-keywords
+         '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
+
+
+
+
+                                           ;(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
+                                           ;(sequence "⚑ WAITING(w)" "|")
+                                           ;(sequence "|" "✘ CANCELED(c)")))
+
+
+   (require 'org-bullets)
+   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+
+   ;; some sexier setup
+
+   (setq org-hide-emphasis-markers t)
+
+   ;; (font-lock-add-keywords 'org-mode
+   ;;                         '(("^ *\\([-]\\) "
+   ;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+
+   (when window-system
+     (let* ((variable-tuple
+             (cond ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
+                   ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
+                   ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
+                   ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
+                   (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+            (base-font-color (face-foreground 'default nil 'default))
+            (headline       `(:inherit default :weight bold :foreground ,base-font-color)))
+
+       (custom-theme-set-faces
+        'user
+        `(org-level-8        ((t (,@headline ,@variable-tuple))))
+        `(org-level-7        ((t (,@headline ,@variable-tuple))))
+        `(org-level-6        ((t (,@headline ,@variable-tuple))))
+        `(org-level-5        ((t (,@headline ,@variable-tuple))))
+        `(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
+        `(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
+        `(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
+        `(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
+        `(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
+        `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+     )
+   (require 'org-variable-pitch)
+
+   (setq variable-pitch-mode 1)
+   ;; (setq variable-pitch ((t (:family "Source Sans Pro" :height 160 :weight light))))
+
+   ;; (setq fixed-pitch ((t (:family "Inconsolata"))))
+
+   (setq org-fontify-done-headline t)
+
+   ;; (setq org-done ((t (:foreground "PaleGreen"
+   ;;                         :strike-through t))))
+
+   ;; (setq org-mode . visual-line-mode)
+   ;; (setq org-mode . variable-pitch-mode)
+
+   ;;(org-tags-column 0)
+
+
+   (setq org-todo-keyword-faces
+         '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
+           ("CANCELED" . (:foreground "pink" :weight bold))
+           ("WRITING" . (:foreground "red" :weight bold))
+           ("RECIEVED" . (:foreground "red" :background "green" :weight bold))
+           ("SUBMITTED" . (:foreground "blue"))
+           ("ACCEPTED" . (:foreground "green"))
+
+
+           ))
+
+                      ;;; ORG TEMPLATES
+   (setq org-default-notes-file (concat org-directory "/notes.org"))
+   (define-key global-map "\C-cc" 'org-capture)
+
+
+   (setq org-capture-templates
+         '(("t" "Todo" entry (file "~/org/notes.org")
+            "* TODO %?\n%U" :empty-lines 1)
+
+           ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}_ %^G :LOG:")
+
+
+           ("P" "Research project" entry (file "~/org/projects.org")
+            "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
+
+           ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+           ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+           ("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+                                           ;    ("C" "Cliplink capture code" entry (file+headline  "~/org/coding.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+
+           ("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description}  %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
+
+                                           ;       ("F" "Cliplink capture fitting" entry (file+headline  "~/org/fitting.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
+
+           )
+         )
+
+
+
+   #+END_SRC
+
+   When editing org-files with source-blocks, we want the source blocks to
+   be themed as they would in their native mode.
+
+   #+BEGIN_SRC emacs-lisp
+   (setq org-src-fontify-natively t
+         org-src-tab-acts-natively t
+         org-confirm-babel-evaluate nil
+         org-edit-src-content-indentation 0)
+   #+END_SRC
+
+   This is quite an ugly fix for allowing code markup for expressions like
+   ="this string"=, because the quotation marks causes problems.
+
+   #+BEGIN_SRC emacs-lisp
+   ;;(require 'org)
+   (eval-after-load "org"
+     '(progn
+        (setcar (nthcdr 2 org-emphasis-regexp-components) " \t\n,")
+        (custom-set-variables `(org-emphasis-alist ',org-emphasis-alist))))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+
+
+
+   #+END_SRC
 ** Compilation
 
    I often run ~latexmk -pdf -pvc~ in a compilation buffer, which recompiles
@@ -1709,40 +1870,6 @@
       '(setq geiser-active-implementations '(guile)))
     #+END_SRC
 
-** Java and C
-
-   The =c-mode-common-hook= is a general hook that work on all C-like
-   languages (C, C++, Java, etc...). I like being able to quickly compile
-   using =C-c C-c= (instead of =M-x compile=), a habit from =latex-mode=.
-
-   #+BEGIN_SRC emacs-lisp
-   (defun c-setup ()
-     (local-set-key (kbd "C-c C-c") 'compile))
-
-   (add-hook 'c-mode-common-hook 'c-setup)
-   #+END_SRC
-
-   Some statements in Java appear often, and become tedious to write
-   out. We can use abbrevs to speed this up.
-
-   #+BEGIN_SRC emacs-lisp
-   (define-abbrev-table 'java-mode-abbrev-table
-     '(("psv" "public static void main(String[] args) {" nil 0)
-       ("sopl" "System.out.println" nil 0)
-       ("sop" "System.out.printf" nil 0)))
-   #+END_SRC
-
-   To be able to use the abbrev table defined above, =abbrev-mode= must be
-   activated.
-
-   #+BEGIN_SRC emacs-lisp
-   (defun java-setup ()
-     (abbrev-mode t)
-     (setq-local compile-command (concat "javac " (buffer-name))))
-
-   (add-hook 'java-mode-hook 'java-setup)
-   #+END_SRC
-
 ** Markdown
 
    This makes =.md=-files open in =markdown-mode=.
@@ -1801,161 +1928,6 @@
        )
 
      )
-
-   #+END_SRC
-
-
-
-** Org
-
-   I use =org-agenda= along with =org-capture= for appointments and such.
-
-   #+BEGIN_SRC emacs-lisp
-
-   (add-hook 'org-mode-hook 'turn-on-auto-fill)
-   (add-hook 'org-mode-hook 'turn-on-flyspell)
-   (setq org-directory "~/org")
-   (setq org-agenda-files (list "~/org/"))
-   (setq org-agenda-file-regexp "\\`[^.].*\\.org\\|.todo\\'")
-   (setq org-mobile-inbox-for-pull "~/org/flagged.org")
-   ;; Set to <your Dropbox root directory>/MobileOrg.
-   (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-   (global-set-key "\C-cl" 'org-store-link)
-   (global-set-key "\C-ca" 'org-agenda)
-   (setq org-todo-keywords
-         '((sequence "TODO" "READ" "RESEARCH" "|" "DONE" "DELEGATED" )))
-
-
-
-
-                                           ;(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
-                                           ;(sequence "⚑ WAITING(w)" "|")
-                                           ;(sequence "|" "✘ CANCELED(c)")))
-
-
-   (require 'org-bullets)
-   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-
-
-   ;; some sexier setup
-
-   (setq org-hide-emphasis-markers t)
-
-   ;; (font-lock-add-keywords 'org-mode
-   ;;                         '(("^ *\\([-]\\) "
-   ;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-
-   (when window-system
-     (let* ((variable-tuple
-             (cond ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
-                   ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
-                   ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
-                   ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
-                   (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-            (base-font-color (face-foreground 'default nil 'default))
-            (headline       `(:inherit default :weight bold :foreground ,base-font-color)))
-
-       (custom-theme-set-faces
-        'user
-        `(org-level-8        ((t (,@headline ,@variable-tuple))))
-        `(org-level-7        ((t (,@headline ,@variable-tuple))))
-        `(org-level-6        ((t (,@headline ,@variable-tuple))))
-        `(org-level-5        ((t (,@headline ,@variable-tuple))))
-        `(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
-        `(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
-        `(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
-        `(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
-        `(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
-        `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
-     )
-   (require 'org-variable-pitch)
-
-   (setq variable-pitch-mode 1)
-   ;; (setq variable-pitch ((t (:family "Source Sans Pro" :height 160 :weight light))))
-
-   ;; (setq fixed-pitch ((t (:family "Inconsolata"))))
-
-   (setq org-fontify-done-headline t)
-
-   ;; (setq org-done ((t (:foreground "PaleGreen"
-   ;;                         :strike-through t))))
-
-   ;; (setq org-mode . visual-line-mode)
-   ;; (setq org-mode . variable-pitch-mode)
-
-   ;;(org-tags-column 0)
-
-
-   (setq org-todo-keyword-faces
-         '(("TODO" . org-warning) ("READ" . "yellow") ("RESEARCH" . (:foreground "blue" :weight bold))
-           ("CANCELED" . (:foreground "pink" :weight bold))
-           ("WRITING" . (:foreground "red" :weight bold))
-           ("RECIEVED" . (:foreground "red" :background "green" :weight bold))
-           ("SUBMITTED" . (:foreground "blue"))
-           ("ACCEPTED" . (:foreground "green"))
-
-
-           ))
-
-                    ;;; ORG TEMPLATES
-   (setq org-default-notes-file (concat org-directory "/notes.org"))
-   (define-key global-map "\C-cc" 'org-capture)
-
-
-   (setq org-capture-templates
-         '(("t" "Todo" entry (file "~/org/notes.org")
-            "* TODO %?\n%U" :empty-lines 1)
-
-           ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}_ %^G :LOG:")
-
-
-           ("P" "Research project" entry (file "~/org/projects.org")
-            "* TODO %^{Project title} :%^G:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%^{Project description}\n** TODO Literature review\n** TODO %?\n** TODO Summary\n** TODO Reports\n** Ideas\n" :clock-in t :clock-resume t)
-
-           ("a" "Research Article" entry(file+headline "~/org/publications.org" "Working articles") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
-
-           ("r" "Ref. Report" entry(file+headline "~/org/publications.org" "Referee reports") "** WRITING %^{Title}\n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
-
-           ("c" "Coding tips" entry(file+headline "~/org/coding.org" "Refile") "** READ %^{description} %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
-
-                                           ;    ("C" "Cliplink capture code" entry (file+headline  "~/org/coding.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
-
-           ("f" "Fitting" entry(file+headline "~/org/fitting.org" "Refile") "** READ %^{description}  %^g  \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n")
-
-                                           ;       ("F" "Cliplink capture fitting" entry (file+headline  "~/org/fitting.org" "Refile" ) "** READ %^{description} %^g  %(org-cliplink-capture) \n\t-Added: %U\n   :LOGBOOK:\n   :END:\n" :empty-lines 1)
-
-           )
-         )
-
-
-
-   #+END_SRC
-
-   When editing org-files with source-blocks, we want the source blocks to
-   be themed as they would in their native mode.
-
-   #+BEGIN_SRC emacs-lisp
-   (setq org-src-fontify-natively t
-         org-src-tab-acts-natively t
-         org-confirm-babel-evaluate nil
-         org-edit-src-content-indentation 0)
-   #+END_SRC
-
-   This is quite an ugly fix for allowing code markup for expressions like
-   ="this string"=, because the quotation marks causes problems.
-
-   #+BEGIN_SRC emacs-lisp
-   ;;(require 'org)
-   (eval-after-load "org"
-     '(progn
-        (setcar (nthcdr 2 org-emphasis-regexp-components) " \t\n,")
-        (custom-set-variables `(org-emphasis-alist ',org-emphasis-alist))))
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-
-
 
    #+END_SRC
 
