@@ -1598,7 +1598,7 @@
 
 
    (setq org-capture-templates
-         '(("t" "Todo" entry (file "~/org/notes.org")
+         '(("t" "Todo" entry (file+headline "~/org/notes.org" "Task List")
             "* TODO %?\n%U" :empty-lines 1)
 
            ("l" "Logbook entry" entry (file+datetree "logbook-work.org") "** %U - %^{Activity}_ %^G :LOG:")
