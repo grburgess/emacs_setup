@@ -213,6 +213,7 @@
              kooten-theme
              liso-theme
              lush-theme
+             cycle-themes
              madhat2r-theme
              majapahit-theme
              metalheart-theme
@@ -250,6 +251,7 @@
              seti-theme
              srcery-theme
              tablist
+             forge
              magit-popup
              neotree
              browse-kill-ring
@@ -467,26 +469,65 @@
 
 
    #+BEGIN_SRC emacs-lisp
-   (load-theme 'atom-one-dark t)
+   ;;   (load-theme 'kaolin-galaxy t)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
 
-   (defun cycle-themes ()
-     "Returns a function that lets you cycle your themes."
-     (lexical-let ((themes '#1=( challenger-deep granger atom-one-dark  sexy-monochrome
-                                                 green-phosphor   . #1#)))
-       (lambda ()
-         (interactive)
-         ;; Rotates the thme cycle and changes the current theme.
-         (load-theme (car (setq themes (cdr themes))) t)
-         (set-frame-font "JetBrains Mono 13" nil t)
-         (add-to-list 'default-frame-alist
-                      '(font . "JetBrains Mono 13"))
+
+   (use-package nimbus-theme
+     :ensure t
+     :config
+     (load-theme 'nimbus t))
 
 
 
-         )))
+   (use-package kaolin-themes
+     :ensure t
+     :config
+     (load-theme 'kaolin-aurora t)
+     (load-theme 'kaolin-galaxy t)
+     (load-theme 'kaolin-eclipse t)
+     (load-theme 'kaolin-mono-dark t)
+     (kaolin-treemacs-theme))
+
+
+
+   (use-package cycle-themes
+     :ensure t
+     :init (setq cycle-themes-theme-list
+		 '( kaolin-aurora kaolin-galaxy kaolin-eclipse nimbus  kaolin-mono-dark ))
+     :config (cycle-themes-mode)
+
+     (add-hook 'cycle-themes-after-cycle-hook
+       #'(lambda ()
+		(set-frame-font "JetBrains Mono 13" nil t)
+		 (add-to-list 'default-frame-alist
+			      '(font . "JetBrains Mono 13"))
+
+
+                 ))
+
+
+
+     )
+
+
+   ;; (defun cycle-themes ()
+   ;;   "Returns a function that lets you cycle your themes."
+   ;;   (lexical-let ((themes '#1=(  nimbus kaolin-aurora  kaolin-galaxy kaolin-eclipse kaolin-mono-dark
+   ;;                                               fogus  . #1#)))
+   ;;     (lambda ()
+   ;;       (interactive)
+   ;;       ;; Rotates the thme cycle and changes the current theme.
+   ;;       (load-theme (car (setq themes (cdr themes))) t)
+   ;;       (set-frame-font "JetBrains Mono 13" nil t)
+   ;;       (add-to-list 'default-frame-alist
+   ;;                    '(font . "JetBrains Mono 13"))
+
+
+
+   ;;       )))
    #+END_SRC
 
    Some nice visual modes
@@ -844,6 +885,8 @@
      :ensure t
      :commands git-timemachine)
 
+   (use-package forge
+     :after magit)
 
    #+END_SRC
 
@@ -923,27 +966,27 @@
              ))
 
 
-    (use-package ivy-posframe
-      :ensure t
-      :after ivy
-      :delight
-      :config
-      (setq ivy-posframe-parameters
-            '((left-fringe . 2)
-              (right-fringe . 2)
-              (internal-border-width . 2)
+    ;; (use-package ivy-posframe
+    ;;   :ensure t
+    ;;   :after ivy
+    ;;   :delight
+    ;;   :config
+    ;;   (setq ivy-posframe-parameters
+    ;;         '((left-fringe . 2)
+    ;;           (right-fringe . 2)
+    ;;           (internal-border-width . 2)
 
-              ))
-      (setq ivy-posframe-height-alist
-            '((swiper . 15)
-              (swiper-isearch . 15)
-              (t . 10)))
-      (setq ivy-posframe-display-functions-alist
-            '((complete-symbol . ivy-posframe-display-at-point)
-              (swiper . nil)
-              (swiper-isearch . nil)
-              (t . ivy-posframe-display-at-point)))
-      (ivy-posframe-mode 1))
+    ;;           ))
+    ;;   (setq ivy-posframe-height-alist
+    ;;         '((swiper . 15)
+    ;;           (swiper-isearch . 15)
+    ;;           (t . 10)))
+    ;;   (setq ivy-posframe-display-functions-alist
+    ;;         '((complete-symbol . ivy-posframe-display-at-point)
+    ;;           (swiper . nil)
+    ;;           (swiper-isearch . nil)
+    ;;           (t . ivy-posframe-display-at-point)))
+    ;;   (ivy-posframe-mode 1))
 
     (use-package prescient
       :ensure t
@@ -1337,15 +1380,15 @@
    the value.
 
    #+BEGIN_SRC emacs-lisp
-   (defadvice eval-last-sexp (around replace-sexp (arg) activate)
-     "Replace sexp when called with a prefix argument."
-     (if arg
-         (let ((pos (point)))
-           ad-do-it
-           (goto-char pos)
-           (backward-kill-sexp)
-           (forward-sexp))
-       ad-do-it))
+   ;; (defadvice eval-last-sexp (around replace-sexp (arg) activate)
+   ;;   "Replace sexp when called with a prefix argument."
+   ;;   (if arg
+   ;;       (let ((pos (point)))
+   ;;         ad-do-it
+   ;;         (goto-char pos)
+   ;;         (backward-kill-sexp)
+   ;;         (forward-sexp))
+   ;;     ad-do-it))
    #+END_SRC
 
    When interactively changing the theme (using =M-x load-theme=), the
@@ -1354,9 +1397,9 @@
    enabled themes.
 
    #+BEGIN_SRC emacs-lisp
-   (defadvice load-theme
-       (before disable-before-load (theme &optional no-confirm no-enable) activate)
-     (mapc 'disable-theme custom-enabled-themes))
+   ;; (defadvice load-theme
+   ;;     (before disable-before-load (theme &optional no-confirm no-enable) activate)
+   ;;   (mapc 'disable-theme custom-enabled-themes))
    #+END_SRC
 
 * Mode specific
@@ -1535,40 +1578,41 @@
 
    (setq org-hide-emphasis-markers t)
 
-   ;; (font-lock-add-keywords 'org-mode
-   ;;                         '(("^ *\\([-]\\) "
-   ;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+   (font-lock-add-keywords 'org-mode
+                           '(("^ *\\([-]\\) "
+                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 
-   ;; (when window-system
-   ;;   (let* ((variable-tuple
-   ;;           (cond ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
-   ;;                 ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
-   ;;                 ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
-   ;;                 ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
-   ;;                 (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-   ;;          (base-font-color (face-foreground 'default nil 'default))
-   ;;          (headline       `(:inherit default :weight bold :foreground ,base-font-color)))
+   (when window-system
+     (let* ((variable-tuple
+             (cond ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
+                   ((x-list-fonts   "JetBrains Mono") '(:font   "JetBrains Mono"))
+                   ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
+                   ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
+                   ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
+                   (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+            (base-font-color (face-foreground 'default nil 'default))
+            (headline       `(:inherit default :weight bold :foreground ,base-font-color)))
 
-   ;;     (custom-theme-set-faces
-   ;;      'user
-   ;;      `(org-level-8        ((t (,@headline ,@variable-tuple))))
-   ;;      `(org-level-7        ((t (,@headline ,@variable-tuple))))
-   ;;      `(org-level-6        ((t (,@headline ,@variable-tuple))))
-   ;;      `(org-level-5        ((t (,@headline ,@variable-tuple))))
-   ;;      `(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
-   ;;      `(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
-   ;;      `(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
-   ;;      `(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
-   ;;      `(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
-   ;;      `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
-   ;;   )
+       (custom-theme-set-faces
+        'user
+        `(org-level-8        ((t (,@headline ,@variable-tuple))))
+        `(org-level-7        ((t (,@headline ,@variable-tuple))))
+        `(org-level-6        ((t (,@headline ,@variable-tuple))))
+        `(org-level-5        ((t (,@headline ,@variable-tuple))))
+        `(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
+        `(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
+        `(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
+        `(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
+        `(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
+        `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+     )
    (require 'org-variable-pitch)
 
-   (setq variable-pitch-mode 1)
-   ;; (setq variable-pitch ((t (:family "Source Sans Pro" :height 160 :weight light))))
+   ;; (setq variable-pitch-mode 1)
+   ;; (setq variable-pitch ((t (:family "JetBrains Mono" :height 160 :weight light))))
 
-   ;; (setq fixed-pitch ((t (:family "Inconsolata"))))
+   ;; (setq fixed-pitch ((t (:family "JetBrains Mono"))))
 
    (setq org-fontify-done-headline t)
 
