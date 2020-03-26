@@ -471,450 +471,471 @@
 ** Visual
 
 
+*** Line numbers
+    #+BEGIN_SRC emacs-lisp
+    (global-linum-mode 1)
 
-   #+BEGIN_SRC emacs-lisp
-   ;;   (load-theme 'kaolin-galaxy t)
-   #+END_SRC
+    (setq linum-mode-inhibit-modes-list '(eshell-mode
+                                          shell-mode
+                                          erc-mode
+                                          org-mode
+                                          jabber-roster-mode
+                                          jabber-chat-mode
+                                          gnus-group-mode
+                                          gnus-summary-mode
+                                          gnus-article-mode))
 
-   #+BEGIN_SRC emacs-lisp
+    (defadvice linum-on (around linum-on-inhibit-for-modes)
+      "Stop the load of linum-mode for some major modes."
+      (unless (member major-mode linum-mode-inhibit-modes-list)
+        ad-do-it))
 
+    (ad-activate 'linum-on)
 
-   (use-package nimbus-theme
-     :ensure t
-     :config
-     (load-theme 'nimbus t))
 
+    #+END_SRC
 
 
-   (use-package kaolin-themes
-     :ensure t
-     :config
-     (load-theme 'kaolin-aurora t)
-     (load-theme 'kaolin-galaxy t)
-     (load-theme 'kaolin-eclipse t)
-     (load-theme 'kaolin-mono-dark t)
-     )
+*** Themes
 
+    #+BEGIN_SRC emacs-lisp
 
 
-   (use-package cycle-themes
-     :ensure t
-     :init (setq cycle-themes-theme-list
-                 '( kaolin-aurora kaolin-galaxy kaolin-eclipse nimbus  kaolin-mono-dark ))
-     :config (cycle-themes-mode)
 
-     (add-hook 'cycle-themes-after-cycle-hook
-               #'(lambda ()
-                   (set-frame-font "JetBrains Mono 13" nil t)
-                   (add-to-list 'default-frame-alist
-                                '(font . "JetBrains Mono 13"))
 
 
-                   ))
 
-
-
-     )
-
-
-   ;; (defun cycle-themes ()
-   ;;   "Returns a function that lets you cycle your themes."
-   ;;   (lexical-let ((themes '#1=(  nimbus kaolin-aurora  kaolin-galaxy kaolin-eclipse kaolin-mono-dark
-   ;;                                               fogus  . #1#)))
-   ;;     (lambda ()
-   ;;       (interactive)
-   ;;       ;; Rotates the thme cycle and changes the current theme.
-   ;;       (load-theme (car (setq themes (cdr themes))) t)
-   ;;       (set-frame-font "JetBrains Mono 13" nil t)
-   ;;       (add-to-list 'default-frame-alist
-   ;;                    '(font . "JetBrains Mono 13"))
-
-
-
-   ;;       )))
-   #+END_SRC
-
-   Some nice visual modes
-   #+BEGIN_SRC emacs-lisp
-
-   (use-package beacon
-     :config
-     (progn
-
-       (setq beacon-color "#1BFFA5")
-       (setq beacon-push-mark 60)
-
-       (setq beacon-blink-when-point-moves-vertically nil) ; default nil
-       (setq beacon-blink-when-point-moves-horizontally nil) ; default nil
-       (setq beacon-blink-when-buffer-changes t) ; default t
-       (setq beacon-blink-when-window-scrolls t) ; default t
-       (setq beacon-blink-when-window-changes t) ; default t
-       (setq beacon-blink-when-focused nil) ; default nil
-
-       (setq beacon-blink-duration 0.3) ; default 0.3
-       (setq beacon-blink-delay 0.3) ; default 0.3
-       (setq beacon-size 20) ; default 40
-       ;; (setq beacon-color "yellow") ; default 0.5
-
-
-       (add-to-list 'beacon-dont-blink-major-modes 'term-mode)
-
-       (beacon-mode 1)))
-
-   ;; (use-package all-the-icons-ivy
-   ;;   :after (all-the-icons ivy)
-   ;;   :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup)
-   ;;   ;;:custom (all-the-icons-ivy-buffer-commands '(ivy-switch-buffer-other-window))
-   ;;   :config
-   ;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
-   ;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-file)
-   ;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-file-jump)
-   ;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
-   ;;   (all-the-icons-ivy-setup))
-
-   ;; More friendly display transformer for Ivy
-   (use-package ivy-rich
-     :defines (all-the-icons-dir-icon-alist bookmark-alist)
-     :functions (all-the-icons-icon-family
-                 all-the-icons-match-to-alist
-                 all-the-icons-auto-mode-match?
-                 all-the-icons-octicon
-                 all-the-icons-dir-is-submodule)
-     :preface
-     (defun ivy-rich-bookmark-name (candidate)
-       (car (assoc candidate bookmark-alist)))
-
-     (defun ivy-rich-repo-icon (candidate)
-       "Display repo icons in `ivy-rich`."
-       (all-the-icons-octicon "repo" :height .9))
-
-     (defun ivy-rich-org-capture-icon (candidate)
-       "Display repo icons in `ivy-rich`."
-       (pcase (car (last (split-string (car (split-string candidate)) "-")))
-         ("emacs" (all-the-icons-fileicon "emacs" :height .68 :v-adjust .001))
-         ("schedule" (all-the-icons-faicon "calendar" :height .68 :v-adjust .005))
-         ("tweet" (all-the-icons-faicon "commenting" :height .7 :v-adjust .01))
-         ("link" (all-the-icons-faicon "link" :height .68 :v-adjust .01))
-         ("memo" (all-the-icons-faicon "pencil" :height .7 :v-adjust .01))
-         (_       (all-the-icons-octicon "inbox" :height .68 :v-adjust .01))
-         ))
-
-     (defun ivy-rich-org-capture-title (candidate)
-       (let* ((octl (split-string candidate))
-              (title (pop octl))
-              (desc (mapconcat 'identity octl " ")))
-         (format "%-25s %s"
-                 title
-                 (propertize desc 'face `(:inherit font-lock-doc-face)))))
-
-     (defun ivy-rich-buffer-icon (candidate)
-       "Display buffer icons in `ivy-rich'."
-       (when (display-graphic-p)
-         (when-let* ((buffer (get-buffer candidate))
-                     (major-mode (buffer-local-value 'major-mode buffer))
-                     (icon (if (and (buffer-file-name buffer)
-                                    (all-the-icons-auto-mode-match? candidate))
-                               (all-the-icons-icon-for-file candidate)
-                             (all-the-icons-icon-for-mode major-mode))))
-           (if (symbolp icon)
-               (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
-           (unless (symbolp icon)
-             (propertize icon
-                         'face `(
-                                 :height 1.1
-                                 :family ,(all-the-icons-icon-family icon)
-                                 ))))))
-
-     (defun ivy-rich-file-icon (candidate)
-       "Display file icons in `ivy-rich'."
-       (when (display-graphic-p)
-         (let ((icon (if (file-directory-p candidate)
-                         (cond
-                          ((and (fboundp 'tramp-tramp-file-p)
-                                (tramp-tramp-file-p default-directory))
-                           (all-the-icons-octicon "file-directory"))
-                          ((file-symlink-p candidate)
-                           (all-the-icons-octicon "file-symlink-directory"))
-                          ((all-the-icons-dir-is-submodule candidate)
-                           (all-the-icons-octicon "file-submodule"))
-                          ((file-exists-p (format "%s/.git" candidate))
-                           (all-the-icons-octicon "repo"))
-                          (t (let ((matcher (all-the-icons-match-to-alist candidate all-the-icons-dir-icon-alist)))
-                               (apply (car matcher) (list (cadr matcher))))))
-                       (all-the-icons-icon-for-file candidate))))
-           (unless (symbolp icon)
-             (propertize icon
-                         'face `(
-                                 :height 1.1
-                                 :family ,(all-the-icons-icon-family icon)
-                                 ))))))
-     :hook (ivy-rich-mode . (lambda ()
-                              (setq ivy-virtual-abbreviate
-                                    (or (and ivy-rich-mode 'abbreviate) 'name))))
-     :init
-     (setq ivy-rich-display-transformers-list
-           '(ivy-switch-buffer
-             (:columns
-              ((ivy-rich-buffer-icon)
-               (ivy-rich-candidate (:width 30))
-               (ivy-rich-switch-buffer-size (:width 7))
-               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
-               (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
-               (ivy-rich-switch-buffer-project (:width 15 :face success))
-               (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
-              :predicate
-              (lambda (cand) (get-buffer cand)))
-             ivy-switch-buffer-other-window
-             (:columns
-              ((ivy-rich-buffer-icon)
-               (ivy-rich-candidate (:width 30))
-               (ivy-rich-switch-buffer-size (:width 7))
-               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
-               (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
-               (ivy-rich-switch-buffer-project (:width 15 :face success))
-               (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
-              :predicate
-              (lambda (cand) (get-buffer cand)))
-             counsel-M-x
-             (:columns
-              ((counsel-M-x-transformer (:width 40))
-               (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
-             counsel-describe-function
-             (:columns
-              ((counsel-describe-function-transformer (:width 45))
-               (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
-             counsel-describe-variable
-             (:columns
-              ((counsel-describe-variable-transformer (:width 45))
-               (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
-             counsel-find-file
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate)))
-             counsel-file-jump
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate)))
-             counsel-dired-jump
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate)))
-             counsel-git
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate)))
-             counsel-recentf
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate (:width 110))))
-             counsel-bookmark
-             (:columns
-              ((ivy-rich-bookmark-type)
-               (ivy-rich-bookmark-name (:width 30))
-               (ivy-rich-bookmark-info (:width 80))))
-             counsel-projectile-switch-project
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate)))
-             counsel-fzf
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate)))
-             ivy-ghq-open
-             (:columns
-              ((ivy-rich-repo-icon)
-               (ivy-rich-candidate)))
-             ivy-ghq-open-and-fzf
-             (:columns
-              ((ivy-rich-repo-icon)
-               (ivy-rich-candidate)))
-             counsel-projectile-find-file
-             (:columns
-              ((ivy-rich-file-icon)
-               (ivy-rich-candidate)))
-             counsel-org-capture
-             (:columns
-              ((ivy-rich-org-capture-icon)
-               (ivy-rich-org-capture-title)
-               ))
-             counsel-projectile-find-dir
-             (:columns
-              ((ivy-rich-file-icon)
-               (counsel-projectile-find-dir-transformer)))))
-
-     (setq ivy-rich-parse-remote-buffer nil)
-     :config
-     (ivy-rich-mode 1))
-
-
-   ;; (use-package all-the-icons-ivy
-   ;;   :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup)
-   ;;   :config
-   ;;   (setq all-the-icons-ivy-file-commands
-   ;;      '(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir))
-   ;;   )
-
-
-   ;; Minimap
-   (use-package sublimity
-     :config (require 'sublimity)
-     (require 'sublimity-scroll)
-                                           ;  (require 'sublimity-map)
-     (sublimity-mode 1))
-                                           ;  (sublimity-map-set-delay 3))
-
-   (use-package doom-themes
-     :init
-
-     ;; (require 'sublimity)
-     ;; (require 'sublimity-attractive)
-     ;; (sublimity-mode 1)
-
-     ;; (setq sublimity-attractive-centering-width 130)
-
-     ;; Enable flashing mode-line on errors
-     (doom-themes-visual-bell-config)
-
-     ;; Corrects (and improves) org-mode's native fontification.
-     (doom-themes-org-config)
-
-     ;; (require 'sublimity-scroll)
-
-     ;; (setq sublimity-scroll-weight 10
-     ;;       sublimity-scroll-drift-length 10)
-
-
-     )
-
-   #+END_SRC
-
-
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package all-the-icons
-     :if window-system
-     :ensure t
-     :config
-     (when (not (member "all-the-icons" (font-family-list)))
-       (all-the-icons-install-fonts t)))
-
-   (use-package doom-modeline
-     :init
-     (doom-modeline-mode 1)
-
-     ;; Whether display icons in mode-line or not.
-     (setq doom-modeline-icon t)
-
-     ;; Whether display the icon for major mode. It respects `doom-modeline-icon'.
-     (setq doom-modeline-major-mode-icon t)
-
-
-     ;; Whether display color icons for `major-mode'. It respects
-     ;; `doom-modeline-icon' and `all-the-icons-color-icons'.
-     (setq doom-modeline-major-mode-color-icon t)
-
-     ;; Whether display icons for buffer states. It respects `doom-modeline-icon'.
-     (setq doom-modeline-buffer-state-icon t)
-
-     ;; Whether display buffer modification icon. It respects `doom-modeline-icon'
-     ;; and `doom-modeline-buffer-state-icon'.
-     (setq doom-modeline-buffer-modification-icon t)
-
-     ;; Whether display minor modes in mode-line or not.
-     (setq doom-modeline-minor-modes t)
-
-     ;; If non-nil, a word count will be added to the selection-info modeline segment.
-     (setq doom-modeline-enable-word-count t)
-
-     ;; If non-nil, only display one number for checker information if applicable.
-     (setq doom-modeline-checker-simple-format t)
-
-     ;; The maximum displayed length of the branch name of version control.
-     (setq doom-modeline-vcs-max-length 12)
-
-
-     ;; Whether display perspective name or not. Non-nil to display in mode-line.
-     (setq doom-modeline-persp-name t)
-
-     ;; Whether display `lsp' state or not. Non-nil to display in mode-line.
-     (setq doom-modeline-lsp t)
-
-     ;; Whether display github notifications or not. Requires `ghub` package.
-     (setq doom-modeline-github t)
-
-     ;; The interval of checking github.
-     (setq doom-modeline-github-interval (* 30 60))
-
-     ;; Whether display environment version or not
-     (setq doom-modeline-env-version t)
-     ;; Or for individual languages
-     (setq doom-modeline-env-enable-python t)
-     (setq doom-modeline-env-enable-ruby nil)
-
-
-
-
-
-
-     ;; Change the executables to use for the language version string
-     (setq doom-modeline-env-python-executable "python")
-     (setq doom-modeline-env-ruby-executable "ruby")
-
-     ;; Whether display mu4e notifications or not. Requires `mu4e-alert' package.
-     (setq doom-modeline-mu4e nil)
-
-     ;; Whether display irc notifications or not. Requires `circe' package.
-     (setq doom-modeline-irc nil)
-
-     ;; Function to stylize the irc buffer names.
-     (setq doom-modeline-irc-stylize 'identity)
-
-
-     )
-
-
-
-
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-   (setq ibuffer-saved-filter-groups
-         '(("home"
-            ("emacs-config" (or (filename . ".emacs.d")
-                                (filename . ".init.org")))
-            ("Org" (or (mode . org-mode)
-                       (filename . "OrgMode")))
-            ("latex" (or (mode . tex-mode)
-                         (mode . auctex-mode)
-                         (mode . latex-mode))
-             )
-            ("stan" (mode . stan-mode) )
-
-            ("python" (mode . python-mode))
-            ("Magit" (name . "\*magit"))
-            ("Help" (or (name . "\*Help\*")
-                        (name . "\*Apropos\*")
-                        (name . "\*info\*"))))))
-
-   (add-hook 'ibuffer-mode-hook
-             '(lambda ()
-                (ibuffer-switch-to-saved-filter-groups "home")))
-
-
-
-   #+END_SRC
-
-
-
-   New in Emacs 24.4 is the =prettify-symbols-mode=! It's neat.
-
-   #+BEGIN_SRC emacs-lisp
-   (setq-default prettify-symbols-alist '(("lambda" . ?λ)
-                                          ("delta" . ?Δ)
-                                          ("gamma" . ?Γ)
-                                          ("phi" . ?φ)
-                                          ("psi" . ?ψ)))
-   #+END_SRC
+    (use-package nimbus-theme
+      :ensure t
+      :config
+      (load-theme 'nimbus t))
+
+
+
+    (use-package kaolin-themes
+      :ensure t
+      :config
+      (load-theme 'kaolin-aurora t)
+      (load-theme 'kaolin-galaxy t)
+      (load-theme 'kaolin-eclipse t)
+      (load-theme 'kaolin-mono-dark t)
+      )
+
+
+
+    (use-package cycle-themes
+      :ensure t
+      :init (setq cycle-themes-theme-list
+                  '( kaolin-aurora kaolin-galaxy kaolin-eclipse nimbus  kaolin-mono-dark ))
+      :config (cycle-themes-mode)
+
+      (add-hook 'cycle-themes-after-cycle-hook
+                #'(lambda ()
+                    (set-frame-font "JetBrains Mono 13" nil t)
+                    (add-to-list 'default-frame-alist
+                                 '(font . "JetBrains Mono 13"))
+
+
+                    ))
+
+
+
+      )
+
+    ;;       )))
+    #+END_SRC
+
+*** Beacon
+
+    Some nice visual modes
+    #+BEGIN_SRC emacs-lisp
+
+    (use-package beacon
+      :config
+      (progn
+
+        (setq beacon-color "#1BFFA5")
+        (setq beacon-push-mark 60)
+
+        (setq beacon-blink-when-point-moves-vertically nil) ; default nil
+        (setq beacon-blink-when-point-moves-horizontally nil) ; default nil
+        (setq beacon-blink-when-buffer-changes t) ; default t
+        (setq beacon-blink-when-window-scrolls t) ; default t
+        (setq beacon-blink-when-window-changes t) ; default t
+        (setq beacon-blink-when-focused nil) ; default nil
+
+        (setq beacon-blink-duration 0.3) ; default 0.3
+        (setq beacon-blink-delay 0.3) ; default 0.3
+        (setq beacon-size 20) ; default 40
+        ;; (setq beacon-color "yellow") ; default 0.5
+
+
+        (add-to-list 'beacon-dont-blink-major-modes 'term-mode)
+
+        (beacon-mode 1)))
+    #+END_SRC
+
+*** ATI ibuffer
+    #+BEGIN_SRC emacs-lisp
+    (setq ibuffer-saved-filter-groups
+          '(("home"
+             ("emacs-config" (or (filename . ".emacs.d")
+                                 (filename . ".init.org")))
+             ("Org" (or (mode . org-mode)
+                        (filename . "OrgMode")))
+             ("latex" (or (mode . tex-mode)
+                          (mode . auctex-mode)
+                          (mode . latex-mode))
+              )
+             ("stan" (mode . stan-mode) )
+
+             ("python" (mode . python-mode))
+             ("Magit" (name . "\*magit"))
+             ("Help" (or (name . "\*Help\*")
+                         (name . "\*Apropos\*")
+                         (name . "\*info\*"))))))
+
+    (add-hook 'ibuffer-mode-hook
+              '(lambda ()
+                 (ibuffer-switch-to-saved-filter-groups "home")))
+
+
+
+
+    (use-package all-the-icons-ibuffer
+      :ensure t
+      :init (all-the-icons-ibuffer-mode 1))
+
+    #+END_SRC
+
+
+*** Ivy-rich
+
+    #+BEGIN_SRC emacs-lisp
+    ;; More friendly display transformer for Ivy
+    (use-package ivy-rich
+      :defines (all-the-icons-dir-icon-alist bookmark-alist)
+      :functions (all-the-icons-icon-family
+                  all-the-icons-match-to-alist
+                  all-the-icons-auto-mode-match?
+                  all-the-icons-octicon
+                  all-the-icons-dir-is-submodule)
+      :preface
+      (defun ivy-rich-bookmark-name (candidate)
+        (car (assoc candidate bookmark-alist)))
+
+      (defun ivy-rich-repo-icon (candidate)
+        "Display repo icons in `ivy-rich`."
+        (all-the-icons-octicon "repo" :height .9))
+
+      (defun ivy-rich-org-capture-icon (candidate)
+        "Display repo icons in `ivy-rich`."
+        (pcase (car (last (split-string (car (split-string candidate)) "-")))
+          ("emacs" (all-the-icons-fileicon "emacs" :height .68 :v-adjust .001))
+          ("schedule" (all-the-icons-faicon "calendar" :height .68 :v-adjust .005))
+          ("tweet" (all-the-icons-faicon "commenting" :height .7 :v-adjust .01))
+          ("link" (all-the-icons-faicon "link" :height .68 :v-adjust .01))
+          ("memo" (all-the-icons-faicon "pencil" :height .7 :v-adjust .01))
+          (_       (all-the-icons-octicon "inbox" :height .68 :v-adjust .01))
+          ))
+
+      (defun ivy-rich-org-capture-title (candidate)
+        (let* ((octl (split-string candidate))
+               (title (pop octl))
+               (desc (mapconcat 'identity octl " ")))
+          (format "%-25s %s"
+                  title
+                  (propertize desc 'face `(:inherit font-lock-doc-face)))))
+
+      (defun ivy-rich-buffer-icon (candidate)
+        "Display buffer icons in `ivy-rich'."
+        (when (display-graphic-p)
+          (when-let* ((buffer (get-buffer candidate))
+                      (major-mode (buffer-local-value 'major-mode buffer))
+                      (icon (if (and (buffer-file-name buffer)
+                                     (all-the-icons-auto-mode-match? candidate))
+                                (all-the-icons-icon-for-file candidate)
+                              (all-the-icons-icon-for-mode major-mode))))
+            (if (symbolp icon)
+                (setq icon (all-the-icons-icon-for-mode 'fundamental-mode)))
+            (unless (symbolp icon)
+              (propertize icon
+                          'face `(
+                                  :height 1.1
+                                  :family ,(all-the-icons-icon-family icon)
+                                  ))))))
+
+      (defun ivy-rich-file-icon (candidate)
+        "Display file icons in `ivy-rich'."
+        (when (display-graphic-p)
+          (let ((icon (if (file-directory-p candidate)
+                          (cond
+                           ((and (fboundp 'tramp-tramp-file-p)
+                                 (tramp-tramp-file-p default-directory))
+                            (all-the-icons-octicon "file-directory"))
+                           ((file-symlink-p candidate)
+                            (all-the-icons-octicon "file-symlink-directory"))
+                           ((all-the-icons-dir-is-submodule candidate)
+                            (all-the-icons-octicon "file-submodule"))
+                           ((file-exists-p (format "%s/.git" candidate))
+                            (all-the-icons-octicon "repo"))
+                           (t (let ((matcher (all-the-icons-match-to-alist candidate all-the-icons-dir-icon-alist)))
+                                (apply (car matcher) (list (cadr matcher))))))
+                        (all-the-icons-icon-for-file candidate))))
+            (unless (symbolp icon)
+              (propertize icon
+                          'face `(
+                                  :height 1.1
+                                  :family ,(all-the-icons-icon-family icon)
+                                  ))))))
+      :hook (ivy-rich-mode . (lambda ()
+                               (setq ivy-virtual-abbreviate
+                                     (or (and ivy-rich-mode 'abbreviate) 'name))))
+      :init
+      (setq ivy-rich-display-transformers-list
+            '(ivy-switch-buffer
+              (:columns
+               ((ivy-rich-buffer-icon)
+                (ivy-rich-candidate (:width 30))
+                (ivy-rich-switch-buffer-size (:width 7))
+                (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+                (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+                (ivy-rich-switch-buffer-project (:width 15 :face success))
+                (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
+               :predicate
+               (lambda (cand) (get-buffer cand)))
+              ivy-switch-buffer-other-window
+              (:columns
+               ((ivy-rich-buffer-icon)
+                (ivy-rich-candidate (:width 30))
+                (ivy-rich-switch-buffer-size (:width 7))
+                (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+                (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+                (ivy-rich-switch-buffer-project (:width 15 :face success))
+                (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))
+               :predicate
+               (lambda (cand) (get-buffer cand)))
+              counsel-M-x
+              (:columns
+               ((counsel-M-x-transformer (:width 40))
+                (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
+              counsel-describe-function
+              (:columns
+               ((counsel-describe-function-transformer (:width 45))
+                (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
+              counsel-describe-variable
+              (:columns
+               ((counsel-describe-variable-transformer (:width 45))
+                (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
+              counsel-find-file
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate)))
+              counsel-file-jump
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate)))
+              counsel-dired-jump
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate)))
+              counsel-git
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate)))
+              counsel-recentf
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate (:width 110))))
+              counsel-bookmark
+              (:columns
+               ((ivy-rich-bookmark-type)
+                (ivy-rich-bookmark-name (:width 30))
+                (ivy-rich-bookmark-info (:width 80))))
+              counsel-projectile-switch-project
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate)))
+              counsel-fzf
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate)))
+              ivy-ghq-open
+              (:columns
+               ((ivy-rich-repo-icon)
+                (ivy-rich-candidate)))
+              ivy-ghq-open-and-fzf
+              (:columns
+               ((ivy-rich-repo-icon)
+                (ivy-rich-candidate)))
+              counsel-projectile-find-file
+              (:columns
+               ((ivy-rich-file-icon)
+                (ivy-rich-candidate)))
+              counsel-org-capture
+              (:columns
+               ((ivy-rich-org-capture-icon)
+                (ivy-rich-org-capture-title)
+                ))
+              counsel-projectile-find-dir
+              (:columns
+               ((ivy-rich-file-icon)
+                (counsel-projectile-find-dir-transformer)))))
+
+      (setq ivy-rich-parse-remote-buffer nil)
+      :config
+      (ivy-rich-mode 1))
+
+
+    ;; (use-package all-the-icons-ivy
+    ;;   :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup)
+    ;;   :config
+    ;;   (setq all-the-icons-ivy-file-commands
+    ;;      '(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir))
+    ;;   )
+
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
+    ;; Minimap
+    (use-package sublimity
+      :config (require 'sublimity)
+      (require 'sublimity-scroll)
+                                            ;  (require 'sublimity-map)
+      (sublimity-mode 1))
+                                            ;  (sublimity-map-set-delay 3))
+    #+END_SRC
+
+
+*** doom themes
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package doom-themes
+      :init
+
+      ;; (require 'sublimity)
+      ;; (require 'sublimity-attractive)
+      ;; (sublimity-mode 1)
+
+      ;; (setq sublimity-attractive-centering-width 130)
+
+      ;; Enable flashing mode-line on errors
+      (doom-themes-visual-bell-config)
+
+      ;; Corrects (and improves) org-mode's native fontification.
+      (doom-themes-org-config)
+
+      ;; (require 'sublimity-scroll)
+
+      ;; (setq sublimity-scroll-weight 10
+      ;;       sublimity-scroll-drift-length 10)
+
+
+      )
+
+    (use-package doom-modeline
+      :init
+      (doom-modeline-mode 1)
+
+      ;; Whether display icons in mode-line or not.
+      (setq doom-modeline-icon t)
+
+      ;; Whether display the icon for major mode. It respects `doom-modeline-icon'.
+      (setq doom-modeline-major-mode-icon t)
+
+
+      ;; Whether display color icons for `major-mode'. It respects
+      ;; `doom-modeline-icon' and `all-the-icons-color-icons'.
+      (setq doom-modeline-major-mode-color-icon t)
+
+      ;; Whether display icons for buffer states. It respects `doom-modeline-icon'.
+      (setq doom-modeline-buffer-state-icon t)
+
+      ;; Whether display buffer modification icon. It respects `doom-modeline-icon'
+      ;; and `doom-modeline-buffer-state-icon'.
+      (setq doom-modeline-buffer-modification-icon t)
+
+      ;; Whether display minor modes in mode-line or not.
+      (setq doom-modeline-minor-modes t)
+
+      ;; If non-nil, a word count will be added to the selection-info modeline segment.
+      (setq doom-modeline-enable-word-count t)
+
+      ;; If non-nil, only display one number for checker information if applicable.
+      (setq doom-modeline-checker-simple-format t)
+
+      ;; The maximum displayed length of the branch name of version control.
+      (setq doom-modeline-vcs-max-length 12)
+
+
+      ;; Whether display perspective name or not. Non-nil to display in mode-line.
+      (setq doom-modeline-persp-name t)
+
+      ;; Whether display `lsp' state or not. Non-nil to display in mode-line.
+      (setq doom-modeline-lsp t)
+
+      ;; Whether display github notifications or not. Requires `ghub` package.
+      (setq doom-modeline-github t)
+
+      ;; The interval of checking github.
+      (setq doom-modeline-github-interval (* 30 60))
+
+      ;; Whether display environment version or not
+      (setq doom-modeline-env-version t)
+      ;; Or for individual languages
+      (setq doom-modeline-env-enable-python t)
+      (setq doom-modeline-env-enable-ruby nil)
+
+
+
+
+
+
+      ;; Change the executables to use for the language version string
+      (setq doom-modeline-env-python-executable "python")
+      (setq doom-modeline-env-ruby-executable "ruby")
+
+      ;; Whether display mu4e notifications or not. Requires `mu4e-alert' package.
+      (setq doom-modeline-mu4e nil)
+
+      ;; Whether display irc notifications or not. Requires `circe' package.
+      (setq doom-modeline-irc nil)
+
+      ;; Function to stylize the irc buffer names.
+      (setq doom-modeline-irc-stylize 'identity)
+
+
+      )
+
+    #+END_SRC
+
+*** ATIcons
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package all-the-icons
+      :if window-system
+      :ensure t
+      :config
+      (when (not (member "all-the-icons" (font-family-list)))
+        (all-the-icons-install-fonts t)))
+
+
+
+
+
+
+    #+END_SRC
+*** prettify symbols
+
+    New in Emacs 24.4 is the =prettify-symbols-mode=! It's neat.
+
+    #+BEGIN_SRC emacs-lisp
+    (setq-default prettify-symbols-alist '(("lambda" . ?λ)
+                                           ("delta" . ?Δ)
+                                           ("gamma" . ?Γ)
+                                           ("phi" . ?φ)
+                                           ("psi" . ?ψ)))
+    #+END_SRC
 
 ** Completion
 
@@ -1106,32 +1127,19 @@
       :bind
       (
 
-       ;; ("C-c v p" . ivy-push-view)
-       ;; ("C-c v o" . ivy-pop-view)
-       ;; ("C-c v ." . ivy-switch-view)
-       ;; ("M-s c" . counsel-ag)
-       ;; ("M-o f" . counsel-fzf)
-       ;; ("M-o r" . counsel-recentf)
-       ;; ("M-y" . counsel-yank-pop)
-       ;; :map ivy-minibuffer-map
-       ;; ("C-w" . ivy-backward-kill-word)
-       ;; ("C-k" . ivy-kill-line)
-       ;; ("C-j" . ivy-immediate-done)
-       ;; ("RET" . ivy-alt-done)
-       ;; ("C-h" . ivy-backward-delete-char)
        )
       :preface
       (defun ivy-format-function-pretty (cands)
-	"Transform CANDS into a string for minibuffer."
-	(ivy--format-function-generic
-	 (lambda (str)
-	   (concat
-	    (all-the-icons-faicon "hand-o-right" :height .85 :v-adjust .05 :face 'font-lock-constant-face)
-	    (ivy--add-face str 'ivy-current-match)))
-	 (lambda (str)
-	   (concat "  " str))
-	 cands
-	 "\n"))
+        "Transform CANDS into a string for minibuffer."
+        (ivy--format-function-generic
+         (lambda (str)
+           (concat
+            (all-the-icons-faicon "hand-o-right" :height .85 :v-adjust .05 :face 'font-lock-constant-face)
+            (ivy--add-face str 'ivy-current-match)))
+         (lambda (str)
+           (concat "  " str))
+         cands
+         "\n"))
       :hook
       (after-init . ivy-mode)
       (ivy-mode . counsel-mode)
@@ -1149,28 +1157,28 @@
        'counsel--yank-pop-format-function
        :override
        (lambda (cand-pairs)
-	 (ivy--format-function-generic
-	  (lambda (str)
-	    (mapconcat
-	     (lambda (s)
-	       (ivy--add-face (concat (propertize "┃ " 'face `(:foreground "#61bfff")) s) 'ivy-current-match))
-	     (split-string
-	      (counsel--yank-pop-truncate str) "\n" t)
-	     "\n"))
-	  (lambda (str)
-	    (counsel--yank-pop-truncate str))
-	  cand-pairs
-	  counsel-yank-pop-separator)))
+         (ivy--format-function-generic
+          (lambda (str)
+            (mapconcat
+             (lambda (s)
+               (ivy--add-face (concat (propertize "┃ " 'face `(:foreground "#61bfff")) s) 'ivy-current-match))
+             (split-string
+              (counsel--yank-pop-truncate str) "\n" t)
+             "\n"))
+          (lambda (str)
+            (counsel--yank-pop-truncate str))
+          cand-pairs
+          counsel-yank-pop-separator)))
 
       ;; NOTE: this variable do not work if defined in :custom
       (setq ivy-format-function 'ivy-format-function-pretty)
       (setq counsel-yank-pop-separator
-	    (propertize "\n────────────────────────────────────────────────────────\n"
-			'face `(:foreground "#6272a4")))
+            (propertize "\n────────────────────────────────────────────────────────\n"
+                        'face `(:foreground "#6272a4")))
 
       ;; Integration with `magit'
       (with-eval-after-load 'magit
-	(setq magit-completing-read-function 'ivy-completing-read))
+        (setq magit-completing-read-function 'ivy-completing-read))
       )
     ;; Enhance fuzzy matching
     (use-package flx)
@@ -1180,67 +1188,24 @@
     ;; (use-package counsel-projectile
     ;;   :config (counsel-projectile-mode 1))
 
+
     ;; Show ivy frame using posframe
-    (use-package ivy-posframe
-      :custom
-      (ivy-display-function #'ivy-posframe-display-at-frame-center)
-      ;; (ivy-posframe-width 130)
-      ;; (ivy-posframe-height 11)
-      (ivy-posframe-parameters
-       '((left-fringe . 5)
-	 (right-fringe . 5)))
-      :custom-face
-      (ivy-posframe ((t (:background "#282a36"))))
-      (ivy-posframe-border ((t (:background "#6272a4"))))
-      (ivy-posframe-cursor ((t (:background "#61bfff"))))
-      :hook
-      (ivy-mode . ivy-posframe-enable))
+    ;; (use-package ivy-posframe
+    ;;   :custom
+    ;;   (ivy-display-function #'ivy-posframe-display-at-frame-center)
+    ;;   ;; (ivy-posframe-width 130)
+    ;;   ;; (ivy-posframe-height 11)
+    ;;   (ivy-posframe-parameters
+    ;;    '((left-fringe . 5)
+    ;;      (right-fringe . 5)))
+    ;;   :custom-face
+    ;;   (ivy-posframe ((t (:background "#282a36"))))
+    ;;   (ivy-posframe-border ((t (:background "#6272a4"))))
+    ;;   (ivy-posframe-cursor ((t (:background "#61bfff"))))
+    ;;   :hook
+    ;;   (ivy-mode . ivy-posframe-enable))
 
 
-
-    ;; (use-package ivy
-    ;;   :ensure t
-    ;;   :delight
-    ;;   :config
-    ;;   (setq ivy-count-format "(%d/%d) ")
-    ;;   (setq ivy-height-alist '((t lambda (_caller) (/ (window-height) 4))))
-    ;;   (setq ivy-use-virtual-buffers t)
-    ;;   ;;(setq enable-recursive-minibuffers t)
-    ;;   (setq ivy-wrap nil)
-    ;;   (setq ivy-re-builders-alist
-    ;;         '((counsel-M-x . ivy--regex-fuzzy)
-    ;;           (ivy-switch-buffer . ivy--regex-fuzzy)
-    ;;           (ivy-switch-buffer-other-window . ivy--regex-fuzzy)
-    ;;           (counsel-rg . ivy--regex-or-literal)
-    ;;           (t . ivy--regex-plus)))
-    ;;   (setq ivy-display-style 'fancy)
-    ;;   (setq ivy-use-selectable-prompt t)
-    ;;   (setq ivy-fixed-height-minibuffer nil)
-    ;;   (setq ivy-initial-inputs-alist
-    ;;         '((counsel-M-x . "^")
-    ;;           (ivy-switch-buffer . "^")
-    ;;           (ivy-switch-buffer-other-window . "^")
-    ;;           (counsel-describe-function . "^")
-    ;;           (counsel-describe-variable . "^")
-    ;;           (t . "")))
-
-    ;;   (ivy-set-occur 'counsel-rg 'counsel-ag-occur)
-    ;;   (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
-    ;;   (ivy-set-occur 'swiper 'swiper-occur)
-    ;;   (ivy-set-occur 'swiper-isearch 'swiper-occur)
-    ;;   (ivy-set-occur 'swiper-multi 'counsel-ag-occur)
-    ;;   :hook ((after-init . ivy-mode)
-    ;;          (ivy-occur-mode . hl-line-mode))
-    ;;   ;; :bind (("<s-up>" . ivy-push-view)
-    ;;   ;;        ("<s-down>" . ivy-switch-view)
-    ;;   ;;        ("C-S-r" . ivy-resume)
-    ;;   ;;        :map ivy-occur-mode-map
-    ;;   ;;        ("f" . forward-char)
-    ;;   ;;        ("b" . backward-char)
-    ;;   ;;        ("n" . ivy-occur-next-line)
-    ;;   ;;        ("p" . ivy-occur-previous-line)
-    ;;   ;;        ("<C-return>" . ivy-occur-press))
-    ;;   )
 
 
     (use-package swiper
@@ -1252,34 +1217,13 @@
       (setq swiper-goto-start-of-match t)
       (setq swiper-include-line-number-in-search t)
       :bind (("M-s" . swiper)
-	     ;;("M-s s" . swiper-multi)
-	     ;;          ("M-s w" . swiper-thing-at-point)
-	     :map swiper-map
-	     ("M-%" . swiper-query-replace)
-	     ))
+             ;;("M-s s" . swiper-multi)
+             ;;          ("M-s w" . swiper-thing-at-point)
+             :map swiper-map
+             ("M-%" . swiper-query-replace)
+             ))
 
 
-    ;; (use-package ivy-posframe
-    ;;   :ensure t
-    ;;   :after ivy
-    ;;   :delight
-    ;;   :config
-    ;;   (setq ivy-posframe-parameters
-    ;;         '((left-fringe . 2)
-    ;;           (right-fringe . 2)
-    ;;           (internal-border-width . 2)
-
-    ;;           ))
-    ;;   (setq ivy-posframe-height-alist
-    ;;         '((swiper . 15)
-    ;;           (swiper-isearch . 15)
-    ;;           (t . 10)))
-    ;;   (setq ivy-posframe-display-functions-alist
-    ;;         '((complete-symbol . ivy-posframe-display-at-point)
-    ;;           (swiper . nil)
-    ;;           (swiper-isearch . nil)
-    ;;           (t . ivy-posframe-display-at-point)))
-    ;;   (ivy-posframe-mode 1))
 
     (use-package prescient
       :ensure t
@@ -1295,12 +1239,12 @@
       :after (prescient ivy)
       :config
       (setq ivy-prescient-sort-commands
-	    '(:not counsel-grep
-		   counsel-rg
-		   counsel-switch-buffer
-		   ivy-switch-buffer
-		   swiper
-		   swiper-multi))
+            '(:not counsel-grep
+                   counsel-rg
+                   counsel-switch-buffer
+                   ivy-switch-buffer
+                   swiper
+                   swiper-multi))
       (setq ivy-prescient-retain-classic-highlighting t)
       (setq ivy-prescient-enable-filtering nil)
       (setq ivy-prescient-enable-sorting t)
