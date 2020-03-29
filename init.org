@@ -413,6 +413,15 @@
                                            ;  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
    #+END_SRC
 
+** Telegram
+   #+BEGIN_SRC emacs-lisp
+
+   (use-package telega
+     :commands (telega)
+     :defer t)
+
+   #+END_SRC
+
 ** Modes
 
    There are some modes that are enabled by default that I don't find
@@ -500,13 +509,13 @@
     The is for displaying HTML colors from HEX
 
     #+BEGIN_SRC emacs-lisp
-	;; (use-package rainbow-mode
-	;;   :ensure t
+    ;; (use-package rainbow-mode
+    ;;   :ensure t
 
-	;;   )
+    ;;   )
 
     (use-package rainbow-mode
-      :diminish rainbow-mode
+      :delight
       :hook (prog-mode . rainbow-mode))
     #+END_SRC
 
@@ -815,7 +824,8 @@
     (use-package sublimity
       :config (require 'sublimity)
       (require 'sublimity-scroll)
-                                            ;  (require 'sublimity-map)
+      (setq sublimity-scroll-weight 10
+            sublimity-scroll-drift-length 2)                           ;  (require 'sublimity-map)
       (sublimity-mode 1))
                                             ;  (sublimity-map-set-delay 3))
     #+END_SRC
