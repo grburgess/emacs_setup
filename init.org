@@ -148,6 +148,8 @@
    (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
 
+
+
    #+END_SRC
 
    The configuration assumes that the packages listed below are
@@ -336,7 +338,7 @@
 
    #+END_SRC
 
-** diminish
+
    #+BEGIN_SRC emacs-lisp
 
    (use-package exec-path-from-shell
@@ -347,22 +349,6 @@
 
 
 
-   (require 'diminish)
-
-   (diminish 'rainbow-mode)
-   (diminish 'auto-fill-mode)
-   (diminish 'yas-mode)
-   (diminish 'ivy-mode)
-   (diminish 'sphinx-doc-mode)
-   (diminish 'which-key-mode)
-   (diminish 'global-eldoc-mode)
-   (diminish 'global-font-lock-mode)
-   (diminish 'highlight-indent-guides-mode)
-   (diminish 'elpy-mode)
-
-   (diminish 'abbrev-mode)
-   (diminish 'flyspell-mode)
-   (diminish 'font-lock-mode)
    #+END_SRC
 ** Mac OS X
 
@@ -440,6 +426,18 @@
        (indent-region beg end)
        (whitespace-cleanup)
        (untabify beg (if (< end (point-max)) end (point-max)))))
+
+   (defun kill-this-buffer-unless-scratch ()
+     "Works like `kill-this-buffer' unless the current buffer is the
+   ,*scratch* buffer. In witch case the buffer content is deleted and
+   the buffer is buried."
+     (interactive)
+     (if (not (string= (buffer-name) "*scratch*"))
+         (kill-this-buffer)
+       (delete-region (point-min) (point-max))
+       (switch-to-buffer (other-buffer))
+       (bury-buffer "*scratch*")))
+
    #+END_SRC
 
    Set =utf-8= as preferred coding system.
@@ -2098,6 +2096,7 @@
 
    #+BEGIN_SRC emacs-lisp
    (define-key custom-bindings-map (kbd "C-c .")   'cycle-themes)
+(define-key custom-bindings-map (kbd "C-x k")   'kill-this-buffer-unless-scratch)
 
    #+END_SRC
 
@@ -2109,6 +2108,32 @@
      "A mode that activates custom-bindings."
      t nil custom-bindings-map)
    #+END_SRC
+
+* diminish
+  #+BEGIN_SRC emacs-lisp
+
+
+
+  (require 'diminish)
+
+  (diminish 'rainbow-mode)
+  (diminish 'auto-fill-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'yas-mode)
+  (diminish 'yas-global-mode)
+  (diminish 'ivy-mode)
+  (diminish 'sphinx-doc-mode)
+  (diminish 'which-key-mode)
+  (diminish 'global-eldoc-mode)
+  (diminish 'global-font-lock-mode)
+  (diminish 'highlight-indent-guides-mode)
+  (diminish 'elpy-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'flyspell-mode)
+  (diminish 'flycheck-mode)
+  (diminish 'font-lock-mode)
+  #+END_SRC
 
 * Font
 
