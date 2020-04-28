@@ -527,6 +527,7 @@
       (load-theme 'kaolin-mono-dark t)
       )
 
+    (load-theme 'spacemacs-dark t)
 
     ;; (defun disable-themes (&rest args)
     ;;   (disable-all-themes))
@@ -1023,12 +1024,13 @@
    (use-package projectile
      :ensure t
      :bind (:map projectile-mode-map
-                 ("s-p" . 'projectile-command-map)
-                 ("C-c p" . 'projectile-command-map)
-                 )
+		 ("s-p" . 'projectile-command-map)
+		 ("C-c p" . 'projectile-command-map)
+		 )
 
      :config
      (setq projectile-completion-system 'ivy)
+     (setq projectile-project-search-path '("~/coding/projects/" "~/coding/tml/"))
 
      (projectile-mode +1))
 
@@ -1037,10 +1039,10 @@
      :ensure t
      :config
      (add-hook 'ibuffer-hook
-               (lambda ()
-                 (ibuffer-projectile-set-filter-groups)
-                 (unless (eq ibuffer-sorting-mode 'alphabetic)
-                   (ibuffer-do-sort-by-alphabetic))))
+	       (lambda ()
+		 (ibuffer-projectile-set-filter-groups)
+		 (unless (eq ibuffer-sorting-mode 'alphabetic)
+		   (ibuffer-do-sort-by-alphabetic))))
      )
 
    #+END_SRC
@@ -1183,8 +1185,8 @@
      :config
      (push 'company-lsp company-backends))
 
-  (use-package lsp-ivy
-    :bind ("<f1>" . lsp-ivy-global-workspace-symbol))
+   (use-package lsp-ivy
+     :bind ("<f1>" . lsp-ivy-global-workspace-symbol))
 
 
    #+END_SRC
