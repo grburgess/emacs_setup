@@ -528,25 +528,43 @@
       )
 
 
+    ;; (defun disable-themes (&rest args)
+    ;;   (disable-all-themes))
 
-    (use-package cycle-themes
-      :ensure t
-      :init (setq cycle-themes-theme-list
-                  '( kaolin-aurora kaolin-galaxy kaolin-eclipse nimbus  kaolin-mono-dark ))
-      :config (cycle-themes-mode)
-
-      (add-hook 'cycle-themes-after-cycle-hook
-                #'(lambda ()
-                    (set-frame-font "JetBrains Mono 13" nil t)
-                    (add-to-list 'default-frame-alist
-                                 '(font . "JetBrains Mono 13"))
+    (defun preserve-font ( &rest args)
+      (set-frame-font "JetBrains Mono 13" nil t)
+      (add-to-list 'default-frame-alist
+                   '(font . "JetBrains Mono 13")))
 
 
-                    ))
+    ;; (defun remove-mode-line-box (&rest args)
+    ;;   (set-face-attribute 'mode-line nil :box nil :underline nil)
+    ;;   (set-face-attribute 'mode-line-inactive nil :box nil :underline nil))
+
+
+    ;; (advice-add 'load-theme :before 'disable-themes)
+    ;; (advice-add 'load-theme :after 'remove-mode-line-box)
+    (advice-add 'counsel-load-theme :after 'preserve-font)
+
+    (provide 'advice)
+    ;; (use-package cycle-themes
+    ;;   :ensure t
+    ;;   :init (setq cycle-themes-theme-list
+    ;;               '( kaolin-aurora kaolin-galaxy kaolin-eclipse nimbus  kaolin-mono-dark ))
+    ;;   :config (cycle-themes-mode)
+
+    ;;   (add-hook 'cycle-themes-after-cycle-hook
+    ;;             #'(lambda ()
+    ;;                 (set-frame-font "JetBrains Mono 13" nil t)
+    ;;                 (add-to-list 'default-frame-alist
+    ;;                              '(font . "JetBrains Mono 13"))
+
+
+    ;;                 ))
 
 
 
-      )
+    ;;   )
 
     ;;       )))
     #+END_SRC
@@ -863,7 +881,7 @@
       (setq doom-modeline-buffer-modification-icon t)
 
       ;; Whether display minor modes in mode-line or not.
-      (setq doom-modeline-minor-modes t)
+      (setq doom-modeline-minor-modes nil)
 
       ;; If non-nil, a word count will be added to the selection-info modeline segment.
       (setq doom-modeline-enable-word-count t)
@@ -1000,6 +1018,33 @@
        '((auto-compile-on-save-mode 1))))  ; compile .el files on save
    #+END_SRC
 
+** projectile
+   #+BEGIN_SRC emacs-lisp
+   (use-package projectile
+     :ensure t
+     :bind (:map projectile-mode-map
+                 ("s-p" . 'projectile-command-map)
+                 ("C-c p" . 'projectile-command-map)
+                 )
+
+     :config
+     (setq projectile-completion-system 'ivy)
+
+     (projectile-mode +1))
+
+
+   (use-package ibuffer-projectile
+     :ensure t
+     :config
+     (add-hook 'ibuffer-hook
+               (lambda ()
+                 (ibuffer-projectile-set-filter-groups)
+                 (unless (eq ibuffer-sorting-mode 'alphabetic)
+                   (ibuffer-do-sort-by-alphabetic))))
+     )
+
+   #+END_SRC
+
 ** Completion
 
    I am using company for completion
@@ -1082,12 +1127,12 @@
    https://github.com/direnv/direnv/wiki/Python#virtualenvwrapper
 
 
-   #+BEGIN_SRC emacs-lsp
+   #+BEGIN_SRC emacs-lisp
 
-(use-package direnv
-  :ensure t
-  :config
-  (direnv-mode))
+   ;; (use-package direnv
+   ;;   :ensure t
+   ;;   :config
+   ;;   (direnv-mode))
 
 
    #+END_SRC
@@ -1098,6 +1143,8 @@
    (use-package lsp-mode
      :ensure t
      :commands lsp
+
+
      :custom
      (lsp-auto-guess-root nil)
      (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
@@ -1109,14 +1156,35 @@
      :after lsp-mode
      :diminish
      :commands lsp-ui-mode
-     )
+     :custom
+     (lsp-ui-doc-enable t)
+     (lsp-ui-doc-header t)
+     (lsp-ui-doc-include-signature t)
+     (lsp-ui-doc-position 'top)
+     (lsp-ui-doc-border (face-foreground 'default))
+     (lsp-ui-sideline-enable nil)
+     (lsp-ui-sideline-ignore-duplicate t)
+     (lsp-ui-sideline-show-code-actions nil)
+     :config
+     ;; Use lsp-ui-doc-webkit only in GUI
+     (setq lsp-ui-doc-use-webkit nil)
+     ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+     ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+     (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+       (setq mode-line-format nil)))
 
    (use-package company-lsp
-     :ensure t
+     :after lsp-mode
+     :commands company-lsp
+     :init
+     (setq company-lsp-async t)
+     (setq company-lsp-enable-recompletion t)
+     (setq company-lsp-enable-snippet t )
      :config
-     (setq compnay-lsp-enable-snippet t)
-     (push 'company-lsp company-backends)
-     )
+     (push 'company-lsp company-backends))
+
+  (use-package lsp-ivy
+    :bind ("<f1>" . lsp-ivy-global-workspace-symbol))
 
 
    #+END_SRC
@@ -1540,7 +1608,7 @@
 ** Python
 
 
-   I use elpy for python.
+   I use LSP for python.
 
    #+BEGIN_SRC emacs-lisp
 
@@ -1550,20 +1618,64 @@
      (venv-initialize-interactive-shells)
      (venv-initialize-eshell))
 
-   ;; (pyvenv-workon "p3")
-   ;; (setq lsp-python-executable-cmd "python3")
 
-   ;; (use-package jedi
-   ;; :ensure t
-   ;; :init
-   ;; (add-hook 'python-mode-hook 'jedi:setup)
-   ;; (add-hook 'python-mode-hook 'jedi:ac-setup))
+   (use-package pyvenv
+     :ensure t
+     :bind (([?\C-c ?\C-x ?v] . pyvenv-workon)))
 
 
    (setq python-shell-interpreter "python3"
          python-shell-interpreter-args "-i")
 
+
+   (defun wcx-restart-python ()
+
+     ;; (set-variable 'ycmd-server-command `(,(executable-find "python3") ,(file-truename "~/.emacs.d/ycmd/ycmd/")))
+     (pyvenv-restart-python)
+     ;; (ycmd-restart-semantic-server)
+     )
+
+
+   (use-package auto-virtualenvwrapper
+     :ensure t
+     :config
+     (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
+     (add-hook 'window-configuration-change-hook #'auto-virtualenvwrapper-activate)
+     (add-hook 'projectile-after-switch-project-hook #'auto-virtualenvwrapper-activate)
+     (add-hook 'pyvenv-post-activate-hooks 'wcx-restart-python)
+     )
+
+
+   (add-hook 'python-mode-hook (lambda ()
+                                 (require 'sphinx-doc)
+                                 (sphinx-doc-mode t)))
+
    #+END_SRC
+
+
+   #+BEGIN_SRC emacs-lisp
+
+   (use-package blacken
+     :ensure t
+     :diminish blacken-mode
+     ;; :hook (python-mode . blacken-mode)
+     :config
+     ;; (setq blacken-line-length 100)
+     :bind (([?\C-c ?\C-x ?a] . blacken-buffer)))
+
+   #+END_SRC
+
+
+
+
+
+   #+BEGIN_SRC emacs-lisp
+
+
+   #+END_SRC
+
+
+
 
 
    #+BEGIN_SRC emacs-lisp
@@ -2096,7 +2208,7 @@
 
    #+BEGIN_SRC emacs-lisp
    (define-key custom-bindings-map (kbd "C-c .")   'cycle-themes)
-(define-key custom-bindings-map (kbd "C-x k")   'kill-this-buffer-unless-scratch)
+   (define-key custom-bindings-map (kbd "C-x k")   'kill-this-buffer-unless-scratch)
 
    #+END_SRC
 
