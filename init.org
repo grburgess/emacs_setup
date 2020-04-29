@@ -464,44 +464,6 @@
 ** Visual
 
 
-*** Line numbers
-    #+BEGIN_SRC emacs-lisp
-    (global-linum-mode 1)
-
-    (setq linum-mode-inhibit-modes-list '(eshell-mode
-                                          shell-mode
-                                          erc-mode
-                                          org-mode
-                                          jabber-roster-mode
-                                          jabber-chat-mode
-                                          gnus-group-mode
-                                          gnus-summary-mode
-                                          gnus-article-mode))
-
-    (defadvice linum-on (around linum-on-inhibit-for-modes)
-      "Stop the load of linum-mode for some major modes."
-      (unless (member major-mode linum-mode-inhibit-modes-list)
-        ad-do-it))
-
-    (ad-activate 'linum-on)
-
-
-    #+END_SRC
-
-*** Rainbow mode
-    The is for displaying HTML colors from HEX
-
-    #+BEGIN_SRC emacs-lisp
-    ;; (use-package rainbow-mode
-    ;;   :ensure t
-
-    ;;   )
-
-    (use-package rainbow-mode
-      :delight
-      :hook (prog-mode . rainbow-mode))
-    #+END_SRC
-
 *** Themes
 
     #+BEGIN_SRC emacs-lisp
@@ -527,7 +489,7 @@
       (load-theme 'kaolin-mono-dark t)
       )
 
-    (load-theme 'spacemacs-dark t)
+    (load-theme 'doom-spacegrey t)
 
     ;; (defun disable-themes (&rest args)
     ;;   (disable-all-themes))
@@ -535,19 +497,43 @@
     (defun preserve-font ( &rest args)
       (set-frame-font "JetBrains Mono 13" nil t)
       (add-to-list 'default-frame-alist
-                   '(font . "JetBrains Mono 13")))
+                   '(font . "JetBrains Mono 13"))
+
+      (when window-system
+        (let* ((variable-tuple
+                (cond ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
+                      ((x-list-fonts   "JetBrains Mono") '(:font   "JetBrains Mono"))
+                      ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
+                      ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
+                      ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
+                      (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+               (base-font-color (face-foreground 'default nil 'default))
+               (headline       `(:inherit default :weight bold :foreground ,base-font-color)))
+
+          (custom-theme-set-faces
+           'user
+           `(org-level-8        ((t (,@headline ,@variable-tuple))))
+           `(org-level-7        ((t (,@headline ,@variable-tuple))))
+           `(org-level-6        ((t (,@headline ,@variable-tuple))))
+           `(org-level-5        ((t (,@headline ,@variable-tuple))))
+           `(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
+           `(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
+           `(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
+           `(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
+           `(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
+           `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
+        )
 
 
-    ;; (defun remove-mode-line-box (&rest args)
-    ;;   (set-face-attribute 'mode-line nil :box nil :underline nil)
-    ;;   (set-face-attribute 'mode-line-inactive nil :box nil :underline nil))
+
+      )
 
 
-    ;; (advice-add 'load-theme :before 'disable-themes)
-    ;; (advice-add 'load-theme :after 'remove-mode-line-box)
     (advice-add 'counsel-load-theme :after 'preserve-font)
 
     (provide 'advice)
+
+
     ;; (use-package cycle-themes
     ;;   :ensure t
     ;;   :init (setq cycle-themes-theme-list
@@ -568,6 +554,44 @@
     ;;   )
 
     ;;       )))
+    #+END_SRC
+
+*** Rainbow mode
+    The is for displaying HTML colors from HEX
+
+    #+BEGIN_SRC emacs-lisp
+    ;; (use-package rainbow-mode
+    ;;   :ensure t
+
+    ;;   )
+
+    (use-package rainbow-mode
+      :delight
+      :hook (prog-mode . rainbow-mode))
+    #+END_SRC
+
+*** Line numbers
+    #+BEGIN_SRC emacs-lisp
+    (global-linum-mode 1)
+
+    (setq linum-mode-inhibit-modes-list '(eshell-mode
+                                          shell-mode
+                                          erc-mode
+                                          org-mode
+                                          jabber-roster-mode
+                                          jabber-chat-mode
+                                          gnus-group-mode
+                                          gnus-summary-mode
+                                          gnus-article-mode))
+
+    (defadvice linum-on (around linum-on-inhibit-for-modes)
+      "Stop the load of linum-mode for some major modes."
+      (unless (member major-mode linum-mode-inhibit-modes-list)
+        ad-do-it))
+
+    (ad-activate 'linum-on)
+
+
     #+END_SRC
 
 *** Beacon
@@ -898,7 +922,7 @@
       (setq doom-modeline-persp-name t)
 
       ;; Whether display `lsp' state or not. Non-nil to display in mode-line.
-      ;;        (setq doom-modeline-lsp t)
+      (setq doom-modeline-lsp t)
 
       ;; Wh     ether display github notifications or not. Requires `ghub` package.
       (setq doom-modeline-github t)
@@ -963,6 +987,62 @@
                                            ("psi" . ?ψ)))
     #+END_SRC
 
+** LSP
+
+   #+BEGIN_SRC emacs-lisp
+       (use-package lsp-mode
+	 :ensure t
+	 :commands lsp
+
+
+	 :custom
+	 (lsp-auto-guess-root nil)
+	 (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+
+	 :config
+	  (setq lsp-print-performance t)
+
+	 :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
+	 :hook ((python-mode) . lsp))
+
+
+       (use-package lsp-ui
+	 :after lsp-mode
+	 :diminish
+	 :commands lsp-ui-mode
+	 :custom
+	 (lsp-ui-doc-enable t)
+	 (lsp-ui-doc-header t)
+	 (lsp-ui-doc-include-signature t)
+	 (lsp-ui-doc-position 'top)
+	 (lsp-ui-doc-border (face-foreground 'default))
+	 (lsp-ui-sideline-enable t)
+	 (lsp-ui-sideline-ignore-duplicate t)
+	 (lsp-ui-sideline-show-code-actions t)
+	 :config
+	 ;; Use lsp-ui-doc-webkit only in GUI
+	 (setq lsp-ui-doc-use-webkit nil)
+	 ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+	 ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+	 (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+	   (setq mode-line-format nil)))
+
+       (use-package company-lsp
+	 :after lsp-mode
+	 :commands company-lsp
+	 :init
+	 (setq company-lsp-async t)
+	 (setq company-lsp-enable-recompletion t)
+	 (setq company-lsp-enable-snippet t )
+	 :config
+	 (push 'company-lsp company-backends))
+
+       (use-package lsp-ivy
+	 :bind ("<f1>" . lsp-ivy-global-workspace-symbol))
+
+
+   #+END_SRC
+
 ** Modes
 
    There are some modes that are enabled by default that I don't find
@@ -1024,9 +1104,9 @@
    (use-package projectile
      :ensure t
      :bind (:map projectile-mode-map
-		 ("s-p" . 'projectile-command-map)
-		 ("C-c p" . 'projectile-command-map)
-		 )
+                 ("s-p" . 'projectile-command-map)
+                 ("C-c p" . 'projectile-command-map)
+                 )
 
      :config
      (setq projectile-completion-system 'ivy)
@@ -1039,10 +1119,10 @@
      :ensure t
      :config
      (add-hook 'ibuffer-hook
-	       (lambda ()
-		 (ibuffer-projectile-set-filter-groups)
-		 (unless (eq ibuffer-sorting-mode 'alphabetic)
-		   (ibuffer-do-sort-by-alphabetic))))
+               (lambda ()
+                 (ibuffer-projectile-set-filter-groups)
+                 (unless (eq ibuffer-sorting-mode 'alphabetic)
+                   (ibuffer-do-sort-by-alphabetic))))
      )
 
    #+END_SRC
@@ -1139,58 +1219,6 @@
 
    #+END_SRC
 
-** LSP
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package lsp-mode
-     :ensure t
-     :commands lsp
-
-
-     :custom
-     (lsp-auto-guess-root nil)
-     (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-     :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
-     :hook ((python-mode) . lsp))
-
-
-   (use-package lsp-ui
-     :after lsp-mode
-     :diminish
-     :commands lsp-ui-mode
-     :custom
-     (lsp-ui-doc-enable t)
-     (lsp-ui-doc-header t)
-     (lsp-ui-doc-include-signature t)
-     (lsp-ui-doc-position 'top)
-     (lsp-ui-doc-border (face-foreground 'default))
-     (lsp-ui-sideline-enable nil)
-     (lsp-ui-sideline-ignore-duplicate t)
-     (lsp-ui-sideline-show-code-actions nil)
-     :config
-     ;; Use lsp-ui-doc-webkit only in GUI
-     (setq lsp-ui-doc-use-webkit nil)
-     ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-     ;; https://github.com/emacs-lsp/lsp-ui/issues/243
-     (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-       (setq mode-line-format nil)))
-
-   (use-package company-lsp
-     :after lsp-mode
-     :commands company-lsp
-     :init
-     (setq company-lsp-async t)
-     (setq company-lsp-enable-recompletion t)
-     (setq company-lsp-enable-snippet t )
-     :config
-     (push 'company-lsp company-backends))
-
-   (use-package lsp-ivy
-     :bind ("<f1>" . lsp-ivy-global-workspace-symbol))
-
-
-   #+END_SRC
-
 ** snippets
 
    #+BEGIN_SRC emacs-lisp
@@ -1233,7 +1261,6 @@
      :ensure t)
 
    #+END_SRC
-
 
 
 
@@ -1606,7 +1633,44 @@
 
 
    #+END_SRC
+** Telegram
+   #+BEGIN_SRC emacs-lisp
 
+   (use-package telega
+     :commands (telega)
+     :defer t)
+
+   #+END_SRC
+
+** spotify
+
+   setup for counsel spoify
+
+   #+BEGIN_SRC emacs-lisp
+
+   (setq counsel-spotify-client-id "ba657d98161647cdad46b0929b9fef75")
+   (setq counsel-spotify-client-secret "ef6f60659af9411c9fb42135a9ab63e8")
+
+
+
+   #+END_SRC
+
+** Jekyll
+   Setup for easy blogging
+
+   #+BEGIN_SRC emacs-lisp
+
+   (setq easy-jekyll-basedir "~/coding/grburgess.github.io/")
+   (setq easy-jekyll-url "https://grburgess.github.io")
+   ;; (setq easy-jekyll-sshdomain "blogdomain")
+   ;; (setq easy-jekyll-root "/home/blog/")
+   ;; (setq easy-jekyll-previewtime "300")
+
+
+
+   #+END_SRC
+
+* Modes
 ** Python
 
 
@@ -1972,12 +2036,6 @@
         (custom-set-variables `(org-emphasis-alist ',org-emphasis-alist))))
    #+END_SRC
 
-   #+BEGIN_SRC emacs-lisp
-
-
-
-   #+END_SRC
-
 ** Markdown
 
    This makes =.md=-files open in =markdown-mode=.
@@ -2106,44 +2164,6 @@
     (eval-after-load "geiser"
       '(setq geiser-active-implementations '(guile)))
     #+END_SRC
-
-
-** Telegram
-   #+BEGIN_SRC emacs-lisp
-
-   (use-package telega
-     :commands (telega)
-     :defer t)
-
-   #+END_SRC
-
-** spotify
-
-   setup for counsel spoify
-
-   #+BEGIN_SRC emacs-lisp
-
-   (setq counsel-spotify-client-id "ba657d98161647cdad46b0929b9fef75")
-   (setq counsel-spotify-client-secret "ef6f60659af9411c9fb42135a9ab63e8")
-
-
-
-   #+END_SRC
-
-** Jekyll
-   Setup for easy blogging
-
-   #+BEGIN_SRC emacs-lisp
-
-   (setq easy-jekyll-basedir "~/coding/grburgess.github.io/")
-   (setq easy-jekyll-url "https://grburgess.github.io")
-   ;; (setq easy-jekyll-sshdomain "blogdomain")
-   ;; (setq easy-jekyll-root "/home/blog/")
-   ;; (setq easy-jekyll-previewtime "300")
-
-
-
-   #+END_SRC
 
 * Key bindings
 
