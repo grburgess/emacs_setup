@@ -990,55 +990,55 @@
 ** LSP
 
    #+BEGIN_SRC emacs-lisp
-       (use-package lsp-mode
-	 :ensure t
-	 :commands lsp
+   (use-package lsp-mode
+     :ensure t
+     :commands lsp
 
 
-	 :custom
-	 (lsp-auto-guess-root nil)
-	 (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+     :custom
+     (lsp-auto-guess-root nil)
+     (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
 
-	 :config
-	  (setq lsp-print-performance t)
+     :config
+      (setq lsp-print-performance t)
 
-	 :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
-	 :hook ((python-mode) . lsp))
+     :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
+     :hook ((python-mode) . lsp))
 
 
-       (use-package lsp-ui
-	 :after lsp-mode
-	 :diminish
-	 :commands lsp-ui-mode
-	 :custom
-	 (lsp-ui-doc-enable t)
-	 (lsp-ui-doc-header t)
-	 (lsp-ui-doc-include-signature t)
-	 (lsp-ui-doc-position 'top)
-	 (lsp-ui-doc-border (face-foreground 'default))
-	 (lsp-ui-sideline-enable t)
-	 (lsp-ui-sideline-ignore-duplicate t)
-	 (lsp-ui-sideline-show-code-actions t)
-	 :config
-	 ;; Use lsp-ui-doc-webkit only in GUI
-	 (setq lsp-ui-doc-use-webkit nil)
-	 ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-	 ;; https://github.com/emacs-lsp/lsp-ui/issues/243
-	 (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-	   (setq mode-line-format nil)))
+   (use-package lsp-ui
+     :after lsp-mode
+     :diminish
+     :commands lsp-ui-mode
+     :custom
+     (lsp-ui-doc-enable t)
+     (lsp-ui-doc-header t)
+     (lsp-ui-doc-include-signature t)
+     (lsp-ui-doc-position 'top)
+     (lsp-ui-doc-border (face-foreground 'default))
+     (lsp-ui-sideline-enable t)
+     (lsp-ui-sideline-ignore-duplicate t)
+     (lsp-ui-sideline-show-code-actions t)
+     :config
+     ;; Use lsp-ui-doc-webkit only in GUI
+     (setq lsp-ui-doc-use-webkit nil)
+     ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+     ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+     (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+       (setq mode-line-format nil)))
 
-       (use-package company-lsp
-	 :after lsp-mode
-	 :commands company-lsp
-	 :init
-	 (setq company-lsp-async t)
-	 (setq company-lsp-enable-recompletion t)
-	 (setq company-lsp-enable-snippet t )
-	 :config
-	 (push 'company-lsp company-backends))
+   (use-package company-lsp
+     :after lsp-mode
+     :commands company-lsp
+     :init
+     (setq company-lsp-async t)
+     (setq company-lsp-enable-recompletion t)
+     (setq company-lsp-enable-snippet t )
+     :config
+     (push 'company-lsp company-backends))
 
-       (use-package lsp-ivy
-	 :bind ("<f1>" . lsp-ivy-global-workspace-symbol))
+   ;; (use-package lsp-ivy
+   ;;   :bind ("<f1>" . lsp-ivy-global-workspace-symbol))
 
 
    #+END_SRC
@@ -1782,112 +1782,6 @@
 
    #+END_SRC
 
-** LaTeX and org-mode LaTeX export
-   #+BEGIN_SRC emacs-lisp
-   (use-package latex
-     :mode
-     ("\\.tex\\'" . latex-mode)
-     :bind
-     (:map LaTeX-mode-map
-           ("M-<delete>" . TeX-remove-macro)
-           ("C-c C-r" . reftex-query-replace-document)
-           ("C-c C-g" . reftex-grep-document))
-     :init
-
-
-     :config
-
-     (setq-default TeX-master nil ; by each new fie AUCTEX will ask for a master fie.
-                   TeX-PDF-mode t
-                   TeX-engine 'xetex)     ; optional
-     (auto-fill-mode 1)
-     (setq TeX-auto-save t
-           TeX-save-query nil       ; don't prompt for saving the .tex file
-           TeX-parse-self t
-           TeX-show-compilation nil         ; if `t`, automatically shows compilation log
-           LaTeX-babel-hyphen nil ; Disable language-specific hyphen insertion.
-           ;; `"` expands into csquotes macros (for this to work, babel pkg must be loaded after csquotes pkg).
-           LaTeX-csquotes-close-quote "}"
-           LaTeX-csquotes-open-quote "\\enquote{"
-           TeX-file-extensions '("Rnw" "rnw" "Snw" "snw" "tex" "sty" "cls" "ltx" "texi" "texinfo" "dtx"))
-
-
-     (setq reftex-plug-into-AUCTeX t)
-     (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
-
-     ;; Font-lock for AuCTeX
-     ;; Note: '«' and '»' is by pressing 'C-x 8 <' and 'C-x 8 >', respectively
-     (font-lock-add-keywords 'latex-mode (list (list "\\(«\\(.+?\\|\n\\)\\)\\(+?\\)\\(»\\)" '(1 'font-latex-string-face t) '(2 'font-latex-string-face t) '(3 'font-latex-string-face t))))
-     ;; Add standard Sweave file extensions to the list of files recognized  by AuCTeX.
-     (add-hook 'TeX-mode-hook (lambda () (reftex-isearch-minor-mode)))
-     (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
-     (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
-
-     :hook (
-
-            (LaTeX-mode . reftex-mode)
-            (LaTeX-mode . visual-line-mode)
-            (LaTeX-mode . flyspell-mode)
-            (LaTeX-mode . LaTeX-math-mode)
-            (LaTeX-mode . turn-on-reftex)
-
-            )
-     )
-
-
-   #+END_SRC
-
-
-   LaTeX Setup
-   #+BEGIN_SRC emacs-lisp
-   ;; (load "auctex.el" nil t t)
-   ;; (with-eval-after-load 'latex
-
-   ;;   (auto-fill-mode 1)
-   ;;   (require 'reftex)
-   ;;   (setq-default TeX-engine 'xetex)
-   ;;   (setq TeX-auto-save t)
-   ;;   (setq TeX-parse-self t)
-   ;;   (setq-default TeX-master nil)
-
-   ;;   (add-hook 'LaTeX-mode-hook 'reftex-mode)
-   ;;   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-   ;;   (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
-   ;;   (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
-
-   ;;   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-   ;;   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-   ;;   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-   ;;                                         ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
-   ;;   (setq reftex-plug-into-AUCTeX t)
-   ;;   (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
-
-
-   ;;   )
-
-   #+END_SRC
-
-** Stan
-
-   #+BEGIN_SRC emacs-lisp
-
-   (use-package stan-mode
-     :ensure t
-     :config
-
-
-     (with-eval-after-load 'stan
-
-       (require 'stan-snippets)
-       (yas-global-mode 1)
-       (add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
-
-       )
-
-     )
-
-   #+END_SRC
-
 ** Org
 
    I use =org-agenda= along with =org-capture= for appointments and such.
@@ -2034,6 +1928,112 @@
      '(progn
         (setcar (nthcdr 2 org-emphasis-regexp-components) " \t\n,")
         (custom-set-variables `(org-emphasis-alist ',org-emphasis-alist))))
+   #+END_SRC
+
+** LaTeX and org-mode LaTeX export
+   #+BEGIN_SRC emacs-lisp
+   (use-package latex
+     :mode
+     ("\\.tex\\'" . latex-mode)
+     :bind
+     (:map LaTeX-mode-map
+           ("M-<delete>" . TeX-remove-macro)
+           ("C-c C-r" . reftex-query-replace-document)
+           ("C-c C-g" . reftex-grep-document))
+     :init
+
+
+     :config
+
+     (setq-default TeX-master nil ; by each new fie AUCTEX will ask for a master fie.
+                   TeX-PDF-mode t
+                   TeX-engine 'xetex)     ; optional
+     (auto-fill-mode 1)
+     (setq TeX-auto-save t
+           TeX-save-query nil       ; don't prompt for saving the .tex file
+           TeX-parse-self t
+           TeX-show-compilation nil         ; if `t`, automatically shows compilation log
+           LaTeX-babel-hyphen nil ; Disable language-specific hyphen insertion.
+           ;; `"` expands into csquotes macros (for this to work, babel pkg must be loaded after csquotes pkg).
+           LaTeX-csquotes-close-quote "}"
+           LaTeX-csquotes-open-quote "\\enquote{"
+           TeX-file-extensions '("Rnw" "rnw" "Snw" "snw" "tex" "sty" "cls" "ltx" "texi" "texinfo" "dtx"))
+
+
+     (setq reftex-plug-into-AUCTeX t)
+     (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
+
+     ;; Font-lock for AuCTeX
+     ;; Note: '«' and '»' is by pressing 'C-x 8 <' and 'C-x 8 >', respectively
+     (font-lock-add-keywords 'latex-mode (list (list "\\(«\\(.+?\\|\n\\)\\)\\(+?\\)\\(»\\)" '(1 'font-latex-string-face t) '(2 'font-latex-string-face t) '(3 'font-latex-string-face t))))
+     ;; Add standard Sweave file extensions to the list of files recognized  by AuCTeX.
+     (add-hook 'TeX-mode-hook (lambda () (reftex-isearch-minor-mode)))
+     (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
+     (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
+
+     :hook (
+
+            (LaTeX-mode . reftex-mode)
+            (LaTeX-mode . visual-line-mode)
+            (LaTeX-mode . flyspell-mode)
+            (LaTeX-mode . LaTeX-math-mode)
+            (LaTeX-mode . turn-on-reftex)
+
+            )
+     )
+
+
+   #+END_SRC
+
+
+   LaTeX Setup
+   #+BEGIN_SRC emacs-lisp
+   ;; (load "auctex.el" nil t t)
+   ;; (with-eval-after-load 'latex
+
+   ;;   (auto-fill-mode 1)
+   ;;   (require 'reftex)
+   ;;   (setq-default TeX-engine 'xetex)
+   ;;   (setq TeX-auto-save t)
+   ;;   (setq TeX-parse-self t)
+   ;;   (setq-default TeX-master nil)
+
+   ;;   (add-hook 'LaTeX-mode-hook 'reftex-mode)
+   ;;   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+   ;;   (add-hook 'LaTeX-mode-hook #'TeX-fold-mode) ;; Automatically activate TeX-fold-mode.
+   ;;   (add-hook 'LaTeX-mode-hook 'TeX-fold-buffer t)
+
+   ;;   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+   ;;   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+   ;;   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+   ;;                                         ;  (add-hook 'LaTeX-mode-hook 'sublimity-mode 1)
+   ;;   (setq reftex-plug-into-AUCTeX t)
+   ;;   (setq reftex-default-bibliography '("/Users/jburgess/Documents/complete_bib.bib"))
+
+
+   ;;   )
+
+   #+END_SRC
+
+** Stan
+
+   #+BEGIN_SRC emacs-lisp
+
+   (use-package stan-mode
+     :ensure t
+     :config
+
+
+     (with-eval-after-load 'stan
+
+       (require 'stan-snippets)
+       (yas-global-mode 1)
+       (add-hook 'stan-mode-hook '(lambda () (yas-minor-mode)))
+
+       )
+
+     )
+
    #+END_SRC
 
 ** Markdown
