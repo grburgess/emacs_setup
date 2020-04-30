@@ -361,19 +361,25 @@
 
    #+BEGIN_SRC emacs-lisp
 
-   (if (eq system-type 'darwin)
-       (defun copy-from-osx ()
-         (shell-command-to-string "pbpaste"))
+      (if (eq system-type 'darwin)
+	  (defun copy-from-osx ()
+	    (shell-command-to-string "pbpaste"))
 
-     (defun paste-to-osx (text &optional push)
-       (let ((process-connection-type nil))
-         (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-           (process-send-string proc text)
-           (process-send-eof proc))))
+	(defun paste-to-osx (text &optional push)
+	  (let ((process-connection-type nil))
+	    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+	      (process-send-string proc text)
+	      (process-send-eof proc))))
 
-     (setq interprogram-cut-function 'paste-to-osx)
-     (setq interprogram-paste-function 'copy-from-osx)
-     )
+	(setq interprogram-cut-function 'paste-to-osx)
+	(setq interprogram-paste-function 'copy-from-osx)
+	)
+
+
+      ;; set keys for Apple keyboard, for emacs in OS X
+      (setq mac-command-modifier 'super) ; make cmd key do Meta
+   (setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
+
    #+END_SRC
 
 ** Sane defaults
@@ -1000,7 +1006,7 @@
      (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
 
      :config
-      (setq lsp-print-performance t)
+     (setq lsp-print-performance t)
 
      :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
      :hook ((python-mode) . lsp))

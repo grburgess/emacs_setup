@@ -31,3 +31,11 @@ custom.el
 /prescient-items
 i
 custom.el
+/.lsp-session-v1
+*.sqlite
+/amx-items
+/init.emacs-lsp
+/mc-lists
+/projectile-bookmarks.eld
+/url/
+*.org#
