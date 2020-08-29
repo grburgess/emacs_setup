@@ -4,132 +4,99 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#000000" "#8b0000" "#00ff00" "#ffa500" "#7b68ee" "#dc8cc3" "#93e0e3" "#dcdccc"])
- '(background-color "#202020")
- '(background-mode dark)
- '(compilation-message-face (quote default))
- '(cursor-color "#cccccc")
+   ["#1C1B19" "#EF2F27" "#519F50" "#FED06E" "#2C78BF" "#E02C6D" "#0AAEB3" "#585858"])
+ '(counsel-grep-base-command
+   "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
+ '(counsel-yank-pop-height 15 t)
  '(custom-safe-themes
-   (quote
-    ("10a31b6c251640d04b2fa74bd2c05aaaee915cbca6501bcc82820cdc177f5a93" "72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" "b583823b9ee1573074e7cbfd63623fe844030d911e9279a7c8a5d16de7df0ed0" "8f97d5ec8a774485296e366fdde6ff5589cf9e319a584b845b6f7fa788c9fa9a" "47ec21abaa6642fefec1b7ace282221574c2dd7ef7715c099af5629926eb4fd7" "a22f40b63f9bc0a69ebc8ba4fbc6b452a4e3f84b80590ba0a92b4ff599e53ad0" "071f5702a5445970105be9456a48423a87b8b9cfa4b1f76d15699b29123fb7d8" "72559f34f255a17b7055687c1593ae1dbbd3c5b61b56d0ca96f9468ca228b96c" "36ca8f60565af20ef4f30783aa16a26d96c02df7b4e54e9900a5138fb33808da" "0574ebcddc942ac17a864d1cf1093de5b4f1ff5b0fc68ad1cfe1aff28f732ba2" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "cc0dbb53a10215b696d391a90de635ba1699072745bf653b53774706999208e3" "c7f10959cb1bc7a36ee355c765a1768d48929ec55dde137da51077ac7f899521" "de9fa4b3614611bed2fe75e105bd0d37542924b977299736f158dd4d7343c666" "ba72dfc6bb260a9d8609136b9166e04ad0292b9760a3e2431cf0cd0679f83c3a" "41098e2f8fa67dc51bbe89cce4fb7109f53a164e3a92356964c72f76d068587e" "0d456bc74e0ffa4bf5b69b0b54dac5104512c324199e96fc9f3a1db10dfa31f3" "37ba833442e0c5155a46df21446cadbe623440ccb6bbd61382eb869a2b9e9bf9" "462d6915a7eac1c6f00d5acd8b08ae379e12db2341e7d3eac44ff7f984a5e579" "2593436c53c59d650c8e3b5337a45f0e1542b1ba46ce8956861316e860b145a0" "0329c772ed96053a73b9ddddf96c1183e23c267955bbdf78e7933057ce9da04b" "e7b49145d311e86da34a32a7e1f73497fa365110a813d2ecd8105eaa551969da" "ba913d12adb68e9dadf1f43e6afa8e46c4822bb96a289d5bf1204344064f041e" "423435c7b0e6c0942f16519fa9e17793da940184a50201a4d932eafe4c94c92d" "cdb3e7a8864cede434b168c9a060bf853eeb5b3f9f758310d2a2e23be41a24ae" default)))
- '(diary-entry-marker (quote font-lock-variable-name-face))
- '(emms-mode-line-icon-image-cache
-   (quote
-    (image :type xpm :ascent center :data "/* XPM */
-static char *note[] = {
-/* width height num_colors chars_per_pixel */
-\"    10   11        2            1\",
-/* colors */
-\". c #1fb3b3\",
-\"# c None s None\",
-/* pixels */
-\"###...####\",
-\"###.#...##\",
-\"###.###...\",
-\"###.#####.\",
-\"###.#####.\",
-\"#...#####.\",
-\"....#####.\",
-\"#..######.\",
-\"#######...\",
-\"######....\",
-\"#######..#\" };")))
- '(fci-rule-color "#383838" t)
- '(foreground-color "#cccccc")
- '(frame-brackground-mode (quote dark))
- '(gnus-logo-colors (quote ("#2fdbde" "#c0c0c0")) t)
- '(gnus-mode-line-image-cache
-   (quote
-    (image :type xpm :ascent center :data "/* XPM */
-static char *gnus-pointer[] = {
-/* width height num_colors chars_per_pixel */
-\"    18    13        2            1\",
-/* colors */
-\". c #1fb3b3\",
-\"# c None s None\",
-/* pixels */
-\"##################\",
-\"######..##..######\",
-\"#####........#####\",
-\"#.##.##..##...####\",
-\"#...####.###...##.\",
-\"#..###.######.....\",
-\"#####.########...#\",
-\"###########.######\",
-\"####.###.#..######\",
-\"######..###.######\",
-\"###....####.######\",
-\"###..######.######\",
-\"###########.######\" };")) t)
- '(highlight-changes-colors (quote ("#ff8eff" "#ab7eff")))
- '(highlight-tail-colors
-   (quote
-    (("#323342" . 0)
-     ("#63de5d" . 20)
-     ("#4BBEAE" . 30)
-     ("#1DB4D0" . 50)
-     ("#9A8F21" . 60)
-     ("#A75B00" . 70)
-     ("#F309DF" . 85)
-     ("#323342" . 100))))
- '(jdee-db-active-breakpoint-face-colors (cons "#10151C" "#5EC4FF"))
- '(jdee-db-requested-breakpoint-face-colors (cons "#10151C" "#8BD49C"))
- '(jdee-db-spec-breakpoint-face-colors (cons "#10151C" "#384551"))
+   '("99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" "a83f05e5e2f2538376ea2bfdf9e3cd8b7f7593b16299238c1134c1529503fa88" "bc836bf29eab22d7e5b4c142d201bcce351806b7c1f94955ccafab8ce5b20208" "a7928e99b48819aac3203355cbffac9b825df50d2b3347ceeec1e7f6b592c647" "b69323309e5839676409607f91c69da2bf913914321c995f63960c3887224848" "f7b0f2d0f37846ef75157f5c8c159e6d610c3efcc507cbddec789c02e165c121" "0eb3c0868ff890b0c4ee138069ce2a8936a8a69ba150efa6bfb9fb7c05af5ec3" "ebc35c8e71983b8401562900abb28feedf4d8fcdfcdea35b3da8449d78ebecc6" default))
+ '(enable-recursive-minibuffers t)
+ '(fci-rule-color "#505050")
+ '(hl-paren-colors '("#B9F" "#B8D" "#B7B" "#B69" "#B57" "#B45" "#B33" "#B11"))
+ '(ivy-on-del-error-function nil)
+ '(ivy-use-selectable-prompt t)
+ '(ivy-use-virtual-buffers t)
+ '(jdee-db-active-breakpoint-face-colors (cons "#1b1d1e" "#fc20bb"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#1b1d1e" "#60aa00"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#1b1d1e" "#505050"))
  '(linum-format " %7i ")
- '(magit-diff-use-overlays nil)
- '(objed-cursor-color "#D95468")
+ '(lsp-auto-guess-root nil)
+ '(lsp-prefer-flymake nil t)
+ '(lsp-ui-doc-border "#c0c5ce")
+ '(lsp-ui-doc-enable t)
+ '(lsp-ui-doc-header t)
+ '(lsp-ui-doc-include-signature t)
+ '(lsp-ui-doc-position 'top)
+ '(lsp-ui-sideline-enable t)
+ '(lsp-ui-sideline-ignore-duplicate t)
+ '(lsp-ui-sideline-show-code-actions t)
+ '(objed-cursor-color "#d02b61")
  '(org-emphasis-alist
-   (quote
-    (("*" bold)
+   '(("*" bold)
      ("/" italic)
      ("_" underline)
      ("=" org-verbatim verbatim)
      ("~" org-code verbatim)
      ("+"
-      (:strike-through t)))))
+      (:strike-through t))))
  '(package-selected-packages
-   (quote
-    (darkroom flycheck-pyflakes counsel-spotify fancy-battery doom-modeline ivy-youtube suscolors-theme all-the-icons-ivy org-variable-pitch gruvbox-theme phoenix-dark-mono-theme darkburn-theme ewal-spacemacs-themes org-beautify-theme swiper swiper-helm counsel ivy-explorer zweilight-theme zerodark-theme zeno-theme yasnippet-snippets yasnippet-classic-snippets yaml-mode which-key warm-night-theme use-package undo-tree twilight-anti-bright-theme toxi-theme sublimity sublime-themes standoff-mode stan-snippets ssh srcery-theme spotify sphinx-doc spacemacs-theme soothe-theme soft-charcoal-theme smex smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme slime shell-pop sexy-monochrome-theme seti-theme rope-read-mode rimero-theme reykjavik-theme rainbow-identifiers rainbow-delimiters python-docstring projectile planet-theme paredit paganini-theme overcast-theme origami org-ref org-cliplink org-bullets omtose-phellack-theme olivetti nyx-theme nova-theme northcode-theme noctilux-theme nimbus-theme neotree mutt-mode multiple-cursors mu4e-maildirs-extension mu4e-conversation mood-one-theme monokai-alt-theme monochrome-theme moe-theme minimal-theme metalheart-theme majapahit-theme magithub magit-popup madhat2r-theme lush-theme liso-theme kooten-theme klere-theme kaolin-themes js2-mode jedi iedit idle-require idea-darkula-theme highlight-numbers highlight-indent-guides hamburg-theme gruber-darker-theme grandshell-theme gotham-theme git-gutter-fringe gist forest-blue-theme foggy-night-theme focus flymake-python-pyflakes flatui-dark-theme eziam-theme exotica-theme ess easy-jekyll doom-themes dockerfile-mode distinguished-theme diminish darktooth-theme darkokai-theme darkmine-theme dark-mint-theme dark-krystal-theme dakrone-theme cython-mode cyberpunk-theme cyberpunk-2019-theme crux context-coloring constant-theme company-reftex company-jedi company-irony-c-headers company-auctex color-identifiers-mode colonoscopy-theme calmer-forest-theme bug-hunter browse-kill-ring blacken birds-of-paradise-plus-theme beacon badger-theme auto-complete-auctex auto-compile atom-one-dark-theme atom-dark-theme arjen-grey-theme arc-dark-theme apropospriate-theme ample-theme alect-themes afternoon-theme ace-jump-mode abyss-theme)))
- '(pdf-view-midnight-colors (quote ("#fdf4c1" . "#1d2021")))
- '(pos-tip-background-color "#E6DB74")
- '(pos-tip-foreground-color "#242728")
- '(vc-annotate-background "#1D252C")
+   '(try maude-mode matlab-mode material-theme helm-swoop helm-projectile helm-dash helm-company helm-ag haskell-mode golden-ratio geiser expand-region erlang drag-stuff define-word clj-refactor cider reveal-in-osx-finder nlinum fantom-theme counsel-etags company-ctags counsel-tramp auto-virtualenvwrapper direnv ibuffer-projectile virtualenvwrapper company-lsp lsp-ui eglot exec-path-from-shell elpy green-screen zweilight-theme zerodark-theme zeno-theme yasnippet-classic-snippets yaml-mode which-key wgrep warm-night-theme vscdark-theme visual-fill use-package undo-tree twilight-anti-bright-theme toxi-theme telega suscolors-theme sublimity sublime-themes standoff-mode stan-snippets ssh srcery-theme spotify sphinx-doc soothe-theme soft-charcoal-theme smex smart-mode-line-powerline-theme smart-mode-line-atom-one-dark-theme slime shell-pop sexy-monochrome-theme seti-theme rope-read-mode rimero-theme reykjavik-theme rainbow-mode rainbow-identifiers rainbow-delimiters python-docstring projectile planet-theme phoenix-dark-mono-theme peep-dired paredit paganini-theme overcast-theme origami org-variable-pitch org-ref org-cliplink org-bullets org-beautify-theme omtose-phellack-theme olivetti nyx-theme nova-theme northcode-theme noctilux-theme nimbus-theme neotree mutt-mode multiple-cursors multi mu4e-maildirs-extension mu4e-conversation mood-one-theme monokai-alt-theme monochrome-theme moe-theme minimal-theme metalheart-theme majapahit-theme magithub magit-popup madhat2r-theme lush-theme liso-theme kooten-theme klere-theme kaolin-themes js2-mode jedi ivy-youtube ivy-prescient ivy-posframe iedit idle-require idea-darkula-theme highlight-numbers highlight-indent-guides heaven-and-hell hamburg-theme gruvbox-theme gruber-darker-theme green-screen-theme green-phosphor-theme green-is-the-new-black-theme grandshell-theme gotham-theme git-timemachine git-gutter-fringe gist forge forest-blue-theme foggy-night-theme focus flymake-python-pyflakes flycheck-pyflakes flx flatui-dark-theme fancy-battery eziam-theme exotica-theme ewal-spacemacs-themes ess easy-jekyll doom-themes doom-modeline dockerfile-mode distinguished-theme diredfl dired-subtree diminish darktooth-theme darkroom darkokai-theme darkmine-theme darkburn-theme dark-mint-theme dark-krystal-theme dakrone-theme cython-mode cycle-themes cyberpunk-theme cyberpunk-2019-theme crux counsel-spotify counsel context-coloring constant-theme company-reftex company-jedi company-irony-c-headers company-auctex color-identifiers-mode colonoscopy-theme challenger-deep-theme calmer-forest-theme bug-hunter browse-kill-ring blacken birds-of-paradise-plus-theme beacon badger-theme auto-complete-auctex auto-compile atom-one-dark-theme atom-dark-theme arjen-grey-theme arc-dark-theme apropospriate-theme amx ample-theme all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-ibuffer all-the-icons-dired alect-themes afternoon-theme ace-jump-mode abyss-theme))
+ '(pdf-view-midnight-colors (cons "#dddddd" "#1b1d1e"))
+ '(pos-tip-background-color "#191F26")
+ '(pos-tip-foreground-color "#d4d4d6")
+ '(rustic-ansi-faces
+   ["#1b1d1e" "#d02b61" "#60aa00" "#d08928" "#6c9ef8" "#b77fdb" "#00aa80" "#dddddd"])
+ '(safe-local-variable-values
+   '((pyvenv-workon . "drmgen")
+     (TeX-engine . default-shell-escape)
+     (TeX-command-extra-options . "-shell-escape")
+     (pyvenv-workon . "hari")
+     (pyvenv-workon . "pyipn")
+     (pyvenv-workon . "gbmgeo")
+     (pyvenv-workon . "zusammen")
+     (pyvenv-workon . "bs_synth")
+     (pyvenv-workon . "rainbowpy")
+     (pyvenv-workon . "popsynth")
+     (pyvenv-workon . "cosmogrb")
+     (pyvenv-workon . "3ml")
+     (elpy-project-root . "~/coding/tml/threeml/")))
+ '(swiper-action-recenter t)
+ '(vc-annotate-background "#1b1d1e")
  '(vc-annotate-color-map
    (list
-    (cons 20 "#8BD49C")
-    (cons 40 "#abcd93")
-    (cons 60 "#cbc68b")
-    (cons 80 "#EBBF83")
-    (cons 100 "#e5ae6f")
-    (cons 120 "#df9e5b")
-    (cons 140 "#D98E48")
-    (cons 160 "#dc885f")
-    (cons 180 "#df8376")
-    (cons 200 "#E27E8D")
-    (cons 220 "#df7080")
-    (cons 240 "#dc6274")
-    (cons 260 "#D95468")
-    (cons 280 "#b05062")
-    (cons 300 "#884c5c")
-    (cons 320 "#604856")
-    (cons 340 "#56697A")
-    (cons 360 "#56697A")))
- '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-   (unspecified "#242728" "#323342" "#F70057" "#ff0066" "#86C30D" "#63de5d" "#BEB244" "#E6DB74" "#40CAE4" "#06d8ff" "#FF61FF" "#ff8eff" "#00b2ac" "#53f2dc" "#f8fbfc" "#ffffff")))
+    (cons 20 "#60aa00")
+    (cons 40 "#859f0d")
+    (cons 60 "#aa931a")
+    (cons 80 "#d08928")
+    (cons 100 "#d38732")
+    (cons 120 "#d6863d")
+    (cons 140 "#da8548")
+    (cons 160 "#ce8379")
+    (cons 180 "#c281aa")
+    (cons 200 "#b77fdb")
+    (cons 220 "#bf63b2")
+    (cons 240 "#c74789")
+    (cons 260 "#d02b61")
+    (cons 280 "#b0345c")
+    (cons 300 "#903d58")
+    (cons 320 "#704654")
+    (cons 340 "#505050")
+    (cons 360 "#505050")))
+ '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande" :height 2.0 :underline nil))))
- '(org-headline-done ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande" :strike-through t))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande" :height 1.75))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande" :height 1.5))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande" :height 1.25))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande" :height 1.1))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande"))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande"))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande"))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "#d4d4d6" :font "Lucida Grande")))))
+ '(lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#dddddd" :font "JetBrains Mono" :height 2.0 :underline nil))))
+ '(org-headline-done ((t (:inherit default :weight bold :foreground "#dddddd" :font "JetBrains Mono" :strike-through t))))
+ '(org-level-1 ((t (:inherit default :weight bold :foreground "#dddddd" :font "JetBrains Mono" :height 1.75))))
+ '(org-level-2 ((t (:inherit default :weight bold :foreground "#dddddd" :font "JetBrains Mono" :height 1.5))))
+ '(org-level-3 ((t (:inherit default :weight bold :foreground "#dddddd" :font "JetBrains Mono" :height 1.25))))
+ '(org-level-4 ((t (:inherit default :weight bold :foreground "#dddddd" :font "JetBrains Mono" :height 1.1))))
+ '(org-level-5 ((t (:inherit default :weight bold :foreground "#cfd2cb" :font "JetBrains Mono"))))
+ '(org-level-6 ((t (:inherit default :weight bold :foreground "#cfd2cb" :font "JetBrains Mono"))))
+ '(org-level-7 ((t (:inherit default :weight bold :foreground "#cfd2cb" :font "JetBrains Mono"))))
+ '(org-level-8 ((t (:inherit default :weight bold :foreground "#cfd2cb" :font "JetBrains Mono")))))
